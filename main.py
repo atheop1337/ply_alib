@@ -5,7 +5,7 @@ import json
 import time
 import os
 import sys
-
+# ПАШЕЛ НАХУЙ
 def setup_headers():
     exe_path = sys.argv[0]
     exe_dir = os.path.dirname(os.path.abspath(exe_path))
