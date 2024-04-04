@@ -32,3 +32,5 @@ while True:
         print(f'\x1b[31mОшибка при отправке сообщения: {response.status_code}\x1b[0m')
         print(f'\x1b[31mТекст ошибки: {response.text}\x1b[0m')
         quit()
+
+# Иди нахуй :P
