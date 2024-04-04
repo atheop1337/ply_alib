@@ -1,7 +1,7 @@
 import requests
-from headers import setup_headers
-from random_fact import get_random_fact
-from animation import animate, clear_animation
+from Libs.headers import setup_headers
+from Libs.random_fact import get_random_fact
+from Libs.animation import animate, clear_animation
 import time
 
 url = "https://forum.wayzer.ru/api/users/96"
