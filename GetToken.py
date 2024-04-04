@@ -2,6 +2,8 @@ import tkinter as tk
 import pyperclip
 import re
 
+# ! SandjezJ banned in gamesense.pub !
+
 def extract_tokens(curl_command):
     browser_check = "Firefox" in curl_command
     csrf_token_pattern = r'-H "X-CSRF-Token: ([^"]+)"'
