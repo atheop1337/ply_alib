@@ -25,8 +25,8 @@ while True:
     animate(2)  # Анимация
     clear_animation()  # Килл
     if response.status_code == 200 or response.status_code == 201:
-        print(f'\x1b[32mBIO успешно изменен на:\n{(bio)}!\x1b[0m\nCode - {response.status_code}')
-        print(f'\x1b[33mЗапущен таймер на 60 секунд!')
+        print(f'\x1b[32mОписание профиля на forum.wayzer.ru успешно изменен на:\n{(bio)}!\x1b[0m\nCode - {response.status_code}')
+        print(f'\x1b[33mСледующия смена через 60 секунд!')
         time.sleep(60) # 60 - кол-во секунд через которое меняется рнд факт
     else:
         print(f'\x1b[31mОшибка при отправке сообщения: {response.status_code}\x1b[0m')

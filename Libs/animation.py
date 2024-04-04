@@ -12,9 +12,9 @@ def animate(repeat_count):
             time.sleep(0.3)
 
 def clear_animation():
-    sys.stdout.write('\r') # Убираем анимацию
+    sys.stdout.write('\r')
     sys.stdout.flush()
 
-repeat_count = None  # Кол-во повторений
+repeat_count = None
 
 
