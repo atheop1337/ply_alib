@@ -1,6 +1,6 @@
+import bs4
 import requests
 from bs4 import BeautifulSoup
-
 def get_random_fact():
     link = 'https://randstuff.ru/fact/'
     response = requests.get(link)
