@@ -43,7 +43,7 @@ def process_curl():
 
     # Сохранение данных в файл headers.json
     current_directory = os.path.dirname(os.path.abspath(__file__))
-    json_headers_file_path = os.path.join(current_directory, 'data/headers.json')
+    json_headers_file_path = os.path.join(current_directory, 'headers.json')
     save_to_json(headers, cookies, json_headers_file_path)
 
     messagebox.showinfo("Готово", f"Данные успешно сохранены в файл {json_headers_file_path}")

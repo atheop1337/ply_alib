@@ -1,4 +1,4 @@
 {
-    "Token": "faM9cSkHRfSLL3uvVqvahZYP9l7kp4G1IzUINocM",
-    "Cookies": "flarum_remember=UNTKcgOHLYHjC5haEl68pNYPQSkwCrAmnvAYlUHI; flarum_session=CQjGdg66BZTIOX8YYTl4J9MxSIYcs7KAFjMyRxzk"
+    "X-CSRF-Token": "faM9cSkHRfSLL3uvVqvahZYP9l7kp4G1IzUINocM",
+    "Cookie": "flarum_remember=UNTKcgOHLYHjC5haEl68pNYPQSkwCrAmnvAYlUHI; flarum_session=CQjGdg66BZTIOX8YYTl4J9MxSIYcs7KAFjMyRxzk"
 }
