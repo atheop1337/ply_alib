@@ -2,6 +2,7 @@ import requests
 import os
 import json
 import sys
+from Libs.RandomName import generate_random_name
 def setup_headers():
     exe_path = sys.argv[0]
     exe_dir = os.path.dirname(os.path.abspath(exe_path))
@@ -17,14 +18,14 @@ def setup_headers():
 headers = setup_headers()
 
 ids = int(input("Введите свое ID: "))
-bio = input("Введите ник: ")
+name = generate_random_name()
 url = "https://forum.wayzer.ru/api/users/" + str(ids)
 
 data = {
     "data": {
         "type": "users",
         "attributes": {
-            "nickname": bio,
+            "nickname": name,
         },
         "id": ids
     }
