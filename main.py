@@ -3,7 +3,10 @@ import asyncio
 import json
 import os
 import random
+import logging
 from data.Libs.animation import animate, clear_animation
+
+logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
 
 class ForumBioEditor:
     def __init__(self, debug):
@@ -36,25 +39,18 @@ class ForumBioEditor:
         }
 
         async with aiohttp.ClientSession(headers=headers) as session:
-            async with session.patch(self.link, json=data) as response:
-                if response.status != 200:
-                    if self.debug:
-                        print(f"[Bio] // Waiting response...")
-                        await asyncio.sleep(0.01)
-                        print(f"[Bio] // Response code: {response.status}")
-                        await asyncio.sleep(0.01)
-                        print(f"[Bio] // {await response.text()}")
-                    await asyncio.sleep(0.3)
-                    return False
-
-                if self.debug:
-                    print(f"[Bio] // Waiting response...")
-                    await asyncio.sleep(0.01)
-                    print(f"[Bio] // Response code: {response.status}")
-                    await asyncio.sleep(0.01)
-                    print("[Bio] // Done!")
-                await asyncio.sleep(0.3)
-                return True
+            try:
+                async with session.patch(self.link, json=data) as response:
+                    response_text = await response.text()
+                    if response.status != 200:
+                        logging.error(f"[Bio] // Response code: {response.status}, {response_text}")
+                        return False
+                    else:
+                        logging.info("[Bio] // Done!")
+                        return True
+            except aiohttp.ClientError as e:
+                logging.error(f"[Bio] // Error: {e}")
+                return False
 
 class ForumNickEditor:
     def __init__(self, debug):
@@ -87,25 +83,18 @@ class ForumNickEditor:
         }
 
         async with aiohttp.ClientSession(headers=headers) as session:
-            async with session.patch(self.link, json=data) as response:
-                if response.status != 200:
-                    if self.debug:
-                        print(f"[Nick] // Waiting response...")
-                        await asyncio.sleep(0.01)
-                        print(f"[Nick] // Response code: {response.status}")
-                        await asyncio.sleep(0.01)
-                        print(f"[Nick] // {await response.text()}")
-                    await asyncio.sleep(0.3)
-                    return False
-
-                if self.debug:
-                    print(f"[Nick] // Waiting response...")
-                    await asyncio.sleep(0.01)
-                    print(f"[Nick] // Response code: {response.status}")
-                    await asyncio.sleep(0.01)
-                    print(f"[Nick] // Done!")
-                await asyncio.sleep(0.3)
-                return True
+            try:
+                async with session.patch(self.link, json=data) as response:
+                    response_text = await response.text()
+                    if response.status != 200:
+                        logging.error(f"[Nick] // Response code: {response.status}, {response_text}")
+                        return False
+                    else:
+                        logging.info("[Nick] // Done!")
+                        return True
+            except aiohttp.ClientError as e:
+                logging.error(f"[Nick] // Error: {e}")
+                return False
 
 async def Run(id, delay, nickname, senderbio, sendernick):
     loop = 0
@@ -126,7 +115,7 @@ async def main():
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
-    print(f'[2501] // Debug: {str(debug)}')
+    logging.info(f'[2501] // Debug: {str(debug)}')
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
