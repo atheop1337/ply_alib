@@ -5,7 +5,6 @@ import json
 import time
 import os
 import sys
-# ПАШЕЛ НАХУЙ
 def setup_headers():
     exe_path = sys.argv[0]
     exe_dir = os.path.dirname(os.path.abspath(exe_path))
@@ -19,9 +18,9 @@ def setup_headers():
 
     return headers
 
-url = "https://forum.wayzer.ru/api/users/96"
 headers = setup_headers()
 ids = int(input("Введите ID своего аккаунта: "))
+url = "https://forum.wayzer.ru/api/users/" + str(ids)
 
 while True:
     bio = f'Created by Star boy.\n{get_random_fact()}'
