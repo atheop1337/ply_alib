@@ -6,7 +6,6 @@ import time
 import random
 from data.Libs.animation import animate, clear_animation
 
-
 class ForumBioEditor:
     def __init__(self, debug):
         self.debug = debug
@@ -117,13 +116,6 @@ class ForumNickEditor:
         await self.send_request(id, nickname)
 
 
-def Debug_func(debug):
-    if debug.lower() == 'y':
-        return True
-    else:
-        return False
-
-
 def Run(id, delay, nickname, senderbio, sendernick):
     loop = 0
     while True:
@@ -138,13 +130,12 @@ def Run(id, delay, nickname, senderbio, sendernick):
             break
 
 
-
 def main():
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
-    debug = Debug_func(yn)
+    debug = (lambda debug: True if debug.lower() == 'y' else False)(yn)
     print(f'[2501] // Debug: {str(debug)}')
     time.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
