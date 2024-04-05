@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import json
 import re
+import os
 
 def parse_curl(curl_string):
     headers = {}
@@ -41,9 +42,11 @@ def process_curl():
     headers, cookies = parse_curl(curl_string)
 
     # Сохранение данных в файл headers.json
-    save_to_json(headers, cookies, 'data/headers.json')
+    current_directory = os.path.dirname(os.path.abspath(__file__))
+    json_headers_file_path = os.path.join(current_directory, 'data/headers.json')
+    save_to_json(headers, cookies, json_headers_file_path)
 
-    messagebox.showinfo("Готово", "Данные успешно сохранены в файл headers.json")
+    messagebox.showinfo("Готово", f"Данные успешно сохранены в файл {json_headers_file_path}")
 
 def paste_from_clipboard():
     clipboard_text = root.clipboard_get()
