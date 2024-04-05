@@ -3,7 +3,7 @@ import random
 from colorama import init, Fore, Style
 import sys
 
-init(autoreset=True)  # Инициализация colorama
+init(autoreset=True)
 
 def animate(repeat_count):
     colors = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
@@ -19,6 +19,6 @@ def clear_animation():
     sys.stdout.flush()
 
 if __name__ == "__main__":
-    repeat_count = 3  # Количество повторений анимации
+    repeat_count = 3
     animate(repeat_count)
     clear_animation()
