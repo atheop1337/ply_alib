@@ -28,23 +28,8 @@ def parse_curl(curl_string):
 
 def save_to_json(headers, cookies, filename):
     data_to_save = {
-        "User-Agent": headers.get("User-Agent", ""),
-        "Accept": headers.get("Accept", ""),
-        "Accept-Language": headers.get("Accept-Language", ""),
-        "Accept-Encoding": headers.get("Accept-Encoding", ""),
-        "Referer": headers.get("Referer", ""),
-        "Content-Type": headers.get("Content-Type", ""),
         "X-CSRF-Token": headers.get("X-CSRF-Token", ""),
-        "X-HTTP-Method-Override": headers.get("X-HTTP-Method-Override", ""),
-        "Origin": headers.get("Origin", ""),
-        "DNT": headers.get("DNT", ""),
-        "Sec-GPC": headers.get("Sec-GPC", ""),
-        "Connection": headers.get("Connection", ""),
-        "Cookie": "flarum_remember=" + cookies.get("flarum_remember", "") + "; flarum_session=" + cookies.get("flarum_session", ""),
-        "Sec-Fetch-Dest": headers.get("Sec-Fetch-Dest", ""),
-        "Sec-Fetch-Mode": headers.get("Sec-Fetch-Mode", ""),
-        "Sec-Fetch-Site": headers.get("Sec-Fetch-Site", ""),
-        "TE": headers.get("TE", "")
+        "Cookie": "flarum_remember=" + cookies.get("flarum_remember", "") + "; flarum_session=" + cookies.get("flarum_session", "")
     }
 
     with open(filename, 'w') as file:
@@ -56,7 +41,7 @@ def process_curl():
     headers, cookies = parse_curl(curl_string)
 
     # Сохранение данных в файл headers.json
-    save_to_json(headers, cookies, 'headers.json')
+    save_to_json(headers, cookies, 'data/headers.json')
 
     messagebox.showinfo("Готово", "Данные успешно сохранены в файл headers.json")
 

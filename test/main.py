@@ -1,48 +1,87 @@
 import requests
-from Libs.random_fact import get_random_fact
-from Libs.animation import animate, clear_animation
-import json
-import time
 import os
-import sys
-def setup_headers():
-    exe_path = sys.argv[0]
-    exe_dir = os.path.dirname(os.path.abspath(exe_path))
-    json_path = os.path.join(exe_dir, 'headers.json')
+import json
+import asyncio
+import time
+import random
 
-    if not os.path.exists(json_path):
-        raise FileNotFoundError(f'File not found: {json_path}')
+class ForumBioEditor:
+    def __init__(self):
+        self.forum_link = None
+        current_directory = os.path.dirname(os.path.abspath(__file__))
+        json_headers_file_path = os.path.join(current_directory, 'data/headers.json')
 
-    with open(json_path, 'r') as f:
-        headers = json.load(f)
+        with open(json_headers_file_path, 'r') as file:
+            self.headers_data = json.load(file)
 
-    return headers
-
-headers = setup_headers()
-ids = int(input("Введите ID своего аккаунта: "))
-url = "https://forum.wayzer.ru/api/users/" + str(ids)
-
-while True:
-    bio = f'Created by Star boy.\n{get_random_fact()}'
-    data = {
-        "data": {
-            "type": "users",
-            "attributes": {
-                "bio": bio,
-            },
-            "id": ids
+    async def send_message(self, id):
+        headers = {
+            'X-CSRF-Token': self.headers_data['Token'],
+            'Cookie': self.headers_data['Cookies'],
         }
-    }
 
-    response = requests.post(url, headers=headers, json=data)
-    animate(2)
-    clear_animation()
+        phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/"]
 
-    if response.status_code == 200 or response.status_code == 201:
-        print(f'\x1b[32mОписание профиля на forum.wayzer.ru успешно изменено на:\n{(bio)}!\x1b[0m\nCode - {response.status_code}')
-        print(f'\x1b[33mСледующая смена через 60 секунд!')
-        time.sleep(60)
-    else:
-        print(f'\x1b[31mОшибка при отправке сообщения: {response.status_code}\x1b[0m')
-        print(f'\x1b[31mТекст ошибки: {response.text}\x1b[0m')
-        quit()
+        random_phrase = random.choice(phrases)
+
+        data = {
+            "data": {
+                "type": "users",
+                "attributes": {
+                    "bio": f"Powered by 2501\n{random_phrase}"
+                },
+                "id": f"{id}"
+            }
+        }
+
+        response = requests.patch(self.link, json=data, headers=headers)
+
+        if response.status_code != 200:  # Если код ответа не равен 200
+            print("// Waiting response...")
+            time.sleep(0.01)
+            print("// Response code:", response.status_code)
+            time.sleep(0.5)
+            print("//", response.text)
+            return False  # Возвращаем False, чтобы основной код мог обработать это условие
+
+        print("// Waiting response...")
+        time.sleep(0.01)
+        print("// Response code:", response.status_code)
+        time.sleep(0.5)
+        print("// Done!")
+        return True  # Возвращаем True, если код ответа равен 200
+
+    async def run(self, id):
+        self.link = "https://forum.wayzer.ru/api/users/" + str(id)
+        await self.send_message(id)
+
+def main():
+    user_id = int(input('Введите ID пользователя: '))
+    id = user_id
+    sender = ForumBioEditor()
+    asyncio.run(sender.run(id))
+    while True:
+        for i in range(1, 61):
+            i = i + 1
+            ## """
+            if i == 2: print('[/-------]...')
+            if i == 4: print('[-/------]...')
+            if i == 6: print('[--/-----]...')
+            if i == 8: print('[---/----]...')
+            if i == 16: print('[----/---]...')
+            if i == 32: print('[----/---]...')
+            if i == 60: print('[-------/]...')
+            ## """
+            time.sleep(1)
+        result = asyncio.run(sender.send_message(id))
+        print("// Looped...")
+        time.sleep(1)
+        if not result:
+            break
+
+
+if __name__ == "__main__":
+    root = tk.Tk()
+    app = Interface(root)
+    root.mainloop()
+    main()
