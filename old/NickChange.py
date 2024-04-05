@@ -2,7 +2,7 @@ import requests
 import os
 import json
 import sys
-from Libs.RandomName import generate_random_name
+from data.Libs.RandomName import generate_random_name
 def setup_headers():
     exe_path = sys.argv[0]
     exe_dir = os.path.dirname(os.path.abspath(exe_path))
