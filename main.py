@@ -4,6 +4,7 @@ import json
 import asyncio
 import time
 import random
+from Libs.animation import animate, clear_animation
 
 class ForumBioEditor:
     def __init__(self):
@@ -16,8 +17,8 @@ class ForumBioEditor:
 
     async def send_message(self, id):
         headers = {
-            'X-CSRF-Token': self.headers_data['Token'],
-            'Cookie': self.headers_data['Cookies'],
+            'X-CSRF-Token': self.headers_data['X-CSRF-Token'],
+            'Cookie': self.headers_data['Cookie'],
         }
 
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/"]
@@ -56,26 +57,19 @@ class ForumBioEditor:
         await self.send_message(id)
 
 def main():
-    user_id = int(input('Введите ID пользователя: '))
+    user_id = int(input('// Enter a ID of user: '))
+    delay = int(input('// Enter a delay (in seconds): '))
     id = user_id
+    loop = 0
     sender = ForumBioEditor()
     asyncio.run(sender.run(id))
     while True:
-        for i in range(1, 61):
-            i = i + 1
-            ## """
-            if i == 2: print('[/-------]...')
-            if i == 4: print('[-/------]...')
-            if i == 6: print('[--/-----]...')
-            if i == 8: print('[---/----]...')
-            if i == 16: print('[----/---]...')
-            if i == 32: print('[----/---]...')
-            if i == 60: print('[-------/]...')
-            ## """
-            time.sleep(1)
+        animate(delay)
+        clear_animation()
         result = asyncio.run(sender.send_message(id))
-        print("// Looped...")
-        time.sleep(1)
+        loop = loop + 1
+        print(f"// Loop: {loop}")
+        time.sleep(0.3)
         if not result:
             break
 
