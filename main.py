@@ -1,13 +1,12 @@
 import asyncio
 import logging
+import aiohttp
 import random
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
 
-logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
-__VERSION__ = '0.5.1'
-__AUTHOR__ = '2501'
+logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 
 class ForumBioEditor(ForumEditor):
     """
@@ -110,6 +109,15 @@ async def Run(id, delay, nickname, choice, senderbio, sendernick):
             break
         print(f"[2501] // Loop: {loop}")
 
+async def fetch_data():
+    url = "https://pastebin.com/raw/vdfxN6bp"
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+            if response.status == 200:
+                return await response.text()
+            else:
+                return '?.?.?'
+
 async def main():
     """
     Основная функция для запуска программы
@@ -126,9 +134,9 @@ async def main():
              ░  ░░ ░                 ░  ░    ░  ░ ░   ░      
                  ░ ░                                       ░ 
     
-    ply_Alib now in BETA, our current version is {__VERSION__}
-    if you have any questions, please contact the {__AUTHOR__} for help
-    turn on debug mode for debugging purposes...
+        ply_Alib now in BETA, our current version is {await fetch_data()}
+    if you have any questions, please contact the 2501 for help
+           turn on debug mode for debugging purposes...
 """)
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
@@ -138,6 +146,7 @@ async def main():
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
+    logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
     if biochoice not in ('1', '2', '3'):
         await asyncio.sleep(0.1)
         logging.error(f"[ForumBioEditor] // Error: Enter valid variation...")

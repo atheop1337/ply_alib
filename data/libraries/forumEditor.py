@@ -1,9 +1,10 @@
 import aiohttp
+import time
 import json
 import os
 import logging
 
-logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
+logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 
 class ForumEditor:
     """
@@ -21,11 +22,14 @@ class ForumEditor:
             debug (bool): Указывает, включен ли режим отладки
         """
         self.debug = debug
+        logging.getLogger().setLevel(logging.DEBUG if self.debug else logging.INFO)
         directory = "C:/2501/ply_Alib/data"
         if not os.path.exists(directory):
+            time.sleep(0.1)
             logging.error(f"[{self.__class__.__name__}] // Error: {directory} not found...")
             return
         else:
+            time.sleep(0.1)
             logging.debug(f"[{self.__class__.__name__}] // Headers.json acquired in: {directory}")
         json_headers_file_path = os.path.join(directory, 'headers.json')
 
@@ -54,15 +58,12 @@ class ForumEditor:
                 async with session.patch(self.link, json=data) as response:
                     response_text = await response.text()
                     if response.status != 200:
-                        if not self.debug:
-                            return False
                         logging.error(f"[{self.__class__.__name__}] // Response code: {response.status}, {response_text}")
                         return False
                     else:
-                        logging.info(f"[{self.__class__.__name__}] // Done!")
+                        time.sleep(0.1)
+                        logging.debug(f"[{self.__class__.__name__}] // Done!")
                         return True
             except aiohttp.ClientError as e:
-                if not self.debug:
-                    return False
                 logging.error(f"[{self.__class__.__name__}] // Error: {e}")
                 return False
