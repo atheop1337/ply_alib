@@ -6,7 +6,8 @@ from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
-__VERSION__ = '0.5.0'
+__VERSION__ = '0.5.1'
+__AUTHOR__ = '2501'
 
 class ForumBioEditor(ForumEditor):
     """
@@ -113,7 +114,7 @@ async def main():
     """
     Основная функция для запуска программы
     """
-    print("""
+    print(f"""
     ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄   
     ▓██░  ██▒▓██▒    ▒██  ██▒      ▒████▄    ▓██▒    ▓██▒▓█████▄ 
     ▓██░ ██▓▒▒██░     ▒██ ██░      ▒██  ▀█▄  ▒██░    ▒██▒▒██▒ ▄██
@@ -124,6 +125,10 @@ async def main():
     ░░         ░ ░   ▒ ▒ ░░          ░   ▒     ░ ░    ▒ ░ ░    ░ 
              ░  ░░ ░                 ░  ░    ░  ░ ░   ░      
                  ░ ░                                       ░ 
+    
+    ply_Alib now in BETA, our current version is {__VERSION__}
+    if you have any questions, please contact the {__AUTHOR__} for help
+    turn on debug mode for debugging purposes...
 """)
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
