@@ -39,7 +39,7 @@ class ForumBioEditor(ForumEditor):
                     "id": f"{id}"
                 }
             }
-        else:
+        elif choice == '2':
             data = {
                 "data": {
                     "type": "users",
@@ -49,6 +49,31 @@ class ForumBioEditor(ForumEditor):
                     "id": f"{id}"
                 }
             }
+        elif choice == '3':
+            choice = random.randint(1, 2)
+            if choice == 1:  # Исправлено: сравнение с целым числом, а не со строкой
+                data = {
+                    "data": {
+                        "type": "users",
+                        "attributes": {
+                            "bio": f"Powered by 2501\n{get_random_fact()}"
+                        },
+                        "id": f"{id}"
+                    }
+                }
+            elif choice == 2:  # Исправлено: сравнение с целым числом, а не со строкой
+                data = {
+                    "data": {
+                        "type": "users",
+                        "attributes": {
+                            "bio": f"Powered by 2501\n{random_phrase}"
+                        },
+                        "id": f"{id}"
+                    }
+                }
+        else:
+            print(f"[Bio] // Enter valid variation.")
+            quit()
         return await self.send_request(id, data)
 
 class ForumNickEditor(ForumEditor):
@@ -128,7 +153,7 @@ async def main():
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
-    biochoice = str(input('[Bio] // Enter your choice (1 for random fact, 2 for random phrase): '))
+    biochoice = str(input('[Bio] // Enter your choice (1 for random fact, 2 for random phrase, 3 for everytime random): '))
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False

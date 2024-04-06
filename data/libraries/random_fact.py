@@ -1,4 +1,5 @@
 import bs4
+import bs4
 import requests
 from bs4 import BeautifulSoup
 def get_random_fact():
@@ -10,3 +11,6 @@ def get_random_fact():
     return fact_text
 
 random_fact = get_random_fact()
+
+
+
