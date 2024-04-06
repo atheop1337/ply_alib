@@ -1,16 +1,20 @@
-import bs4
-import bs4
-import requests
+import aiohttp
+import asyncio
 from bs4 import BeautifulSoup
-def get_random_fact():
+
+async def get_random_fact():
     link = 'https://randstuff.ru/fact/'
-    response = requests.get(link)
-    soup = BeautifulSoup(response.text, 'html.parser')
-    fact_block = soup.find('div', id='fact')
-    fact_text = fact_block.find('td').text.strip()
-    return fact_text
+    async with aiohttp.ClientSession() as session:
+        async with session.get(link) as response:
+            html = await response.text()
+            soup = BeautifulSoup(html, 'html.parser')
+            fact_block = soup.find('div', id='fact')
+            fact_text = fact_block.find('td').text.strip()
+            return fact_text
 
-random_fact = get_random_fact()
+async def main():
+    random_fact = await get_random_fact()
+    print(random_fact)
 
-
-
+if __name__ == "__main__":
+    asyncio.run(main())
