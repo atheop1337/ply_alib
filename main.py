@@ -29,51 +29,25 @@ class ForumBioEditor(ForumEditor):
         """
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/"]
         random_phrase = random.choice(phrases)
+        data = {
+            "data": {
+                "type": "users",
+                "attributes": {
+                    "bio": f"Powered by 2501\n"
+                },
+                "id": f"{id}"
+            }
+        }
         if choice == '1':
-            data = {
-                "data": {
-                    "type": "users",
-                    "attributes": {
-                        "bio": f"Powered by 2501\n{get_random_fact()}"
-                    },
-                    "id": f"{id}"
-                }
-            }
+            data["data"]["attributes"]["bio"] += get_random_fact()
         elif choice == '2':
-            data = {
-                "data": {
-                    "type": "users",
-                    "attributes": {
-                        "bio": f"Powered by 2501\n{random_phrase}"
-                    },
-                    "id": f"{id}"
-                }
-            }
+            data["data"]["attributes"]["bio"] += random_phrase
         elif choice == '3':
             choice = random.randint(1, 2)
             if choice == 1:
-                data = {
-                    "data": {
-                        "type": "users",
-                        "attributes": {
-                            "bio": f"Powered by 2501\n{get_random_fact()}"
-                        },
-                        "id": f"{id}"
-                    }
-                }
+                data["data"]["attributes"]["bio"] += get_random_fact()
             elif choice == 2:
-                data = {
-                    "data": {
-                        "type": "users",
-                        "attributes": {
-                            "bio": f"Powered by 2501\n{random_phrase}"
-                        },
-                        "id": f"{id}"
-                    }
-                }
-        else:
-            print(f"[Bio] // Enter valid variation.")
-            quit()
+                data["data"]["attributes"]["bio"] += random_phrase
         return await self.send_request(id, data)
 
 class ForumNickEditor(ForumEditor):
@@ -158,6 +132,10 @@ async def main():
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
+    if biochoice not in ('1', '2', '3'):
+        await asyncio.sleep(0.1)
+        logging.error(f"[ForumBioEditor] // Error: Enter valid variation...")
+        return
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
