@@ -1,6 +1,6 @@
 import requests
-from data.Libs.random_fact import get_random_fact
-from data.Libs.animation import animate, clear_animation
+from data.libraries.random_fact import get_random_fact
+from data.libraries.animation import animate, clear_animation
 import json
 import time
 import os

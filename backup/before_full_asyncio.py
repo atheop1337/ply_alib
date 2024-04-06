@@ -4,7 +4,7 @@ import json
 import asyncio
 import time
 import random
-from data.Libs.animation import animate, clear_animation
+from data.libraries.animation import animate, clear_animation
 
 class ForumBioEditor:
     def __init__(self, debug):

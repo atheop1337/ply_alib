@@ -4,7 +4,7 @@ import json
 import os
 import random
 import logging
-from data.Libs.animation import animate, clear_animation
+from data.libraries.animation import animate, clear_animation
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
 

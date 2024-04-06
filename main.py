@@ -1,8 +1,8 @@
 import asyncio
 import logging
 import random
-from data.Libs.animation import animate, clear_animation
-from data.Libs.forumEditor import ForumEditor
+from data.libraries.animation import animate, clear_animation
+from data.libraries.forumEditor import ForumEditor
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
 
