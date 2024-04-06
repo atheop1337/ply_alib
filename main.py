@@ -6,6 +6,7 @@ from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
+__VERSION__ = '0.5.0'
 
 class ForumBioEditor(ForumEditor):
     """
