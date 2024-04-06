@@ -1,113 +1,54 @@
-import aiohttp
 import asyncio
-import json
-import os
-import random
 import logging
+import random
 from data.Libs.animation import animate, clear_animation
+from data.Libs.forumEditor import ForumEditor
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
 
-class ForumBioEditor:
-    def __init__(self, debug):
-        self.debug = debug
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-        json_headers_file_path = os.path.join(current_directory, 'data/headers.json')
-
-        with open(json_headers_file_path, 'r') as file:
-            self.headers_data = json.load(file)
-
-    async def send_request(self, id):
-        self.link = "https://forum.wayzer.ru/api/users/" + str(id)
-        headers = {
-            'X-CSRF-Token': self.headers_data['X-CSRF-Token'],
-            'Cookie': self.headers_data['Cookie'],
-        }
-
+class ForumBioEditor(ForumEditor):
+    async def send_bio_request(self, id):
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/"]
-
         random_phrase = random.choice(phrases)
-
         data = {
             "data": {
                 "type": "users",
                 "attributes": {
                     "bio": f"Powered by 2501\n{random_phrase}"
                 },
-                "id": f"{id}"
+                "id": str(id)
             }
         }
+        return await self.send_request(id, data)
 
-        async with aiohttp.ClientSession(headers=headers) as session:
-            try:
-                async with session.patch(self.link, json=data) as response:
-                    response_text = await response.text()
-                    if response.status != 200:
-                        logging.error(f"[Bio] // Response code: {response.status}, {response_text}")
-                        return False
-                    else:
-                        logging.info("[Bio] // Done!")
-                        return True
-            except aiohttp.ClientError as e:
-                logging.error(f"[Bio] // Error: {e}")
-                return False
-
-class ForumNickEditor:
-    def __init__(self, debug):
-        self.debug = debug
-        current_directory = os.path.dirname(os.path.abspath(__file__))
-        json_headers_file_path = os.path.join(current_directory, 'data/headers.json')
-
-        with open(json_headers_file_path, 'r') as file:
-            self.headers_data = json.load(file)
-
-    async def send_request(self, id, nickname):
-        self.link = "https://forum.wayzer.ru/api/users/" + str(id)
-        headers = {
-            'X-CSRF-Token': self.headers_data['X-CSRF-Token'],
-            'Cookie': self.headers_data['Cookie'],
-        }
-
+class ForumNickEditor(ForumEditor):
+    async def send_nick_request(self, id, nickname):
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/"]
-
         random_phrase = random.choice(phrases)
-
         data = {
             "data": {
                 "type": "users",
                 "attributes": {
                     "nickname": f"{nickname}\n{random_phrase}"
                 },
-                "id": f"{id}"
+                "id": str(id)
             }
         }
-
-        async with aiohttp.ClientSession(headers=headers) as session:
-            try:
-                async with session.patch(self.link, json=data) as response:
-                    response_text = await response.text()
-                    if response.status != 200:
-                        logging.error(f"[Nick] // Response code: {response.status}, {response_text}")
-                        return False
-                    else:
-                        logging.info("[Nick] // Done!")
-                        return True
-            except aiohttp.ClientError as e:
-                logging.error(f"[Nick] // Error: {e}")
-                return False
+        return await self.send_request(id, data)
 
 async def Run(id, delay, nickname, senderbio, sendernick):
     loop = 0
     while True:
         animate(delay)
         clear_animation()
-        resultbio = await senderbio.send_request(id)
-        resultnick = await sendernick.send_request(id, nickname)
+        resultbio = await senderbio.send_bio_request(id)
+        resultnick = await sendernick.send_nick_request(id, nickname)
         loop += 1
-        print(f"[2501] // Loop: {loop}")
         await asyncio.sleep(0.1)
         if not resultbio or not resultnick:
+            logging.error(f"[2501] // Error acquired on loop {loop}...")
             break
+        print(f"[2501] // Loop: {loop}")
 
 async def main():
     yn = str(input('[2501] // Debug mode? [y/n]: '))
@@ -115,7 +56,7 @@ async def main():
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
-    logging.info(f'[2501] // Debug: {str(debug)}')
+    if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
