@@ -3,6 +3,7 @@ import logging
 import random
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
+from data.libraries.random_fact import get_random_fact
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', level=logging.DEBUG, datefmt='%H:%M:%S')
 
@@ -16,7 +17,7 @@ class ForumBioEditor(ForumEditor):
         debug (bool): Указывает, включен ли режим отладки
     """
 
-    async def send_bio_request(self, id):
+    async def send_bio_request(self, id, choice):
         """
         Отправляет запрос на обновление "О себе" пользователя
 
@@ -28,15 +29,26 @@ class ForumBioEditor(ForumEditor):
         """
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/"]
         random_phrase = random.choice(phrases)
-        data = {
-            "data": {
-                "type": "users",
-                "attributes": {
-                    "bio": f"Powered by 2501\n{random_phrase}"
-                },
-                "id": str(id)
+        if choice == '1':
+            data = {
+                "data": {
+                    "type": "users",
+                    "attributes": {
+                        "bio": f"Powered by 2501\n{get_random_fact()}"
+                    },
+                    "id": f"{id}"
+                }
             }
-        }
+        else:
+            data = {
+                "data": {
+                    "type": "users",
+                    "attributes": {
+                        "bio": f"Powered by 2501\n{random_phrase}"
+                    },
+                    "id": f"{id}"
+                }
+            }
         return await self.send_request(id, data)
 
 class ForumNickEditor(ForumEditor):
@@ -73,7 +85,7 @@ class ForumNickEditor(ForumEditor):
         }
         return await self.send_request(id, data)
 
-async def Run(id, delay, nickname, senderbio, sendernick):
+async def Run(id, delay, nickname, choice, senderbio, sendernick):
     """
     Запускает основной цикл для непрерывной отправки запросов на обновление биографии и ника пользователя
 
@@ -88,7 +100,7 @@ async def Run(id, delay, nickname, senderbio, sendernick):
     while True:
         animate(delay)
         clear_animation()
-        resultbio = await senderbio.send_bio_request(id)
+        resultbio = await senderbio.send_bio_request(id, choice)
         resultnick = await sendernick.send_nick_request(id, nickname)
         loop += 1
         await asyncio.sleep(0.1)
@@ -116,6 +128,7 @@ async def main():
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
+    biochoice = str(input('[Bio] // Enter your choice (1 for random fact, 2 for random phrase): '))
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
@@ -123,7 +136,7 @@ async def main():
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
-    await Run(user_id, delay, nickname, senderbio, sendernick)
+    await Run(user_id, delay, nickname, biochoice, senderbio, sendernick)
 
 if __name__ == "__main__":
     asyncio.run(main())
