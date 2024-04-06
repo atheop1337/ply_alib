@@ -51,7 +51,7 @@ class ForumBioEditor(ForumEditor):
             }
         elif choice == '3':
             choice = random.randint(1, 2)
-            if choice == 1:  # Исправлено: сравнение с целым числом, а не со строкой
+            if choice == 1:
                 data = {
                     "data": {
                         "type": "users",
@@ -61,7 +61,7 @@ class ForumBioEditor(ForumEditor):
                         "id": f"{id}"
                     }
                 }
-            elif choice == 2:  # Исправлено: сравнение с целым числом, а не со строкой
+            elif choice == 2:
                 data = {
                     "data": {
                         "type": "users",
