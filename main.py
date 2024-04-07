@@ -2,6 +2,7 @@ import asyncio
 import logging
 import aiohttp
 import random
+import pyfiglet
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
@@ -28,6 +29,8 @@ class ForumBioEditor(ForumEditor):
         Returns:
             bool: True, если запрос успешно отправлен, False в противном случае
         """
+        choice_phares = ''
+
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/", "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(❁´◡`❁)", "(¬‿¬)"]
         random_phrase = random.choice(phrases)
         data = {
@@ -118,30 +121,28 @@ async def fetch_data():
             else:
                 return '?.?.?'
 
+async def random_hello():
+    text = 'PLY ALIB'
+    fonts = pyfiglet.FigletFont.getFonts()
+    chosen_font = random.choice(fonts)
+    beta = """
+            ply_Alib now in BETA, our current version is {await fetch_data()}
+    if you have any questions, please contact the 2501 for help
+           turn on debug mode for debugging purposes...
+    """
+    return beta, pyfiglet.figlet_format(text, font=chosen_font)
+
 async def main():
     """
     Основная функция для запуска программы
     """
-    print(f"""
-    ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄   
-    ▓██░  ██▒▓██▒    ▒██  ██▒      ▒████▄    ▓██▒    ▓██▒▓█████▄ 
-    ▓██░ ██▓▒▒██░     ▒██ ██░      ▒██  ▀█▄  ▒██░    ▒██▒▒██▒ ▄██
-    ▒██▄█▓▒ ▒▒██░     ░ ▐██▓░      ░██▄▄▄▄██ ▒██░    ░██░▒██░█▀  
-    ▒██▒ ░  ░░██████▒ ░ ██▒▓░       ▓█   ▓██▒░██████▒░██░░▓█  ▀█▓
-    ▒▓▒░ ░  ░░ ▒░▓  ░  ██▒▒▒        ▒▒   ▓▒█░░ ▒░▓  ░░▓  ░▒▓███▀▒
-    ░▒ ░     ░ ░ ▒  ░▓██ ░▒░         ▒   ▒▒ ░░ ░ ▒  ░ ▒ ░▒░▒   ░ 
-    ░░         ░ ░   ▒ ▒ ░░          ░   ▒     ░ ░    ▒ ░ ░    ░ 
-             ░  ░░ ░                 ░  ░    ░  ░ ░   ░      
-                 ░ ░                                       ░ 
-    
-        ply_Alib now in BETA, our current version is {await fetch_data()}
-    if you have any questions, please contact the 2501 for help
-           turn on debug mode for debugging purposes...
-""")
+    beta, result = await random_hello()
+    print(result + beta)
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
     biochoice = str(input('[Bio] // Enter your choice (1 for random fact, 2 for random phrase, 3 for everytime random): '))
+    emoji = str(input('[Emo] // Enter emoji type: '))
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
