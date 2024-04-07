@@ -29,7 +29,6 @@ class ForumBioEditor(ForumEditor):
         Returns:
             bool: True, если запрос успешно отправлен, False в противном случае
         """
-        choice_phares = ''
 
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/", "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(❁´◡`❁)", "(¬‿¬)"]
         random_phrase = random.choice(phrases)
@@ -123,15 +122,13 @@ async def fetch_data():
 
 async def random_hello():
     text = 'PLY ALIB'
-    fonts = pyfiglet.FigletFont.getFonts()
-    chosen_font = random.choice(fonts)
-    beta = """
+    fonts = ['slant', 'graffiti', 'starwars', 'poison', 'Bloody']
+    beta = f"""
             ply_Alib now in BETA, our current version is {await fetch_data()}
     if you have any questions, please contact the 2501 for help
            turn on debug mode for debugging purposes...
     """
-    return beta, pyfiglet.figlet_format(text, font=chosen_font)
-
+    return beta, pyfiglet.figlet_format(text, font=random.choice(fonts))
 async def main():
     """
     Основная функция для запуска программы
@@ -156,6 +153,7 @@ async def main():
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
     await Run(user_id, delay, nickname, biochoice, senderbio, sendernick)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
