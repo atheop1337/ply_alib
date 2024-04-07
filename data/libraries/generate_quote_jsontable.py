@@ -5,7 +5,7 @@ import os
 
 def generate_citata():
     quotes = []
-    while len(quotes) < 10:
+    while len(quotes) < 100:
         url = "https://finewords.ru/sluchajnaya"
         try:
             response = requests.get(url)
