@@ -3,9 +3,6 @@ import logging
 import aiohttp
 import random
 import pyfiglet
-import signal
-import sys
-import requests
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
@@ -140,11 +137,6 @@ async def random_hello():
            turn on debug mode for debugging purposes...
     """
     return beta, pyfiglet.figlet_format(text, font=random.choice(fonts))
-
-async def cleanup_before_exit():
-    print("\r[2501] // Performing cleanup before exiting...")
-    # Сюда кароче запрос на установление старого био и ника, я хз как из мейна получить никнейм и сюда передать
-
 async def main():
     """
     Основная функция для запуска программы
@@ -168,13 +160,7 @@ async def main():
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
     await Run(user_id, delay, nickname, biochoice, senderbio, sendernick)
-    await cleanup_before_exit()
+
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    try:
-        loop.run_until_complete(main())
-    except KeyboardInterrupt:
-        loop.run_until_complete(cleanup_before_exit())
-    finally:
-        loop.close()
+    asyncio.run(main())
