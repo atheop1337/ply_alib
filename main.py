@@ -7,6 +7,7 @@ import json
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
+from data.libraries.clock import curtimeget
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
@@ -47,29 +48,34 @@ class ForumBioEditor(ForumEditor):
             return await self.send_request(id, data)
 
 class ForumNickEditor(ForumEditor):
-    async def send_nick_request(self, id, nickname):
+    async def send_nick_request(self, id, nickname, choice):
         random_phrase = random.choice(phrases)
         random_emoji = chr(random.randint(0x1F600, 0x1F64F))
-        choice = random.randint(1, 2)
-        data = {
-            "data": {
-                "type": "users",
-                "attributes": {
-                    "nickname": f"{nickname} {random_emoji if choice == 1 else random_phrase}"
-                },
-                "id": str(id)
-            }
+        choice_options = {
+            'clock': await curtimeget(),
+            'random emoticone': random_phrase,
+            'random emoji': random_emoji,
         }
+        choice_value = choice_options.get(choice)
+        if choice_value is not None:
+            data = {
+                "data": {
+                    "type": "users",
+                    "attributes": {
+                        "nickname": f"{nickname}\n{choice_value}"
+                    },
+                    "id": str(id)
+                }
+            }
+            return await self.send_request(id, data)
 
-        return await self.send_request(id, data)
-
-async def Run(id, delay, nickname, choice, senderbio, sendernick):
+async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
     while True:
         animate(delay)
         clear_animation()
-        resultbio = await senderbio.send_bio_request(id, choice)
-        resultnick = await sendernick.send_nick_request(id, nickname)
+        resultbio = await senderbio.send_bio_request(id, biochoice)
+        resultnick = await sendernick.send_nick_request(id, nickname, nickchoice)
         await asyncio.sleep(0.1)
         loop = loop + 1
         if not resultbio or not resultnick:
@@ -116,8 +122,9 @@ async def main():
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
     user_bio = await get_bio(user_id)
-    choice = inquirer.list_input("[Bio] // Enter your choice: ", choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
+    biochoice = inquirer.list_input("[Bio] // Enter your choice: ", choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
     nickname = str(input('[Nick] // Enter a nickname: '))
+    nickchoice = inquirer.list_input("[Nick] // Enter your choice: ", choices=['clock', 'random emoticone', 'random emoji'])
     started_name = nickname
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
@@ -127,7 +134,7 @@ async def main():
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
-    await Run(user_id, delay, nickname, choice, senderbio, sendernick)
+    await Run(user_id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
 
 
 if __name__ == "__main__":
