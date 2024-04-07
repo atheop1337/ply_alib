@@ -6,6 +6,7 @@ import pyfiglet
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
+from data.libraries.random_quote import generate_citata
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 
@@ -30,27 +31,34 @@ class ForumBioEditor(ForumEditor):
             bool: True, если запрос успешно отправлен, False в противном случае
         """
 
-        phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/", "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(❁´◡`❁)", "(¬‿¬)"]
+        phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
+                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(❁´◡`❁)", "(¬‿¬)"]
         random_phrase = random.choice(phrases)
+        random_quote, author = await generate_citata()
         data = {
             "data": {
                 "type": "users",
                 "attributes": {
                     "bio": f"Powered by 2501\n"
                 },
-                "id": f"{id}"
+                "id": str(id)
             }
         }
         if choice == '1':
-            data["data"]["attributes"]["bio"] += get_random_fact()
+            data["data"]["attributes"]["bio"] += await get_random_fact()
         elif choice == '2':
             data["data"]["attributes"]["bio"] += random_phrase
         elif choice == '3':
-            choice = random.randint(1, 2)
+            data["data"]["attributes"]["bio"] += f"Quote: {random_quote}\nAuthor: {author}"
+        elif choice == '4':
+            choice = random.randint(1, 3)
             if choice == 1:
-                data["data"]["attributes"]["bio"] += get_random_fact()
+                data["data"]["attributes"]["bio"] += await get_random_fact()
             elif choice == 2:
                 data["data"]["attributes"]["bio"] += random_phrase
+            elif choice == 3:
+                quote, author = await generate_citata()
+                data["data"]["attributes"]["bio"] += f"Quote: {random_quote}\nAuthor: {author}"
         return await self.send_request(id, data)
 
 class ForumNickEditor(ForumEditor):
@@ -134,18 +142,17 @@ async def main():
     Основная функция для запуска программы
     """
     beta, result = await random_hello()
-    print(result + beta)
+    print(result + beta, '\nЭта история, про то как я попал в зомби апокалипсис')
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
-    biochoice = str(input('[Bio] // Enter your choice (1 for random fact, 2 for random phrase, 3 for everytime random): '))
-    emoji = str(input('[Emo] // Enter emoji type: '))
+    biochoice = str(input('[Bio] // Enter your choice (1 for random fact, 2 for random phrase, 3 for random quote, 4 for everytime random): '))
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
     logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
-    if biochoice not in ('1', '2', '3'):
+    if biochoice not in ('1', '2', '3', '4'):
         await asyncio.sleep(0.1)
         logging.error(f"[ForumBioEditor] // Error: Enter valid variation...")
         return

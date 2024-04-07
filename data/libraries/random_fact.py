@@ -1,5 +1,6 @@
 import aiohttp
 import asyncio
+import requests
 from bs4 import BeautifulSoup
 
 async def get_random_fact():
