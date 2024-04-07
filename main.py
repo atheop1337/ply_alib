@@ -15,8 +15,13 @@ directory = "C:/2501/ply_Alib/data"
 
 class ForumBioEditor(ForumEditor):
     async def send_bio_request(self, id, choice):
-        with open(directory + "/quotes.json", "r", encoding="utf-8") as file:
-            quotes = json.load(file)
+        try:
+            with open(directory + "/quotes.json", "r", encoding="utf-8") as file:
+                quotes = json.load(file)
+        except FileNotFoundError:
+            logging.error("[Bio] // File quotes.json not found! Try to run the setup.py again")
+            return
+
         random_phrase = random.choice(phrases)
         random_quote = random.choice(quotes)
         choice_options = {
