@@ -113,7 +113,7 @@ async def main():
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
-    choice = inquirer.list_input("[Bio] // Enter your choice: ", choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
+    choice = inquirer.list_input("[Bio] // Enter your choice", choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
     nickname = str(input('[Nick] // Enter a nickname: '))
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
