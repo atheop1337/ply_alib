@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 import json
 import os
 from plyer import notification
-
+#111
 def generate_citata():
     quotes = []
     while len(quotes) < 100:
@@ -17,6 +17,7 @@ def generate_citata():
                 citata_text = citata_tag.text.strip()
                 if len(citata_text) <= 60:
                     quotes.append(citata_text)
+                    print(citata_text)
         except Exception as e:
             print("Error fetching data:", e)
     return quotes
