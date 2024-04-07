@@ -111,14 +111,18 @@ async def main():
                turn on debug mode for debugging purposes...
     """)
     await asyncio.sleep(0.1)
+    print(f'Press CTRL+C to exit the program')
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
+    user_bio = await get_bio(user_id)
     choice = inquirer.list_input("[Bio] // Enter your choice: ", choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
     nickname = str(input('[Nick] // Enter a nickname: '))
+    started_name = nickname
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
     logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
+    logging.debug(f'\nUser started bio:\n {user_bio}\nUser started name: {started_name}')
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
