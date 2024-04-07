@@ -11,28 +11,9 @@ from data.libraries.random_quote import generate_citata
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 
 class ForumBioEditor(ForumEditor):
-    """
-    Класс для редактирования биографии пользователя на форуме
-
-    Наследуется от класса ForumEditor
-
-    Атрибуты:
-        debug (bool): Указывает, включен ли режим отладки
-    """
-
     async def send_bio_request(self, id, choice):
-        """
-        Отправляет запрос на обновление "О себе" пользователя
-
-        Args:
-            id (int): Идентификатор пользователя
-
-        Returns:
-            bool: True, если запрос успешно отправлен, False в противном случае
-        """
-
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
-                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(❁´◡`❁)", "(¬‿¬)"]
+                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"]
         random_phrase = random.choice(phrases)
         random_quote, author = await generate_citata()
         data = {
@@ -62,28 +43,9 @@ class ForumBioEditor(ForumEditor):
         return await self.send_request(id, data)
 
 class ForumNickEditor(ForumEditor):
-    """
-    Класс для редактирования ника пользователя на форуме
-
-    Наследуется от класса ForumEditor
-
-    Атрибуты:
-        debug (bool): Указывает, включен ли режим отладки
-    """
-
     async def send_nick_request(self, id, nickname):
-        """
-        Отправляет запрос на обновление ника пользователя
-
-        Args:
-            id (int): Идентификатор пользователя
-            nickname (str): Новый никнейм
-
-        Returns:
-            bool: True, если запрос успешно отправлен, False в противном случае
-        """
         phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
-                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(❁´◡`❁)", "(¬‿¬)"]
+                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"]
         random_phrase = random.choice(phrases)
         random_emoji = chr(random.randint(0x1F600, 0x1F64F))
         choice = random.randint(1, 2)
@@ -100,16 +62,6 @@ class ForumNickEditor(ForumEditor):
         return await self.send_request(id, data)
 
 async def Run(id, delay, nickname, choice, senderbio, sendernick):
-    """
-    Запускает основной цикл для непрерывной отправки запросов на обновление биографии и ника пользователя
-
-    Args:
-        id (int): Идентификатор пользователя
-        delay (int): Задержка между запросами (в секундах)
-        nickname (str): Старый никнейм
-        senderbio (ForumBioEditor): Экземпляр класса ForumBioEditor
-        sendernick (ForumNickEditor): Экземпляр класса ForumNickEditor
-    """
     loop = 0
     while True:
         animate(delay)
@@ -141,10 +93,14 @@ async def random_hello():
            turn on debug mode for debugging purposes...
     """
     return beta, pyfiglet.figlet_format(text, font=random.choice(fonts))
+
+async def get_bio(id):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://forum.wayzer.ru/api/users/{id}") as response:
+            data = await response.json()
+            bio = data['data']['attributes']['bio']
+            return bio
 async def main():
-    """
-    Основная функция для запуска программы
-    """
     beta, result = await random_hello()
     print(result + beta, '\nЭта история, про то как я попал в зомби апокалипсис')
     await asyncio.sleep(0.1)
