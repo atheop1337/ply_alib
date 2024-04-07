@@ -1,4 +1,10 @@
 import subprocess
+import os
+current_directory = os.path.dirname(os.path.abspath(__file__))
+
+def run_file(file_path):
+    subprocess.Popen(["cmd", "/c", "python", file_path], creationflags=subprocess.CREATE_NEW_CONSOLE)
 
 if __name__ == "__main__":
-    subprocess.Popen(["cmd", "/c", "python", "main.py"], creationflags=subprocess.CREATE_NEW_CONSOLE)
+    ai_file_path = "main.py"
+    run_file(ai_file_path)
