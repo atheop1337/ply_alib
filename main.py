@@ -4,10 +4,12 @@ import aiohttp
 import random
 import inquirer
 import json
+from colorama import init, Fore, Style
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
 from data.libraries.clock import curtimeget
+init(autoreset=True)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
@@ -101,26 +103,29 @@ async def get_bio(id):
             return bio
 
 async def main():
-    print(f"""
-           <===> ply_alib loader by 2501 v {await fetch_data()} <===>
-        ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄   
-        ▓██░  ██▒▓██▒    ▒██  ██▒      ▒████▄    ▓██▒    ▓██▒▓█████▄ 
-        ▓██░ ██▓▒▒██░     ▒██ ██░      ▒██  ▀█▄  ▒██░    ▒██▒▒██▒ ▄██
-        ▒██▄█▓▒ ▒▒██░     ░ ▐██▓░      ░██▄▄▄▄██ ▒██░    ░██░▒██░█▀  
-        ▒██▒ ░  ░░██████▒ ░ ██▒▓░       ▓█   ▓██▒░██████▒░██░░▓█  ▀█▓
-        ▒▓▒░ ░  ░░ ▒░▓  ░  ██▒▒▒        ▒▒   ▓▒█░░ ▒░▓  ░░▓  ░▒▓███▀▒
-        ░▒ ░     ░ ░ ▒  ░▓██ ░▒░         ▒   ▒▒ ░░ ░ ▒  ░ ▒ ░▒░▒   ░ 
-        ░░         ░ ░   ▒ ▒ ░░          ░   ▒     ░ ░    ▒ ░ ░    ░ 
-                 ░  ░░ ░                 ░  ░    ░  ░ ░   ░      
-                     ░ ░                                       ░ 
-
-            ply_Alib now in BETA, our current version is {await fetch_data()}
-        if you have any questions, please contact the 2501 for help
-               turn on debug mode for debugging purposes...
-    """)
+    print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
+┌──────────────────┬────────────────────────────────────────────────────┬───────┐
+│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{await fetch_data()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
+├──────────────────┴────────────────────────────────────────────────────┴───────┤
+│                                                                               │
+│{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}         ▓██░  ██▒▓██▒    ▒██  ██▒      ▒████▄    ▓██▒    ▓██▒▓█████▄          {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}         ▓██░ ██▓▒▒██░     ▒██ ██░      ▒██  ▀█▄  ▒██░    ▒██▒▒██▒ ▄██         {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}         ▒██▄█▓▒ ▒▒██░     ░ ▐██▓░      ░██▄▄▄▄██ ▒██░    ░██░▒██░█▀           {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}         ▒██▒ ░  ░░██████▒ ░ ██▒▓░       ▓█   ▓██▒░██████▒░██░░▓█  ▀█▓         {Fore.LIGHTWHITE_EX}│    
+│{Fore.YELLOW}         ▒▓▒░ ░  ░░ ▒░▓  ░  ██▒▒▒        ▒▒   ▓▒█░░ ▒░▓  ░░▓  ░▒▓███▀▒         {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}         ░▒ ░     ░ ░ ▒  ░▓██ ░▒░         ▒   ▒▒ ░░ ░ ▒  ░ ▒ ░▒░▒   ░          {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}         ░░         ░ ░   ▒ ▒ ░░          ░   ▒     ░ ░    ▒ ░ ░    ░          {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}                  ░  ░░ ░                 ░  ░    ░  ░ ░   ░                   {Fore.LIGHTWHITE_EX}│
+│{Fore.YELLOW}                      ░ ░                                       ░              {Fore.LIGHTWHITE_EX}│
+│                                                                               │
+│  {Fore.RESET}•  {Fore.GREEN}Welcome to the ply_Alib script, press {Fore.RESET}CTRL+C {Fore.GREEN}to exit the program          {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}•  {Fore.GREEN}if you have any questions, please contact the 2501 for help               {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}•  {Fore.GREEN}turn on debug mode for debugging purposes...                              {Fore.LIGHTWHITE_EX}│
+└───────────────────────────────────────────────────────────────────────────────┘
+""")
     #
     await asyncio.sleep(0.1)
-    print(f'Press CTRL+C to exit the program')
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
     user_bio = await get_bio(user_id)
