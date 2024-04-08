@@ -77,7 +77,7 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, s
     while True:
         animate(delay)
         clear_animation()
-        resultbio = await senderbio.send_bio_request(id, biochoice, user_bio)
+        resultbio = await senderbio.send_bio_request(id, biochoice, user_bio_static)
         resultnick = await sendernick.send_nick_request(id, nickname, nickchoice)
         await asyncio.sleep(0.1)
         loop = loop + 1
