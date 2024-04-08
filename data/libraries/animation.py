@@ -1,16 +1,10 @@
 import time
-import random
-from colorama import init, Fore, Style
 import sys
 
-init(autoreset=True)
-
 def animate(repeat_count):
-    colors = [Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN]
     for _ in range(repeat_count):
-        for char in ['/', '|', '\\', '—']:
-            color = random.choice(colors)
-            sys.stdout.write(f'\r[2501] // Delay: {color}{char}{Style.DIM}')
+        for char in ['⋮', '⋰', '⋯', '⋱']:
+            sys.stdout.write(f'\r[2501] // Delay: {char}')
             sys.stdout.flush()
             time.sleep(0.3)
 
