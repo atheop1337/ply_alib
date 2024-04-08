@@ -7,20 +7,9 @@ import logging
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 
 class ForumEditor:
-    """
-    Класс для редактирования информации пользователей форума
-
-    Атрибуты:
-        debug (bool): Указывает, включен ли режим отладки
-    """
 
     def __init__(self, debug):
-        """
-        Инициализирует объект ForumEditor
 
-        Args:
-            debug (bool): Указывает, включен ли режим отладки
-        """
         self.debug = debug
         logging.getLogger().setLevel(logging.DEBUG if self.debug else logging.INFO)
         directory = "C:/2501/ply_Alib/data"
@@ -37,16 +26,6 @@ class ForumEditor:
             self.headers_data = json.load(file)
 
     async def send_request(self, id, data):
-        """
-        Отправляет запрос на обновление информации пользователя
-
-        Args:
-            id (int): Идентификатор пользователя
-            data (dict): Данные для отправки в запросе
-
-        Returns:
-            bool: True, если запрос успешно отправлен, False в противном случае
-        """
         self.link = f"https://forum.wayzer.ru/api/users/{id}"
         headers = {
             'X-CSRF-Token': self.headers_data['CSRF'],

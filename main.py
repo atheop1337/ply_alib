@@ -5,10 +5,8 @@ import random
 import inquirer
 import json
 from colorama import init, Fore, Style
-from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.random_fact import get_random_fact
-from data.libraries.clock import curtimeget
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact
 init(autoreset=True)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
@@ -28,7 +26,7 @@ class ForumBioEditor(ForumEditor):
         random_phrase = random.choice(phrases)
         random_quote = random.choice(quotes)
         choice_options = {
-            'random fact': get_random_fact(),
+            'random fact': RandomFact.get_random_fact(),
             'random emoticone': random_phrase,
             'random quote': random_quote,
         }
@@ -54,7 +52,7 @@ class ForumNickEditor(ForumEditor):
         random_phrase = random.choice(phrases)
         random_emoji = chr(random.randint(0x1F600, 0x1F64F))
         choice_options = {
-            'clock': await curtimeget(),
+            'clock': Clock.curtimeget(),
             'random emoticone': random_phrase,
             'random emoji': random_emoji,
         }
@@ -75,8 +73,8 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, s
     loop = 0
     user_bio_static = user_bio
     while True:
-        animate(delay)
-        clear_animation()
+        Animation.animate(delay)
+        Animation.clear_animation()
         resultbio = await senderbio.send_bio_request(id, biochoice, user_bio_static)
         resultnick = await sendernick.send_nick_request(id, nickname, nickchoice)
         await asyncio.sleep(0.1)
