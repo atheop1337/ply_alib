@@ -15,7 +15,7 @@ phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)�
 directory = "C:/2501/ply_Alib/data"
 
 class ForumBioEditor(ForumEditor):
-    async def send_bio_request(self, id, choice):
+    async def send_bio_request(self, id, choice, user_bio_static):
         try:
             with open(directory + "/quotes.json", "r", encoding="utf-8") as file:
                 quotes = json.load(file)
@@ -69,12 +69,13 @@ class ForumNickEditor(ForumEditor):
             }
             return await self.send_request(id, data)
 
-async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
+async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick):
     loop = 0
+    user_bio_static = user_bio
     while True:
         animate(delay)
         clear_animation()
-        resultbio = await senderbio.send_bio_request(id, biochoice)
+        resultbio = await senderbio.send_bio_request(id, biochoice, user_bio)
         resultnick = await sendernick.send_nick_request(id, nickname, nickchoice)
         await asyncio.sleep(0.1)
         loop = loop + 1
@@ -125,16 +126,15 @@ async def main():
     biochoice = inquirer.list_input("[Bio] // Enter your choice: ", choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
     nickname = str(input('[Nick] // Enter a nickname: '))
     nickchoice = inquirer.list_input("[Nick] // Enter your choice: ", choices=['clock', 'random emoticone', 'random emoji'])
-    started_name = nickname
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
     logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
-    logging.debug(f'\nUser started bio:\n {user_bio}\nUser started name: {started_name}')
+    logging.debug(f'\nUser started bio:\n {user_bio})
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
-    await Run(user_id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
+    await Run(user_id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick)
 
 
 if __name__ == "__main__":
