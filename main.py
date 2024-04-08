@@ -102,7 +102,6 @@ async def get_bio(id):
 
 async def main():
     print(f"""
-           <===> ply_alib loader by 2501 v {await fetch_data()} <===>
         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄   
         ▓██░  ██▒▓██▒    ▒██  ██▒      ▒████▄    ▓██▒    ▓██▒▓█████▄ 
         ▓██░ ██▓▒▒██░     ▒██ ██░      ▒██  ▀█▄  ▒██░    ▒██▒▒██▒ ▄██
@@ -131,7 +130,7 @@ async def main():
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
     logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
-    logging.debug(f'User started bio:{user_bio}')
+    logging.debug(f'\nUser started bio:\n {user_bio}')
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
