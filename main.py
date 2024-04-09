@@ -11,8 +11,8 @@ init(autoreset=True)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
-                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"]
-directory = "C:/2501/ply_Alib/data"
+                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"] #const
+directory = "C:/2501/ply_Alib/data" #const
 
 class ForumBioEditor(ForumEditor):
     async def send_bio_request(self, id, choice, user_bio_static):
@@ -91,7 +91,7 @@ async def fetch_data():
             if response.status == 200:
                 return await response.text()
             else:
-                return '?.?.?'
+                return '?.?.?' #relocate to twentyfivezeroone
 
 async def get_bio(id):
     async with aiohttp.ClientSession() as session:
@@ -122,7 +122,6 @@ async def main():
 │  {Fore.RESET}•  {Fore.GREEN}turn on debug mode for debugging purposes...                              {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
-    #
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
