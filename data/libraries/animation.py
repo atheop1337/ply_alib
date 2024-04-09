@@ -3,7 +3,7 @@ import sys
 
 def animate(repeat_count):
     for _ in range(repeat_count):
-        for char in ['⋮', '⋰', '⋯', '⋱']:
+        for char in ['|', '/', '—', '\\']:
             sys.stdout.write(f'\r[2501] // Delay: {char}')
             sys.stdout.flush()
             time.sleep(0.3)

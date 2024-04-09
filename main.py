@@ -26,7 +26,7 @@ class ForumBioEditor(ForumEditor):
         random_phrase = random.choice(phrases)
         random_quote = random.choice(quotes)
         choice_options = {
-            'random fact': RandomFact.get_random_fact(),
+            'random fact': RandomFact().get_random_fact(),
             'random emoticone': random_phrase,
             'random quote': random_quote,
         }
@@ -52,7 +52,7 @@ class ForumNickEditor(ForumEditor):
         random_phrase = random.choice(phrases)
         random_emoji = chr(random.randint(0x1F600, 0x1F64F))
         choice_options = {
-            'clock': Clock.curtimeget(),
+            'clock': Clock().curtimeget(),
             'random emoticone': random_phrase,
             'random emoji': random_emoji,
         }
@@ -73,8 +73,8 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, s
     loop = 0
     user_bio_static = user_bio
     while True:
-        Animation.animate(delay)
-        Animation.clear_animation()
+        Animation().animate(delay)
+        Animation().clear_animation()
         resultbio = await senderbio.send_bio_request(id, biochoice, user_bio_static)
         resultnick = await sendernick.send_nick_request(id, nickname, nickchoice)
         await asyncio.sleep(0.1)
