@@ -101,6 +101,7 @@ async def get_bio(id):
             return bio
 
 async def main():
+
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────┬───────┐
 │  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{await fetch_data()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
@@ -125,11 +126,11 @@ async def main():
     await asyncio.sleep(0.1)
     yn = str(input('[2501] // Debug mode? [y/n]: '))
     user_id = int(input('[2501] // Enter a ID of user: '))
-    user_bio = await get_bio(user_id)
-    biochoice = inquirer.list_input("[Bio] // Enter your choice: ", choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
-    nickname = str(input('[Nick] // Enter a nickname: '))
-    nickchoice = inquirer.list_input("[Nick] // Enter your choice: ", choices=['clock', 'random emoticone', 'random emoji'])
     delay = int(input('[2501] // Enter a delay (in seconds): '))
+    user_bio = await get_bio(user_id)
+    nickname = str(input('[Nick] // Enter a nickname: '))
+    nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji'])
+    biochoice = inquirer.list_input("[Bio] // Enter your choice",choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
     debug = True if yn.lower() == 'y' else False
     skibidi = True if nickname.lower() == 'skibidi' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
