@@ -4,6 +4,7 @@ import aiohttp
 import random
 import inquirer
 import json
+import discordrpc
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact
@@ -99,7 +100,13 @@ async def get_bio(id):
             data = await response.json()
             bio = data['data']['attributes']['bio']
             return bio
-
+async def set_custom_status():
+    rpc = discordrpc.RPC(app_id=1227178799964356650)
+    rpc.set_activity(
+        state="A super simple rpc",
+        details="simple RPC",
+        large_image='main'
+    )
 async def main():
 
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
