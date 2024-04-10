@@ -142,6 +142,13 @@ async def main():
             print(f'SKIBIDI DOP DOP DOP ES ES')
             await asyncio.sleep(0.1)
         return
+    if delay == 1337 or delay == 228:
+        for _ in range(5):
+            os.system('explorer.exe')
+        for i in range(1, 101):
+            print(f'ELITE 228 1337')
+            await asyncio.sleep(0.1)
+        return
     logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
     logging.debug(f'User started bio:{user_bio}')
     await asyncio.sleep(0.1)
