@@ -4,6 +4,7 @@ import aiohttp
 import random
 import inquirer
 import json
+import os
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, Connection
@@ -135,6 +136,8 @@ async def main():
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
     if nickname.lower() == 'skibidi':
+        for _ in range(5):
+            os.system('explorer.exe')
         for i in range(1, 101):
             print(f'SKIBIDI DOP DOP DOP ES ES')
             await asyncio.sleep(0.1)

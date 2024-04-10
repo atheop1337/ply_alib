@@ -3,6 +3,7 @@ import sys
 import json
 import requests
 import random
+import os
 from bs4 import BeautifulSoup
 
 class Clock:
