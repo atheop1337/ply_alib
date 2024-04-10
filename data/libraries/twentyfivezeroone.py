@@ -2,6 +2,7 @@ import time
 import sys
 import json
 import requests
+import random
 from bs4 import BeautifulSoup
 
 class Clock:
@@ -42,6 +43,16 @@ class Connection:
             return json_data['version']
         else:
             return "?.?.?"
+class RandomName:
+    def generate_random_name(self):
+        names = [
+            'Анатолий', 'Наталья', 'Дмитрий', 'Екатерина', 'Алексей',
+            'Ольга', 'Иван', 'Светлана', 'Сергей', 'Мария', 'Владимир',
+            'Елена', 'Андрей', 'Татьяна', 'Павел', 'Анастасия', 'Александр',
+            'Виктория', 'Константин', 'Надежда'
+        ]
+        rnd = random.choice(names)
+        return rnd
 
 if __name__ == '__main__':
     print(Connection().get_version())

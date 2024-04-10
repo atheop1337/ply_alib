@@ -6,7 +6,7 @@ import inquirer
 import json
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, Connection
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, Connection
 init(autoreset=True)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
@@ -47,6 +47,7 @@ class ForumBioEditor(ForumEditor):
             }
             return await self.send_request(id, data)
 
+
 class ForumNickEditor(ForumEditor):
     async def send_nick_request(self, id, nickname, choice):
         random_phrase = random.choice(phrases)
@@ -55,19 +56,26 @@ class ForumNickEditor(ForumEditor):
             'clock': Clock().curtimeget(),
             'random emoticone': random_phrase,
             'random emoji': random_emoji,
+            'random name': RandomName().generate_random_name()
         }
         choice_value = choice_options.get(choice)
         if choice_value is not None:
+            if choice == 'random name':
+                nickname_value = choice_value
+            else:
+                nickname_value = f'{nickname}\n{choice_value}'
+
             data = {
                 "data": {
                     "type": "users",
                     "attributes": {
-                        "nickname": f"{nickname}\n{choice_value}"
+                        "nickname": nickname_value
                     },
                     "id": str(id)
                 }
             }
             return await self.send_request(id, data)
+
 
 async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick):
     loop = 0
@@ -122,7 +130,7 @@ async def main():
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     user_bio = await get_bio(user_id)
     nickname = str(input('[Nick] // Enter a nickname: '))
-    nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji'])
+    nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji', 'random name'])
     biochoice = inquirer.list_input("[Bio] // Enter your choice",choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
