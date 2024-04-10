@@ -70,9 +70,10 @@ class ForumNickEditor(ForumEditor):
             }
             return await self.send_request(id, data)
 
-async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick):
+async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, rpc, senderbio, sendernick):
     loop = 0
     user_bio_static = user_bio
+    rpc = await set_custom_status()
     while True:
         Animation().animate(delay)
         Animation().clear_animation()
@@ -149,9 +150,10 @@ async def main():
     logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
     logging.debug(f'User started bio:{user_bio}')
     await asyncio.sleep(0.1)
+    rpc = await set_custom_status()
     senderbio = ForumBioEditor(debug=debug)
     sendernick = ForumNickEditor(debug=debug)
-    await Run(user_id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick)
+    await Run(user_id, delay, nickname, biochoice, nickchoice, user_bio, rpc, senderbio, sendernick)
 
 
 if __name__ == "__main__":
