@@ -91,6 +91,10 @@ async def get_bio(id):
             bio = data['data']['attributes']['bio']
             return bio
 async def main():
+    current_version = "0.1.1"
+    if current_version != Connection().get_version():
+        print(f"{Style.DIM}{Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")
+        return
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────┬───────┐
 │  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
