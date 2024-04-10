@@ -1,7 +1,9 @@
 import discordrpc
 from discordrpc.utils import timestamp
-from twentyfivezeroone import GetVersion
-data = GetVersion().fetch_data()
+from twentyfivezeroone import Connection
+get_version = Connection
+data = Connection().get_version()
+
 
 def rpc_connect():
     rpc = discordrpc.RPC(app_id=1227178799964356650, output=True)
