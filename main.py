@@ -103,7 +103,7 @@ async def main():
 
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────┬───────┐
-│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{await fetch_data()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{await CheckVersion().fetch_data()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
 ├──────────────────┴────────────────────────────────────────────────────┴───────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
