@@ -86,21 +86,13 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, rpc, senderb
             break
         print(f"[2501] // Loop: {loop}")
 
-async def fetch_data():
-    url = "https://pastebin.com/raw/vdfxN6bp"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            if response.status == 200:
-                return await response.text()
-            else:
-                return '?.?.?' #relocate to twentyfivezeroone
-
 async def get_bio(id):
     async with aiohttp.ClientSession() as session:
         async with session.get(f"https://forum.wayzer.ru/api/users/{id}") as response:
             data = await response.json()
             bio = data['data']['attributes']['bio']
             return bio
+
 async def set_custom_status():
     rpc = discordrpc.RPC(app_id=1227178799964356650)
     rpc.set_activity(
@@ -112,7 +104,7 @@ async def main():
 
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────┬───────┐
-│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{await fetch_data()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{await CheckVersion().fetch_data()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
 ├──────────────────┴────────────────────────────────────────────────────┴───────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│

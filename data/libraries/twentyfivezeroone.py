@@ -1,5 +1,7 @@
 import time
 import sys
+import asyncio
+import aiohttp
 import requests
 from bs4 import BeautifulSoup
 
@@ -38,6 +40,16 @@ class RandomFact:
     def main(self):
         random_fact = self.get_random_fact()
         print(random_fact)
+
+class CheckVersion
+    async def fetch_data():
+        url = "https://pastebin.com/raw/vdfxN6bp"
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                if response.status == 200:
+                    return await response.text()
+                else:
+                    return '?.?.?' #relocate to twentyfivezeroone
 
 if __name__ == '__main__':
     clock = Clock()
