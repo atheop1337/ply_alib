@@ -131,9 +131,8 @@ async def main():
     nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji'])
     biochoice = inquirer.list_input("[Bio] // Enter your choice",choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
     debug = True if yn.lower() == 'y' else False
-    skibidi = True if nickname.lower() == 'skibidi' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
-    if skibidi:
+    if nickname.lower() == 'skibidi':
         for i in range(1, 101):
             print(f'SKIBIDI DOP DOP DOP ES ES')
             await asyncio.sleep(0.1)
