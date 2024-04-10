@@ -1,6 +1,5 @@
 import time
 import sys
-from pypresence import Presence
 import requests
 from bs4 import BeautifulSoup
 
