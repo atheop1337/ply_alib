@@ -1,5 +1,6 @@
 import time
 import sys
+from pypresence import Presence
 import requests
 from bs4 import BeautifulSoup
 
@@ -46,15 +47,3 @@ class GetVersion:
             return response.text
         else:
             return "?.?.?"
-
-if __name__ == '__main__':
-    clock = Clock()
-    clock.main()
-
-    animation = Animation()
-    repeat_count = 3
-    animation.animate(repeat_count)
-    animation.clear_animation()
-
-    random_fact = RandomFact()
-    random_fact.main()

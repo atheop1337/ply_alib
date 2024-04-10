@@ -92,14 +92,6 @@ async def get_bio(id):
             bio = data['data']['attributes']['bio']
             return bio
 
-async def set_custom_status():
-    rpc = discordrpc.RPC(app_id=1227178799964356650)
-    rpc.set_activity(
-        state="A super simple rpc",
-        details="simple RPC",
-        large_image='main'
-    )
-
 async def main():
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────┬───────┐
