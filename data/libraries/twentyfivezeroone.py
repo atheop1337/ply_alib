@@ -1,5 +1,6 @@
 import time
 import sys
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -10,9 +11,6 @@ class Clock:
         minutes = str(current_time.tm_min).zfill(2)
         seconds = str(current_time.tm_sec).zfill(2)
         return f"[{hours}:{minutes}:{seconds}]"
-
-    def main(self):
-        print(self.curtimeget())
 
 class Animation:
     def animate(self, repeat_count):
@@ -35,14 +33,15 @@ class RandomFact:
         fact_text = fact_block.find('td').text.strip()
         return fact_text
 
-    def main(self):
-        random_fact = self.get_random_fact()
-        print(random_fact)
-
-class GetVersion:
-    def fetch_data(self):
-        response = requests.get("https://pastebin.com/raw/vdfxN6bp")
+class Connection:
+    def get_version(self):
+        url = "https://pastebin.com/raw/MuFfZ3BA"
+        response = requests.get(url)
         if response.status_code == 200:
-            return response.text
+            json_data = json.loads(response.text)
+            return json_data['version']
         else:
             return "?.?.?"
+
+if __name__ == '__main__':
+    print(Connection().get_version())

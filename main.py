@@ -6,7 +6,7 @@ import inquirer
 import json
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, Connection
 init(autoreset=True)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
@@ -84,15 +84,6 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, s
             break
         print(f"[2501] // Loop: {loop}")
 
-async def fetch_data():
-    url = "https://pastebin.com/raw/vdfxN6bp"
-    async with aiohttp.ClientSession() as session:
-        async with session.get(url) as response:
-            if response.status == 200:
-                return await response.text()
-            else:
-                return '?.?.?' #relocate to twentyfivezeroone
-
 async def get_bio(id):
     async with aiohttp.ClientSession() as session:
         async with session.get(f"https://forum.wayzer.ru/api/users/{id}") as response:
@@ -100,10 +91,9 @@ async def get_bio(id):
             bio = data['data']['attributes']['bio']
             return bio
 async def main():
-
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────┬───────┐
-│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{await fetch_data()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
 ├──────────────────┴────────────────────────────────────────────────────┴───────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
