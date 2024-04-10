@@ -39,6 +39,14 @@ class RandomFact:
         random_fact = self.get_random_fact()
         print(random_fact)
 
+class GetVersion:
+    def fetch_data(self):
+        response = requests.get("https://pastebin.com/raw/vdfxN6bp")
+        if response.status_code == 200:
+            return response.text
+        else:
+            return "?.?.?"
+
 if __name__ == '__main__':
     clock = Clock()
     clock.main()
