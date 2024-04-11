@@ -7,7 +7,7 @@ import json
 import os
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, Connection
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection
 init(autoreset=True)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
@@ -58,11 +58,12 @@ class ForumNickEditor(ForumEditor):
             'clock': Clock().curtimeget(),
             'random emoticone': random_phrase,
             'random emoji': random_emoji,
-            'random name': RandomName().generate_random_name()
+            'random name': RandomName().generate_random_name(),
+            'random string': RandomStr().generate_random_string(60),
         }
         choice_value = choice_options.get(choice)
         if choice_value is not None:
-            if choice == 'random name':
+            if choice == 'random name' or choice == 'random string':
                 nickname_value = choice_value
             else:
                 nickname_value = f'{nickname}\n{choice_value}'
@@ -132,7 +133,7 @@ async def main():
     delay = int(input('[2501] // Enter a delay (in seconds): '))
     user_bio = await get_bio(user_id)
     nickname = str(input('[Nick] // Enter a nickname: '))
-    nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji', 'random name'])
+    nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
     biochoice = inquirer.list_input("[Bio] // Enter your choice",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')

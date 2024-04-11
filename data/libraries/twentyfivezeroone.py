@@ -3,6 +3,7 @@ import sys
 import json
 import requests
 import random
+import string
 from bs4 import BeautifulSoup
 
 class Clock:
@@ -72,6 +73,11 @@ class RandomJoke:
         joke_block = soup.find('div', id='joke')
         joke_text = joke_block.find('td').text.strip()
         return joke_text
-#
+class RandomStr:
+    def generate_random_string(self, length):
+        characters = string.ascii_letters + string.digits + string.punctuation
+        return ''.join(random.choice(characters) for _ in range(length))
+
+
 if __name__ == '__main__':
     print(Connection().get_version())
