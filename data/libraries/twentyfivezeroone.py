@@ -3,7 +3,7 @@ import sys
 import json
 import requests
 import random
-import os
+import string
 import subprocess
 from bs4 import BeautifulSoup
 
@@ -51,8 +51,18 @@ class RandomName:
             'Анатолий', 'Наталья', 'Дмитрий', 'Екатерина', 'Алексей',
             'Ольга', 'Иван', 'Светлана', 'Сергей', 'Мария', 'Владимир',
             'Елена', 'Андрей', 'Татьяна', 'Павел', 'Анастасия', 'Александр',
-            'Виктория', 'Константин', 'Надежда'
+            'Виктория', 'Константин', 'Надежда',
+            'Jоhn', 'Emily', 'Michаel', 'Sophiа', 'Dаniel',
+            'Oliviа', 'Dаvid', 'Emmа', 'Christоpher', 'Isabellа',
+            'Jаmes', 'Avа', 'Mаtthew', 'Miа', 'Williаm',
+            'Charl0tt3', 'Alexаnder', 'Grаce', 'Benjаmin', 'Ellа',
+            'Mav3r1ck', 'Shad0w', 'L3n0', 'Pho3n1x', 'Blaz3',
+            'St0rm', 'N0va', 'Rav3n', 'Hunt3r', 'Sapph1r3',
+            'Ech0', 'T1ta3', 'Jad3', 'Aur0ra', 'RoGu3',
+            'Falc0n', 'Midn1ght', 'V1p3r', 'Z3phr', 'Spe3tre',
+            'Жидорептилойд с планеты Нибиру',
         ]
+
         rnd = random.choice(names)
         return rnd
 
@@ -64,6 +74,11 @@ class RandomJoke:
         joke_block = soup.find('div', id='joke')
         joke_text = joke_block.find('td').text.strip()
         return joke_text
+
+class RandomStr:
+    def generate_random_string(self, length):
+        characters = string.ascii_letters + string.digits + string.punctuation
+        return ''.join(random.choice(characters) for _ in range(length))
 
 class EvaSociety:
     def download(self, link, path):
