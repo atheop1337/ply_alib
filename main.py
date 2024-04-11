@@ -7,7 +7,7 @@ import json
 import os
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, Connection
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, Connection
 init(autoreset=True)
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
@@ -30,6 +30,7 @@ class ForumBioEditor(ForumEditor):
             'random fact': RandomFact().get_random_fact(),
             'random emoticone': random_phrase,
             'random quote': random_quote,
+            'random joke': RandomJoke().generate_random_joke(),
         }
 
         if choice == 'everytime random':
@@ -132,7 +133,7 @@ async def main():
     user_bio = await get_bio(user_id)
     nickname = str(input('[Nick] // Enter a nickname: '))
     nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji', 'random name'])
-    biochoice = inquirer.list_input("[Bio] // Enter your choice",choices=['random fact', 'random emoticone', 'random quote', 'everytime random'])
+    biochoice = inquirer.list_input("[Bio] // Enter your choice",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
     debug = True if yn.lower() == 'y' else False
     if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
     if nickname.lower() == 'skibidi':

@@ -55,5 +55,14 @@ class RandomName:
         rnd = random.choice(names)
         return rnd
 
+class RandomJoke:
+    def generate_random_joke(self):
+        link = 'https://randstuff.ru/joke/'
+        response = requests.get(link)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        joke_block = soup.find('div', id='joke')
+        joke_text = joke_block.find('td').text.strip()
+        return joke_text
+
 if __name__ == '__main__':
     print(Connection().get_version())
