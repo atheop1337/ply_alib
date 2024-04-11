@@ -3,7 +3,6 @@ import sys
 import json
 import requests
 import random
-import os
 from bs4 import BeautifulSoup
 
 class Clock:
@@ -50,11 +49,16 @@ class RandomName:
             'Анатолий', 'Наталья', 'Дмитрий', 'Екатерина', 'Алексей',
             'Ольга', 'Иван', 'Светлана', 'Сергей', 'Мария', 'Владимир',
             'Елена', 'Андрей', 'Татьяна', 'Павел', 'Анастасия', 'Александр',
-            'Виктория', 'Константин', 'Надежда'
+            'Виктория', 'Константин', 'Надежда',
+            'John', 'Emily', 'Michael', 'Sophia', 'Daniel',
+            'Olivia', 'David', 'Emma', 'Christopher', 'Isabella',
+            'James', 'Ava', 'Matthew', 'Mia', 'William',
+            'Charlotte', 'Alexander', 'Grace', 'Benjamin', 'Ella'
         ]
+
         rnd = random.choice(names)
         return rnd
-
+# a2m 🤡
 class RandomJoke:
     def generate_random_joke(self):
         link = 'https://randstuff.ru/joke/'
