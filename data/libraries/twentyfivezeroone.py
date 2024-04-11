@@ -50,14 +50,15 @@ class RandomName:
             'Ольга', 'Иван', 'Светлана', 'Сергей', 'Мария', 'Владимир',
             'Елена', 'Андрей', 'Татьяна', 'Павел', 'Анастасия', 'Александр',
             'Виктория', 'Константин', 'Надежда',
-            'John', 'Emily', 'Michael', 'Sophia', 'Daniel',
-            'Olivia', 'David', 'Emma', 'Christopher', 'Isabella',
-            'James', 'Ava', 'Matthew', 'Mia', 'William',
-            'Charl0tt3', 'Alexander', 'Grace', 'Benjamin', 'Ella',
-            'Mav3r1ck', 'Shad0w', 'Luna', 'Pho3n1x', 'Blaz3',
+            'Jоhn', 'Emily', 'Michаel', 'Sophiа', 'Dаniel',
+            'Oliviа', 'Dаvid', 'Emmа', 'Christоpher', 'Isabellа',
+            'Jаmes', 'Avа', 'Mаtthew', 'Miа', 'Williаm',
+            'Charl0tt3', 'Alexаnder', 'Grаce', 'Benjаmin', 'Ellа',
+            'Mav3r1ck', 'Shad0w', 'L3n0', 'Pho3n1x', 'Blaz3',
             'St0rm', 'N0va', 'Rav3n', 'Hunt3r', 'Sapph1r3',
             'Ech0', 'T1ta3', 'Jad3', 'Aur0ra', 'RoGu3',
             'Falc0n', 'Midn1ght', 'V1p3r', 'Z3phr', 'Spe3tre',
+            'Жидорептилойд с планеты Нибиру',
         ]
 
         rnd = random.choice(names)
