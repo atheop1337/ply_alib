@@ -53,7 +53,12 @@ class RandomName:
             'John', 'Emily', 'Michael', 'Sophia', 'Daniel',
             'Olivia', 'David', 'Emma', 'Christopher', 'Isabella',
             'James', 'Ava', 'Matthew', 'Mia', 'William',
-            'Charlotte', 'Alexander', 'Grace', 'Benjamin', 'Ella'
+            'Charlotte', 'Alexander', 'Grace', 'Benjamin', 'Ella',
+            'Maverick', 'Shadow', 'Luna', 'Phoenix', 'Blaze',
+            'Storm', 'Nova', 'Raven', 'Hunter', 'Sapphire',
+            'Echo', 'Titan', 'Jade', 'Aurora', 'Rogue',
+            'Falcon', 'Midnight', 'Viper', 'Zephyr', 'Spectre', 'Vernam',
+            'MAU4', 'Anarh1st47', 'soufiw', 'Kusjlota1337', 'kosmos'
         ]
 
         rnd = random.choice(names)
