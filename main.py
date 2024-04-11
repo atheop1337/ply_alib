@@ -14,7 +14,7 @@ logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefm
 phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
                    "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"] #const
 directory = "C:/2501/ply_Alib/data" #const
-
+# Я люблю тебя, Москва!
 class ForumBioEditor(ForumEditor):
     async def send_bio_request(self, id, choice, user_bio_static):
         try:

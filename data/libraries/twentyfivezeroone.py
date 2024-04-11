@@ -63,6 +63,6 @@ class RandomJoke:
         joke_block = soup.find('div', id='joke')
         joke_text = joke_block.find('td').text.strip()
         return joke_text
-
+#
 if __name__ == '__main__':
     print(Connection().get_version())
