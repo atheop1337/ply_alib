@@ -4,24 +4,40 @@ import aiohttp
 import random
 import inquirer
 import json
+import sys
 import os
+import signal
+import time
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection, EvaSociety
 init(autoreset=True)
 
-logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
+logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
                    "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"] #const
 directory = "C:/2501/ply_Alib/data" #const
-# Я люблю тебя, Москва!
+
+def signal_handler(sig, frame):
+    time.sleep(1)
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
+    time.sleep(0.5)
+    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
+    time.sleep(2)
+    file_path = os.path.join(directory, "encrypted.json")
+    with open(file_path, 'w') as json_file:
+        json.dump(f'{RandomStr().generate_ascii_string(128)}&T', json_file)
+    sys.exit(0)
+
 class ForumBioEditor(ForumEditor):
-    async def send_bio_request(self, id, choice, user_bio_static):
+    async def send_bio_request(self, id, choice):
         try:
             with open(directory + "/quotes.json", "r", encoding="utf-8") as file:
                 quotes = json.load(file)
         except FileNotFoundError:
-            logging.error("[Bio] // File quotes.json not found! Try to run the setup.py again")
+            logging.error(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.RED}File quotes.json not found! Try to run the setup.py again")
+            signal_handler(None, None)
             return
 
         random_phrase = random.choice(phrases)
@@ -86,14 +102,15 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, s
     while True:
         Animation().animate(delay)
         Animation().clear_animation()
-        resultbio = await senderbio.send_bio_request(id, biochoice, user_bio_static)
+        resultbio = await senderbio.send_bio_request(id, biochoice)
         resultnick = await sendernick.send_nick_request(id, nickname, nickchoice)
         await asyncio.sleep(0.1)
         loop = loop + 1
         if not resultbio or not resultnick:
-            logging.error(f"[2501] // An error occurred on loop {loop}...")
+            logging.error(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.RED}An error occurred on loop {loop}...")
+            signal_handler(None, None)
             break
-        print(f"[2501] // Loop: {loop}")
+        print(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Loop: {loop}")
 
 async def get_bio(id):
     async with aiohttp.ClientSession() as session:
@@ -102,9 +119,11 @@ async def get_bio(id):
             bio = data['data']['attributes']['bio']
             return bio
 async def main():
-    current_version = "0.1.1"
+    signal.signal(signal.SIGINT, signal_handler)
+    current_version = "2.1"
     if current_version != Connection().get_version():
-        print(f"{Style.DIM}{Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")
+        print(f"{Fore.RESET}{Style.DIM} [2501] // {Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")
+        signal_handler(None, None)
         return
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
@@ -122,40 +141,33 @@ async def main():
 │{Fore.YELLOW}                  ░  ░░ ░                 ░  ░    ░  ░ ░   ░                   {Fore.LIGHTWHITE_EX}│
 │{Fore.YELLOW}                      ░ ░                                       ░              {Fore.LIGHTWHITE_EX}│
 │                                                                               │
-│  {Fore.RESET}•  {Fore.GREEN}Welcome to the ply_Alib script, press {Fore.RESET}CTRL+C {Fore.GREEN}to exit the program.         {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}•  {Fore.GREEN}if you have any questions, please contact the 2501 for help.              {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}•  {Fore.GREEN}you confirm that you have read and accept the 2501 terms of purchase.     {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[•]   {Fore.GREEN}You confirm that you have read and accept the 2501 terms of use.       {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[!]   {Fore.RED}Closing the terminal window is NOT SAFE please use {Fore.RESET}CTRL+C{Fore.RED}.             {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
+    logging.getLogger().setLevel(logging.DEBUG)
     await asyncio.sleep(0.1)
-    yn = str(input('[2501] // Debug mode? [y/n]: '))
-    user_id = int(input('[2501] // Enter a ID of user: '))
-    delay = int(input('[2501] // Enter a delay (in seconds): '))
-    user_bio = await get_bio(user_id)
-    nickname = str(input('[Nick] // Enter a nickname: '))
-    nickchoice = inquirer.list_input("[Nick] // Enter your choice", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
-    biochoice = inquirer.list_input("[Bio] // Enter your choice",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
-    debug = True if yn.lower() == 'y' else False
-    if debug: logging.debug(f'[2501] // Debug mode: {str(debug)}')
+    user_id = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a ID of user{Fore.RESET}: '))
+    delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
+    nickname = str(input(f'{Fore.RESET}{Style.DIM}[Nick]  // {Fore.GREEN}Enter a nickname{Fore.RESET}: '))
+    nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
+    biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
     if nickname.lower() == 'skibidi':
-        for _ in range(5):
-            os.system('explorer.exe')
         for i in range(1, 101):
-            print(f'SKIBIDI DOP DOP DOP ES ES')
+            print(f'{Fore.RED}SKIBIDI DOP DOP DOP ES ES{Fore.RESET}')
             await asyncio.sleep(0.1)
         return
     if delay == 1337 or delay == 228:
-        for _ in range(5):
-            os.system('explorer.exe')
         for i in range(1, 101):
-            print(f'ELITE 228 1337')
+            print(f'{Fore.RED}ELITE 228 1337{Fore.RESET}')
             await asyncio.sleep(0.1)
         return
-    logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
-    logging.debug(f'User started bio:{user_bio}')
+    user_bio = await get_bio(user_id)
+    #logging.debug(f'{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}User started bio{Fore.RESET}:\n{user_bio}')
     await asyncio.sleep(0.1)
-    senderbio = ForumBioEditor(debug=debug)
-    sendernick = ForumNickEditor(debug=debug)
+    senderbio = ForumBioEditor()
+    sendernick = ForumNickEditor()
     await Run(user_id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick)
 
 

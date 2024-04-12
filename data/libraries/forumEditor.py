@@ -8,10 +8,8 @@ logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefm
 
 class ForumEditor:
 
-    def __init__(self, debug):
-
-        self.debug = debug
-        logging.getLogger().setLevel(logging.DEBUG if self.debug else logging.INFO)
+    def __init__(self):
+        logging.getLogger().setLevel(logging.DEBUG)
         directory = "C:/2501/ply_Alib/data"
         if not os.path.exists(directory):
             time.sleep(0.1)
@@ -37,7 +35,9 @@ class ForumEditor:
                 async with session.patch(self.link, json=data) as response:
                     response_text = await response.text()
                     if response.status != 200:
-                        logging.error(f"[{self.__class__.__name__}] // Response code: {response.status}, {response_text}")
+                        error_data = json.loads(response_text)
+                        error_code = error_data["errors"][0]["code"]
+                        logging.error(f"[{self.__class__.__name__}] // Response code: {response.status}, {error_code}")
                         return False
                     else:
                         time.sleep(0.1)
