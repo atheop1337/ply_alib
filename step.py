@@ -2,10 +2,21 @@ import inquirer
 import time
 import subprocess
 import os
+import signal
+import sys
 from colorama import Fore, Style, init
 directory = "C:/2501/ply_Alib/data"
 current_directory = os.path.dirname(os.path.abspath(__file__))
 init(autoreset=True)
+
+def signal_handler(sig, frame):
+    time.sleep(1)
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
+    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
+    time.sleep(0.5)
+    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
+    time.sleep(2)
+    sys.exit(0)
 
 def run_file(file_path, show_console=True):
     if show_console:
@@ -16,27 +27,27 @@ def run_file(file_path, show_console=True):
 
 def all_in_one():
     print('THIS FUNCTION IS NOT AVAILABLE RIGHT NOW!\n\n\n\n')
-    time.sleep(4)
+    time.sleep(5)
     main()
 
 def main_script():
     print('THIS FUNCTION IS NOT AVAILABLE RIGHT NOW!\n\n\n\n')
-    time.sleep(4)
+    time.sleep(5)
     main()
 
 def plug():
     print('THIS FUNCTION IS NOT AVAILABLE RIGHT NOW!\n\n\n\n')
-    time.sleep(4)
+    time.sleep(5)
     main()
 
 def quote_req():
     run_file(f'{current_directory}/data/libraries/generate_quote_jsontable.py', True)
-    time.sleep(4)
+    time.sleep(5)
     main()
 
 def token_req():
     run_file(f'{current_directory}/data/GetToken.py', False)
-    time.sleep(4)
+    time.sleep(5)
     main()
 
 def list_input(choice):
@@ -54,6 +65,7 @@ def list_input(choice):
 
 
 def main():
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
 │     {Fore.RESET}ply_Alib       Launcher                                                   {Fore.LIGHTWHITE_EX}│
@@ -76,7 +88,12 @@ def main():
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
     time.sleep(0.2)
-    choice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[2501]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['[!] all in one', '[•] main script', '[•] gpt', '[•] someother shit', '[!] setup(Token)', '[!] setup(Quotes)'])
+    signal.signal(signal.SIGINT, signal_handler)
+    try:
+        choice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[2501]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['[!] all in one', '[•] main script', '[•] gpt', '[•] someother shit', '[!] setup(Token)', '[!] setup(Quotes)'])
+    except KeyboardInterrupt:
+        signal_handler(None, None)
+
     list_input(choice)
 
 

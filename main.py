@@ -21,7 +21,7 @@ directory = "C:/2501/ply_Alib/data" #const
 def signal_handler(sig, frame):
     time.sleep(1)
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
-    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
+    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
     time.sleep(2)
@@ -151,8 +151,11 @@ async def main():
     user_id = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a ID of user{Fore.RESET}: '))
     delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
     nickname = str(input(f'{Fore.RESET}{Style.DIM}[Nick]  // {Fore.GREEN}Enter a nickname{Fore.RESET}: '))
-    nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
-    biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
+    try:
+        nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
+        biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
+    except KeyboardInterrupt:
+        signal_handler(None, None)
     if nickname.lower() == 'skibidi':
         for i in range(1, 101):
             print(f'{Fore.RED}SKIBIDI DOP DOP DOP ES ES{Fore.RESET}')
