@@ -26,17 +26,18 @@ def run_file(file_path, show_console=True):
     return True
 
 def all_in_one():
-    print('THIS FUNCTION IS NOT AVAILABLE RIGHT NOW!\n\n\n\n')
+    print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
+    #run_file(f'{current_directory}/data/run_all.py', False)
     time.sleep(5)
     main()
 
 def main_script():
-    print('THIS FUNCTION IS NOT AVAILABLE RIGHT NOW!\n\n\n\n')
+    run_file(f'{current_directory}/data/run_main.py', False)
     time.sleep(5)
     main()
 
 def plug():
-    print('THIS FUNCTION IS NOT AVAILABLE RIGHT NOW!\n\n\n\n')
+    print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
     time.sleep(5)
     main()
 
