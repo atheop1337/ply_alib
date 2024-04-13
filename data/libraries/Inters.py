@@ -11,7 +11,7 @@ data = Connection().get_version()
 def fterminate(pid):
     process_to_terminate = psutil.Process(pid)
     process_to_terminate.terminate()
-    print("Процесс с PID", process_to_terminate, "был завершен.")
+    #print("Процесс с PID", process_to_terminate, "был завершен.")
 
 def readjsonloop(rpc):
     directory = "C:/2501/ply_Alib/data"
@@ -37,13 +37,13 @@ def readjsonloop(rpc):
 
 def rpc_connect():
     rpc = discordrpc.RPC(app_id=1227178799964356650, output=False)
-    button = discordrpc.Button(button_one_label="Какой-то мужик", button_one_url="https://github.com/v1lmok",button_two_label="Злодей британец",button_two_url="https://github.com/PivoSteve")
+    button = discordrpc.Button(button_one_label="v1lmok", button_one_url="https://github.com/v1lmok",button_two_label="Pivo",button_two_url="https://github.com/PivoSteve")
     rpc.set_activity(
-        state=f'Actual version {data}', #2
+        state=f'Actual version: {data}', #2
         details='Powered by 2501', #1
         buttons=button,
         large_image='2501m',
-        large_text='Мейби бейби такая зайка',
+        large_text='born in the sea of information',
         ts_start=timestamp,
         ts_end=86400000000,
         )
