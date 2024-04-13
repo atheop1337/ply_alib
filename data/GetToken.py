@@ -3,6 +3,7 @@ from tkinter import messagebox, ttk
 import json
 import re
 import os
+import sys
 
 class Interface:
     def __init__(self, root):
