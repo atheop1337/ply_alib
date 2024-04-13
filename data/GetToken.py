@@ -1,9 +1,9 @@
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import ttk
 import json
 import re
 import os
-import sys
+import time
 
 class Interface:
     def __init__(self, root):
@@ -19,8 +19,11 @@ class Interface:
         self.disable_resizing()
 
     def create_widgets(self):
-        mainframe = ttk.Frame(self.root, padding="50")
-        mainframe.pack()
+        parent_frame = ttk.Frame(self.root)
+        parent_frame.pack(fill="both", expand=True)
+
+        mainframe = ttk.Frame(parent_frame, padding="50")
+        mainframe.pack(side="top", pady=20)
 
         self.curl_label = ttk.Label(mainframe, text="Введите cURL на отправку сообщения:")
         self.curl_label.grid(row=0, column=0, sticky="w", padx=47, pady=5)
@@ -37,24 +40,25 @@ class Interface:
         self.confirm_button = ttk.Button(mainframe, text="Подтвердить", command=self.process_curl, width=20)
         self.confirm_button.grid(row=3, column=0, sticky="ew", pady=5)
 
-        # Добавление консоли
-        self.console_frame = ttk.Frame(self.root, padding="10")
-        self.console_frame.pack(fill="both", expand=True)
+        self.console_frame = ttk.Frame(parent_frame)
+        self.console_frame.pack(side="bottom", fill="both", expand=True)
         self.console = ConsoleWindow(self.console_frame)
 
     def clear_entry(self):
         self.curl_entry.delete(0, tk.END)
+        self.console.write("[2501] // Cleared\n")
 
     def paste_from_clipboard(self):
         clipboard_text = self.root.clipboard_get()
         self.curl_entry.insert(tk.END, clipboard_text)
+        self.console.write("[2501] // Done\n")
 
     def process_curl(self):
         curl_string = self.curl_entry.get()
         headers, cookies = parse_curl(curl_string)
         filename = 'headers.json'
         save_to_json(headers, cookies, filename)
-        messagebox.showinfo("Готово", f"Данные успешно сохранены в файл C:/2501/ply_Alib/data/{filename}")
+        self.console.write(f"[2501] // The data was successfully saved to the file C:/2501/ply_Alib/data/{filename}\n")
 
     def disable_resizing(self):
         self.root.resizable(width=False, height=False)
@@ -69,29 +73,34 @@ class ConsoleWindow:
     def __init__(self, root):
         self.root = root
         self.create_widgets()
+        self.text_to_display = ""
+        self.index = 0
 
     def create_widgets(self):
-        self.text_area = tk.Text(self.root, wrap="word", state="disabled")
+        self.text_area = tk.Text(self.root, wrap="word", state="disabled", height=10, bg="black", fg="white")
         self.text_area.pack(fill="both", expand=True)
 
-        # Включение прокрутки для текстового поля
-        scroll = ttk.Scrollbar(self.root, orient="vertical", command=self.text_area.yview)
-        scroll.pack(side="right", fill="y")
-        self.text_area.configure(yscrollcommand=scroll.set)
+    def write(self, msg):
+        self.text_to_display += msg
+        self.display_text()
 
-        # Перенаправление стандартного вывода в текстовое поле
-        self.original_stdout = sys.stdout
-        sys.stdout = TextRedirector(self.text_area)
+    def display_text(self):
+        self.text_area.configure(state="normal")
+        self.text_area.insert("end", self.text_to_display[self.index])
+        self.text_area.see("end")
+        self.text_area.configure(state="disabled")
+        self.index += 1
+        if self.index < len(self.text_to_display):
+            self.root.after(50, self.display_text)
 
 class TextRedirector:
     def __init__(self, text_widget):
         self.text_widget = text_widget
 
     def write(self, str):
-        self.text_widget.configure(state="normal")
-        self.text_widget.insert("end", str)
-        self.text_widget.see("end")  # Прокрутка к концу текста
-        self.text_widget.configure(state="disabled")
+        for char in str:
+            time.sleep(0.01)
+            self.text_widget.write(char)
 
     def flush(self):
         pass
