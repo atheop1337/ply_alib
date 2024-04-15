@@ -2,6 +2,8 @@ import asyncio
 import aiohttp
 import time
 from bs4 import BeautifulSoup
+from colorama import Fore, Style, init
+init(autoreset=True)
 
 class ServerMonitor:
     ids = ["11170", "1510", "3780", "2550", "3632"]
@@ -43,19 +45,19 @@ class ServerMonitor:
 
     async def get_info(self):
         async with aiohttp.ClientSession() as session:
-            tasks = [self.fetch_info(session, id) for id in self.ids]
-            await asyncio.gather(*tasks)
+            for id in self.ids:
+                await self.fetch_info(session, id)
 
     def return_info(self):
         info_str = ""
         for server_info in self.server_info_list:
-            info_str += f"\n{server_info['server_name']} [{server_info['server_address']}]\n{server_info['current_map']} - {server_info['online_players']}\n"
+            info_str += f"\n{Fore.LIGHTWHITE_EX}{Style.DIM}{server_info['server_name']} [{server_info['server_address']}]\n{Fore.LIGHTWHITE_EX}{server_info['current_map']} - {Fore.GREEN}{server_info['online_players']}\n"
 
         return info_str.strip()
 
     def return_time(self):
         local_time = time.localtime()
-        formatted_time = time.strftime("%d.%m.%Y %H:%M", local_time)
+        formatted_time = time.strftime(f"{Fore.GREEN}%d.%m.%Y %H:%M", local_time)
 
         return formatted_time
 
@@ -65,4 +67,5 @@ async def main():
     print(server_monitor.return_info())
     print(server_monitor.return_time())
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
