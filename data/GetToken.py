@@ -4,6 +4,7 @@ import json
 import re
 import os
 import time
+from libraries.twentyfivezeroone import const
 
 class Interface:
     def __init__(self, root):
@@ -131,11 +132,7 @@ def save_to_json(headers, cookies, filename):
         "flarum": "flarum_remember=" + cookies.get("flarum_remember", "") + "; flarum_session=" + cookies.get("flarum_session", "")
     }
 
-    directory = "C:/2501/ply_Alib/data"
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    file_path = os.path.join(directory, filename)
+    file_path = os.path.join(const().directory, filename)
 
     with open(file_path, 'w') as file:
         json.dump(data_to_save, file, indent=4)

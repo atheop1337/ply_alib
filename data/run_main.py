@@ -2,7 +2,7 @@ import subprocess
 import os
 import json
 import time
-from libraries.twentyfivezeroone import RandomStr
+from libraries.twentyfivezeroone import RandomStr, const
 
 current_directory = os.path.dirname(os.path.abspath(__file__))
 parent_directory = os.path.dirname(current_directory)
@@ -15,10 +15,7 @@ def run_file(file_path, show_console=True):
     return True
 
 def main():
-    directory = "C:/2501/ply_Alib/data"
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-    file_path = os.path.join(directory, "encrypted.json")
+    file_path = os.path.join(const().directory, "encrypted.json")
 
     with open(file_path, 'w') as json_file:
         json.dump(f'{RandomStr().generate_ascii_string(128)}&F', json_file)

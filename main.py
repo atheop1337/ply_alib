@@ -10,22 +10,18 @@ import signal
 import time
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection, EvaSociety
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection, const
 init(autoreset=True)
 
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
-phrases = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/",
-                   "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"] #const
-directory = "C:/2501/ply_Alib/data" #const
 
 def signal_handler(sig, frame):
-    time.sleep(1)
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
     time.sleep(2)
-    file_path = os.path.join(directory, "encrypted.json")
+    file_path = os.path.join(const().directory, "encrypted.json")
     with open(file_path, 'w') as json_file:
         json.dump(f'{RandomStr().generate_ascii_string(128)}&T', json_file)
     sys.exit(0)
@@ -33,14 +29,14 @@ def signal_handler(sig, frame):
 class ForumBioEditor(ForumEditor):
     async def send_bio_request(self, id, choice):
         try:
-            with open(directory + "/quotes.json", "r", encoding="utf-8") as file:
+            with open(const().directory + "/quotes.json", "r", encoding="utf-8") as file:
                 quotes = json.load(file)
         except FileNotFoundError:
-            logging.error(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.RED}File quotes.json not found! Try to run the setup.py again")
+            logging.error(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.RED}File quotes.json not found! Try to run the setup proccess again")
             signal_handler(None, None)
             return
 
-        random_phrase = random.choice(phrases)
+        random_phrase = random.choice(const().emoticons)
         random_quote = random.choice(quotes)
         choice_options = {
             'random fact': RandomFact().get_random_fact(),
@@ -68,7 +64,7 @@ class ForumBioEditor(ForumEditor):
 
 class ForumNickEditor(ForumEditor):
     async def send_nick_request(self, id, nickname, choice):
-        random_phrase = random.choice(phrases)
+        random_phrase = random.choice(const().emoticons)
         random_emoji = chr(random.randint(0x1F600, 0x1F64F))
         choice_options = {
             'clock': Clock().curtimeget(),

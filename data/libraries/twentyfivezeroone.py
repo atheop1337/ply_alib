@@ -4,8 +4,15 @@ import json
 import requests
 import random
 import string
+import os
 import subprocess
 from bs4 import BeautifulSoup
+
+class const:
+    emoticons = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/", "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"]
+    directory = "C:/2501/ply_Alib/data"
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 class Clock:
     def curtimeget(self):
@@ -104,3 +111,11 @@ class EvaSociety:
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")
             return False
+
+class WindowTitle():
+    def set(self, title):
+        if sys.platform.startswith("win"):
+            os.system(f"title {title}")
+        elif sys.platform.startswith("linux") or sys.platform.startswith("darwin"):
+            sys.stdout.write(f"\x1b]2;{title}\x07")
+            sys.stdout.flush()

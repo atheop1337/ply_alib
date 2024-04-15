@@ -5,17 +5,15 @@ import time
 import signal
 import configparser
 from libraries.serverMonitor import ServerMonitor
-from libraries.twentyfivezeroone import Animation
+from libraries.twentyfivezeroone import Animation, WindowTitle, const
 from colorama import Fore, Style, init
 
-directory = "C:/2501/ply_Alib/data"
 config = configparser.ConfigParser()
-config.read(directory + "/settings.ini")
+config.read(const().directory + "/settings.ini")
 delay = int(config.get("serverMonitor", "delay"))
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    time.sleep(1)
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
@@ -25,10 +23,11 @@ def signal_handler(sig, frame):
 
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
+    WindowTitle().set("ply_Alib   //   Server Monitoring")
     while True:
         print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
-│     {Fore.RESET}ply_Alib       Server Monitor                                             {Fore.LIGHTWHITE_EX}│
+│     {Fore.RESET}ply_Alib       Server Monitoring                                          {Fore.LIGHTWHITE_EX}│
 ├──────────────────┴────────────────────────────────────────────────────────────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
@@ -44,7 +43,7 @@ async def main():
 │                                                                               │
 │  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[!]   {Fore.GREEN}Fetching server stats are started!                                     {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}[!]   {Fore.GREEN}You can change a delay time in {directory}/settings.         {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[!]   {Fore.GREEN}You can change a delay time in {const().directory}/settings.         {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE please use {Fore.RESET}CTRL+C{Fore.RED}.             {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)

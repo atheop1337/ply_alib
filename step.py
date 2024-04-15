@@ -4,13 +4,12 @@ import subprocess
 import os
 import signal
 import sys
+from data.libraries.twentyfivezeroone import WindowTitle
 from colorama import Fore, Style, init
-directory = "C:/2501/ply_Alib/data"
 current_directory = os.path.dirname(os.path.abspath(__file__))
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    time.sleep(1)
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
@@ -36,6 +35,11 @@ def main_script():
     time.sleep(5)
     main()
 
+def server_monitoring():
+    run_file(f'{current_directory}/data/run_serverMonitor.py', True)
+    time.sleep(5)
+    main()
+
 def plug():
     print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
     time.sleep(5)
@@ -55,7 +59,7 @@ def list_input(choice):
     choice_options = {
         '[!] all in one': all_in_one,
         '[•] main script': main_script,
-        '[•] gpt': plug,
+        '[•] server monitoring': server_monitoring,
         '[•] someother shit': plug,
         '[!] setup(Token)': token_req,
         '[!] setup(Quotes)': quote_req,
@@ -66,10 +70,11 @@ def list_input(choice):
 
 
 def main():
+    WindowTitle().set("ply_Alib   //   Hub")
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
-│     {Fore.RESET}ply_Alib       Launcher                                                   {Fore.LIGHTWHITE_EX}│
+│     {Fore.RESET}ply_Alib       Hub                                                        {Fore.LIGHTWHITE_EX}│
 ├──────────────────┴────────────────────────────────────────────────────────────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
@@ -91,7 +96,14 @@ def main():
     time.sleep(0.2)
     signal.signal(signal.SIGINT, signal_handler)
     try:
-        choice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[2501]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['[!] all in one', '[•] main script', '[•] gpt', '[•] someother shit', '[!] setup(Token)', '[!] setup(Quotes)'])
+        choice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[2501]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=[
+            '[!] all in one',
+            '[•] main script',
+            '[•] server monitoring',
+            '[•] someother shit',
+            '[!] setup(Token)',
+            '[!] setup(Quotes)'
+        ])
     except KeyboardInterrupt:
         signal_handler(None, None)
 

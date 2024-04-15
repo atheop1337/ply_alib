@@ -5,17 +5,17 @@ import signal
 import json
 import os
 import sys
+from twentyfivezeroone import WindowTitle, const
 from bs4 import BeautifulSoup
 from colorama import Fore, Style, init
 
-directory = "C:/2501/ply_Alib/data"
+
 config = configparser.ConfigParser()
-config.read(directory + "/settings.ini")
+config.read(const().directory + "/settings.ini")
 amount = int(config.get("quotesGenerator", "amount"))
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    time.sleep(1)
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
@@ -42,11 +42,7 @@ def generate_quotes():
     return quotes
 
 def save_quotes_to_json(quotes):
-    directory = "C:/2501/ply_Alib/data"
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    file_path = os.path.join(directory, "quotes.json")
+    file_path = os.path.join(const().directory, "quotes.json")
 
     with open(file_path, "w", encoding="utf-8") as file:
         json.dump(quotes, file, ensure_ascii=False, indent=4)
@@ -54,6 +50,7 @@ def save_quotes_to_json(quotes):
     time.sleep(3)
 
 def main():
+    WindowTitle().set("ply_Alib   //   Quote Generator")
     signal.signal(signal.SIGINT, signal_handler)
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
@@ -73,7 +70,7 @@ def main():
 │                                                                               │
 │  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[!]   {Fore.GREEN}Quotes generating are started!                                         {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}[!]   {Fore.GREEN}You can change a amount of quotes in {directory}/settings.  {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[!]   {Fore.GREEN}You can change a amount of quotes in {const().directory}/settings.   {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE please use {Fore.RESET}CTRL+C{Fore.RED}.             {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
