@@ -1,5 +1,5 @@
 # ♿ ply_Alib - make great again
-Скрипт для выебонов на форуме
+Скрипт для улучшения опыта на форуме
 
 _powered by 2501 👁️_
 
@@ -21,7 +21,7 @@ _powered by 2501 👁️_
 
 3. Запустите: `setup.py`
 
-## Вклад
+## Создатели
 
-- Star Boy > [Github](https://github.com/v1lmok) / [WRP Forum](https://forum.wayzer.ru/u/vilmok)
+- Star boy > [Github](https://github.com/v1lmok) / [WRP Forum](https://forum.wayzer.ru/u/vilmok)
 - Стив Пиво > [Github](https://github.com/PivoSteve) / [WRP Forum](https://forum.wayzer.ru/u/Buba)

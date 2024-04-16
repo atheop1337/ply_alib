@@ -6,6 +6,8 @@ import random
 import string
 import os
 import subprocess
+import aiohttp
+import configparser
 from bs4 import BeautifulSoup
 
 class const:
@@ -76,6 +78,7 @@ class RandomName:
         rnd = random.choice(names)
         return rnd
 
+
 class RandomJoke:
     def generate_random_joke(self):
         link = 'https://randstuff.ru/joke/'
@@ -93,6 +96,19 @@ class RandomStr:
     def generate_ascii_string(self, length):
         characters = string.ascii_letters
         return ''.join(random.choice(characters) for _ in range(length))
+
+class Get_AV:
+    config = configparser.ConfigParser()
+    config.read(const().directory + "/settings.ini")
+    amount = int(config.get("requests", "amount"))
+
+    async def get_data(self, amount):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://forum.wayzer.ru/api/users/{amount}") as response:
+                data = await response.json()
+                avatar = data['data']['attributes']['avatarUrl']
+                name = data['data']['attributes']['displayName']
+                return avatar, name
 
 class EvaSociety:
     def download(self, link, path):
