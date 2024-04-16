@@ -114,6 +114,13 @@ async def get_bio(id):
             data = await response.json()
             bio = data['data']['attributes']['bio']
             return bio
+
+async def get_avatar(id):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://forum.wayzer.ru/api/users/{id}") as response:
+            data = await response.json()
+            avatar = data['data']['attributes']['avatarUrl']
+            return avatar
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
     current_version = "2.1"
@@ -140,6 +147,7 @@ async def main():
 │  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[•]   {Fore.GREEN}You confirm that you have read and accept the 2501 terms of use.       {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[!]   {Fore.RED}Closing the terminal window is NOT SAFE please use {Fore.RESET}CTRL+C{Fore.RED}.             {Fore.LIGHTWHITE_EX}│
+|  {Fore.RESET}[!!]  {Fore.RED}If you close terminal window your balls will explode                   {Fore.LIGHTWHITE_EX}|
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
     logging.getLogger().setLevel(logging.DEBUG)

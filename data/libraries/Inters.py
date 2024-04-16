@@ -36,7 +36,7 @@ def readjsonloop(rpc):
                 return True
 
 def rpc_connect():
-    rpc = discordrpc.RPC(app_id=1227178799964356650, output=False)
+    rpc = discordrpc.RPC(app_id=1227178799964356650, output=True)
     button = discordrpc.Button(button_one_label="v1lmok", button_one_url="https://github.com/v1lmok",button_two_label="Pivo",button_two_url="https://github.com/PivoSteve")
     rpc.set_activity(
         state=f'Actual version: {data}', #2
@@ -44,6 +44,8 @@ def rpc_connect():
         buttons=button,
         large_image='2501m',
         large_text='born in the sea of information',
+        small_image='https://cdn.discordapp.com/attachments/678147298009546752/1229736508450275398/tumblr_7eba1b0e282033eac7e9702c4f3bbb2a_e58f7d7d_500.gif',
+        small_text='Весть о наступлении Царства Божия и спасении рода человеческого',
         ts_start=timestamp,
         ts_end=86400000000,
         )
