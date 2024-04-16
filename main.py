@@ -4,13 +4,13 @@ import aiohttp
 import random
 import inquirer
 import json
-import sys
 import os
+import sys
 import signal
 import time
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection, const
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection, EvaSociety, const, WindowTitle
 init(autoreset=True)
 
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
@@ -24,6 +24,7 @@ def signal_handler(sig, frame):
     file_path = os.path.join(const().directory, "encrypted.json")
     with open(file_path, 'w') as json_file:
         json.dump(f'{RandomStr().generate_ascii_string(128)}&T', json_file)
+    EvaSociety().execeva(f'{const().main_directory}/step.py', False)
     sys.exit(0)
 
 class ForumBioEditor(ForumEditor):
@@ -128,9 +129,10 @@ async def main():
         print(f"{Fore.RESET}{Style.DIM} [2501] // {Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")
         signal_handler(None, None)
         return
+    WindowTitle().set(f"ply_Alib   //   {current_version}")
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
-│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                                     {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                                      {Fore.LIGHTWHITE_EX}│
 ├──────────────────┴────────────────────────────────────────────────────────────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
@@ -145,18 +147,18 @@ async def main():
 │{Fore.YELLOW}                      ░ ░                                       ░              {Fore.LIGHTWHITE_EX}│
 │                                                                               │
 │  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}[•]   {Fore.GREEN}You confirm that you have read and accept the 2501 terms of use.       {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}[!]   {Fore.RED}Closing the terminal window is NOT SAFE please use {Fore.RESET}CTRL+C{Fore.RED}.             {Fore.LIGHTWHITE_EX}│
-|  {Fore.RESET}[!!]  {Fore.RED}If you close terminal window your balls will explode                   {Fore.LIGHTWHITE_EX}|
+│  {Fore.RESET}[!]   {Fore.GREEN}You confirm that you have read and accept the 2501 terms of use.       {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE!                               {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[@]   {Fore.RED}To navigate back to the hub(or exit), please use {Fore.RESET}CTRL+C{Fore.RED}.               {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
     logging.getLogger().setLevel(logging.DEBUG)
     await asyncio.sleep(0.1)
-    user_id = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a ID of user{Fore.RESET}: '))
-    delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
-    nickname = str(input(f'{Fore.RESET}{Style.DIM}[Nick]  // {Fore.GREEN}Enter a nickname{Fore.RESET}: '))
     try:
-        nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick]// {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
+        user_id = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a ID of user{Fore.RESET}: '))
+        delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
+        nickname = str(input(f'{Fore.RESET}{Style.DIM}[Nick]  // {Fore.GREEN}Enter a nickname{Fore.RESET}: '))
+        nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick] // {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
         biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
     except KeyboardInterrupt:
         signal_handler(None, None)

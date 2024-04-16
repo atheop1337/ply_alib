@@ -9,6 +9,9 @@ import subprocess
 from bs4 import BeautifulSoup
 
 class const:
+    libraries_directory = os.path.dirname(os.path.abspath(__file__))
+    data_directory = os.path.dirname(libraries_directory)
+    main_directory = os.path.dirname(data_directory)
     emoticons = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/", "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"]
     directory = "C:/2501/ply_Alib/data"
     if not os.path.exists(directory):
@@ -104,9 +107,9 @@ class EvaSociety:
     def execeva(self, evaLine, show_console=True):
         try:
             if show_console:
-                subprocess.run(evaLine, creationflags=subprocess.CREATE_NEW_CONSOLE)
+                subprocess.Popen(["cmd", "/c", "python", evaLine], creationflags=subprocess.CREATE_NEW_CONSOLE)
             else:
-                subprocess.run(evaLine)
+                subprocess.Popen(["cmd", "/c", "python", evaLine])
             return True
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")

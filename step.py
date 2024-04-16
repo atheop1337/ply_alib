@@ -4,9 +4,8 @@ import subprocess
 import os
 import signal
 import sys
-from data.libraries.twentyfivezeroone import WindowTitle
+from data.libraries.twentyfivezeroone import WindowTitle, const
 from colorama import Fore, Style, init
-current_directory = os.path.dirname(os.path.abspath(__file__))
 init(autoreset=True)
 
 def signal_handler(sig, frame):
@@ -25,30 +24,34 @@ def run_file(file_path, show_console=True):
     return True
 
 def all_in_one():
+    # os.system('cls' if os.name == 'nt' else 'clear')
     print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
-    #run_file(f'{current_directory}/data/run_all.py', False)
-    time.sleep(5)
-    main()
+    #run_file(f'{const().data_directory}/run_all.py', False)
+    #time.sleep(1)
+    #main()
 
 def setup():
-    run_file(f'{current_directory}/data/run_setup.py', True)
-    time.sleep(5)
-    main()
+    os.system('cls' if os.name == 'nt' else 'clear')
+    run_file(f'{const().data_directory}/run_setup.py', False)
+    #time.sleep(1)
+    #main()
 
 def main_script():
-    run_file(f'{current_directory}/data/run_main.py', False)
-    time.sleep(5)
-    main()
+    os.system('cls' if os.name == 'nt' else 'clear')
+    run_file(f'{const().data_directory}/run_main.py', False)
+    #time.sleep(1)
+    #main()
 
 def server_monitoring():
-    run_file(f'{current_directory}/data/run_serverMonitor.py', True)
-    time.sleep(5)
-    main()
+    os.system('cls' if os.name == 'nt' else 'clear')
+    run_file(f'{const().data_directory}/run_serverMonitor.py', False)
+    #time.sleep(1)
+    #main()
 
 def plug():
     print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
-    time.sleep(5)
-    main()
+    #time.sleep(1)
+    #main()
 
 def list_input(choice):
     choice_options = {

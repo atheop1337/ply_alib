@@ -4,9 +4,8 @@ import subprocess
 import os
 import signal
 import sys
-from libraries.twentyfivezeroone import WindowTitle
+from libraries.twentyfivezeroone import WindowTitle, EvaSociety, const
 from colorama import Fore, Style, init
-current_directory = os.path.dirname(os.path.abspath(__file__))
 init(autoreset=True)
 
 def signal_handler(sig, frame):
@@ -15,7 +14,9 @@ def signal_handler(sig, frame):
     time.sleep(0.5)
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
     time.sleep(2)
+    EvaSociety().execeva(f'{const().main_directory}/step.py', False)
     sys.exit(0)
+
 
 def run_file(file_path, show_console=True):
     if show_console:
@@ -25,20 +26,17 @@ def run_file(file_path, show_console=True):
     return True
 
 def quote_req():
-    run_file(f'{current_directory}/libraries/generate_quote_jsontable.py', True)
-    time.sleep(5)
-    main()
+    run_file(f'{const().libraries_directory}/generate_quote_jsontable.py', False)
 
 def settings_req():
     print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
-    run_file(f'{current_directory}/libraries/settings_setup.py', True)
-    time.sleep(5)
-    main()
+    run_file(f'{const().libraries_directory}/settings_setup.py', False)
 
 def token_req():
-    run_file(f'{current_directory}/GetToken.py', False)
-    time.sleep(5)
-    main()
+    run_file(f'{const().data_directory}/GetToken.py', False)
+    time.sleep(1)
+    EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
+    sys.exit(0)
 
 def list_input(choice):
     choice_options = {
@@ -72,7 +70,8 @@ def main():
 │                                                                               │
 │  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[!]   {Fore.GREEN}Choose your mode to setup ply_Alib!                                    {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE please use {Fore.RESET}CTRL+C{Fore.RED}.             {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE!                               {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[@]   {Fore.RED}To navigate back to the hub(or exit), please use {Fore.RESET}CTRL+C{Fore.RED}.               {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
     time.sleep(0.2)
@@ -82,10 +81,11 @@ def main():
             '[!] settings',
             '[!] quotes',
         ])
+        list_input(choice)
     except KeyboardInterrupt:
         signal_handler(None, None)
 
-    list_input(choice)
+
 
 if __name__ == '__main__':
     main()

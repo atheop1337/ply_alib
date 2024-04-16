@@ -5,7 +5,7 @@ import signal
 import json
 import os
 import sys
-from twentyfivezeroone import WindowTitle, const
+from twentyfivezeroone import WindowTitle, const, EvaSociety
 from bs4 import BeautifulSoup
 from colorama import Fore, Style, init
 
@@ -21,6 +21,7 @@ def signal_handler(sig, frame):
     time.sleep(0.5)
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
     time.sleep(2)
+    EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
 
 def generate_quotes():
@@ -52,6 +53,7 @@ def save_quotes_to_json(quotes):
 def main():
     WindowTitle().set("ply_Alib   //   Quote Generator")
     signal.signal(signal.SIGINT, signal_handler)
+    os.system('cls' if os.name == 'nt' else 'clear')
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
 │     {Fore.RESET}ply_Alib       Quote Generator                                            {Fore.LIGHTWHITE_EX}│
@@ -71,7 +73,8 @@ def main():
 │  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[!]   {Fore.GREEN}Quotes generating are started!                                         {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[!]   {Fore.GREEN}You can change a amount of quotes in {const().directory}/settings.   {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE please use {Fore.RESET}CTRL+C{Fore.RED}.             {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE!                               {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[@]   {Fore.RED}To navigate back to the hub(or exit), please use {Fore.RESET}CTRL+C{Fore.RED}.               {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
     quotes = generate_quotes()
