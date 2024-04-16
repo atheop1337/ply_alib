@@ -27,6 +27,10 @@ def create_settings_ini(answers):
         "; Amount of quotes to be generated": "Default 50",
         "amount": answers["quotes_amount"]
     }
+    config["requests"] = {
+        "; User id": "Default ?",
+        "amount": answers["requests"]
+    }
     with open(const().directory + "/settings.ini", "w") as configfile:
         config.write(configfile)
     print(f"\n{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Settings file created successfully in {const().directory}!")
@@ -63,6 +67,7 @@ def main():
         questions = [
             inquirer.Text("server_delay", message=f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter delay for \"serverMonitor\" section (in seconds){Fore.RESET}", default="60"),
             inquirer.Text("quotes_amount", message=f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"quotesGenerator\" section{Fore.RESET}", default="50"),
+            inquirer.Text("requests", message=f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter default id for \"requests\"{Fore.RESET}", default=""),
         ]
     except KeyboardInterrupt:
         signal_handler(None, None)
