@@ -4,7 +4,7 @@ import os
 import json
 import time
 from discordrpc.utils import timestamp
-from twentyfivezeroone import Connection, RandomStr
+from twentyfivezeroone import Connection, RandomStr, const
 get_version = Connection
 data = Connection().get_version()
 
@@ -14,22 +14,17 @@ def fterminate(pid):
     #print("Процесс с PID", process_to_terminate, "был завершен.")
 
 def readjsonloop(rpc):
-    directory = "C:/2501/ply_Alib/data"
-    file_path = os.path.join(directory, "encrypted.json")
+    file_path = os.path.join(const().directory, "encrypted.json")
 
     while True:
         time.sleep(3)
-        #print("1")
         with open(file_path, 'r') as json_file:
             loaded_data = json.load(json_file)
-        print(loaded_data)
+        print(loaded_data) # FOR DEBUG
         index_of_ampersand = loaded_data.find('&')
         if index_of_ampersand != -1:
-            #print("2")
-            #print(loaded_data[index_of_ampersand+1:])
             data_after_ampersand = loaded_data[index_of_ampersand+1:]
             if data_after_ampersand == "T":
-                #print("3")
                 rpc.disconnect()
                 with open(file_path, 'w') as json_file:
                     json.dump(f'{RandomStr().generate_ascii_string(128)}&F', json_file)

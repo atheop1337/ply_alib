@@ -23,7 +23,7 @@ def main():
     main_file_path = f"{parent_directory}/main.py"
     rpc_file_path = f"{current_directory}/libraries/Inters.py"
 
-    run_file(rpc_file_path, False) #<<< True для дебага, False для запуска
+    run_file(rpc_file_path, True) #<<< True для дебага, False для запуска
     time.sleep(0.4)
     run_file(main_file_path, True)
 
