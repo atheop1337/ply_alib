@@ -12,11 +12,9 @@ data = Connection().get_version()
 def fterminate(pid):
     process_to_terminate = psutil.Process(pid)
     process_to_terminate.terminate()
-    #print("Процесс с PID", process_to_terminate, "был завершен.")
 
 def readjsonloop(rpc):
     file_path = os.path.join(const().directory, "encrypted.json")
-
     while True:
         time.sleep(3)
         with open(file_path, 'r') as json_file:
@@ -32,9 +30,8 @@ def readjsonloop(rpc):
                 return True
 
 def rpc_connect():
-    rpc = discordrpc.RPC(app_id=1227178799964356650, output=True)
-    av = Get_AV()
-    avatar, name = asyncio.run(av.get_data(av.amount))
+    rpc = discordrpc.RPC(app_id=1227178799964356650, output=True) # True FOR DEBUG
+    avatar, name = asyncio.run(Get_AV().get_data())
     button = discordrpc.Button(
         button_one_label="v1lmok",
         button_one_url="https://github.com/v1lmok",

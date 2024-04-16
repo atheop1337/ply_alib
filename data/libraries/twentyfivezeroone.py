@@ -98,13 +98,12 @@ class RandomStr:
         return ''.join(random.choice(characters) for _ in range(length))
 
 class Get_AV:
-    config = configparser.ConfigParser()
-    config.read(const().directory + "/settings.ini")
-    amount = int(config.get("requests", "amount"))
-
-    async def get_data(self, amount):
+    async def get_data(self):
+        config = configparser.ConfigParser()
+        config.read(const().directory + "/settings.ini")
+        user_id = int(config.get("requests", "user_id"))
         async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://forum.wayzer.ru/api/users/{amount}") as response:
+            async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
                 data = await response.json()
                 avatar = data['data']['attributes']['avatarUrl']
                 name = data['data']['attributes']['displayName']

@@ -16,11 +16,9 @@ amount = int(config.get("quotesGenerator", "amount"))
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
-    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
-    time.sleep(2)
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
 

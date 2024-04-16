@@ -16,11 +16,9 @@ init(autoreset=True)
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 
 def signal_handler(sig, frame):
-    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
-    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
-    time.sleep(2)
     file_path = os.path.join(const().directory, "encrypted.json")
     with open(file_path, 'w') as json_file:
         json.dump(f'{RandomStr().generate_ascii_string(128)}&T', json_file)

@@ -1,5 +1,4 @@
 import configparser
-import inquirer
 import time
 import signal
 import sys
@@ -9,15 +8,13 @@ from twentyfivezeroone import const, WindowTitle, EvaSociety
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
-    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
-    time.sleep(2)
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
 
-def create_settings_ini(serverdelay, quotesammount):
+def create_settings_ini(serverdelay, quotesammount, id):
     config = configparser.ConfigParser()
     if serverdelay is None or not isinstance(serverdelay, int):
         answers_serverdelay = "60"
@@ -29,6 +26,11 @@ def create_settings_ini(serverdelay, quotesammount):
     else:
         answers_quotesammount = str(quotesammount)
 
+    if id is None or not isinstance(id, int):
+        answers_id = "25"
+    else:
+        answers_id = str(id)
+
     config["serverMonitor"] = {
         "; Delay between updates in seconds": "Default 60",
         "delay": answers_serverdelay
@@ -36,6 +38,10 @@ def create_settings_ini(serverdelay, quotesammount):
     config["quotesGenerator"] = {
         "; Amount of quotes to be generated": "Default 50",
         "amount": answers_quotesammount
+    }
+    config["requests"] = {
+        "; User id for requests": "Default 25",
+        "user_id": answers_id
     }
     with open(const().directory + "/settings.ini", "w") as configfile:
         config.write(configfile)
@@ -74,7 +80,8 @@ def main():
     try:
         serverdelay = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter delay for \"serverMonitor\" section (in seconds) {Fore.RESET}(default 60): ")
         quotesammount = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"quotesGenerator\" section {Fore.RESET}(default 50): ")
-        create_settings_ini(serverdelay, quotesammount)
+        id = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 25(Стив Пиво)): ")
+        create_settings_ini(serverdelay, quotesammount, id)
     except KeyboardInterrupt:
         signal_handler(None, None)
 
