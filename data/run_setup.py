@@ -24,7 +24,7 @@ def run_file(file_path, show_console=True):
     return True
 
 def quote_req():
-    run_file(f'{const().libraries_directory}/generate_quote_jsontable.py', False)
+    run_file(f'{const().libraries_directory}/quotes_generate.py', False)
 
 def settings_req():
     print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')

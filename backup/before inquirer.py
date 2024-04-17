@@ -5,7 +5,7 @@ import random
 from data.libraries.animation import animate, clear_animation
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.random_fact import get_random_fact
-from data.libraries.generate_quote_jsontable import generate_citata
+from data.libraries.quotes_generate import generate_citata
 
 logging.basicConfig(format='[%(asctime)s] %(levelname)s |   %(message)s', datefmt='%H:%M:%S')
 
