@@ -24,7 +24,7 @@
 
 ---
 
-<img src="https://avatars.githubusercontent.com/u/112832151?" width="30" height="30"> [Pivo:](https://github.com/PivoSteve)
+<img src="https://avatars.githubusercontent.com/u/112832151?" width="30" height="30"> [Syra // Пиво:](https://github.com/PivoSteve)
 ========================
 *суки твари*
 
