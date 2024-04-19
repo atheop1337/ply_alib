@@ -24,7 +24,7 @@
 
 <img src="https://avatars.githubusercontent.com/u/112832151?" width="30" height="30"> [Syra // Пиво:](https://github.com/PivoSteve)
 ========================
-<img src="https://forum.wayzer.ru/assets/files/2024-04-19/1713514260-74067-screenshot-20240419-114806.jpg" width="180" height="30">
+<img src="https://forum.wayzer.ru/assets/files/2024-04-19/1713514260-74067-screenshot-20240419-114806.jpg" width="540" height="90">
 
 *чорт пришол к ведьме чай попить, а она его в печку затолкнула и пожарила себе на ужин.*
 
