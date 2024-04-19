@@ -24,6 +24,7 @@
 
 <img src="https://avatars.githubusercontent.com/u/112832151?" width="30" height="30"> [Syra // Пиво:](https://github.com/PivoSteve)
 ========================
+src="https://forum.wayzer.ru/assets/files/2024-04-19/1713514260-74067-screenshot-20240419-114806.jpg" width="60" height="30">
 *чорт пришол к ведьме чай попить, а она его в печку затолкнула и пожарила себе на ужин.*
 
 > Вынести все конст переменные в отдельный джсон :: ✅ (twentyfivezeroone.py class const)
