@@ -156,8 +156,8 @@ async def main():
     except KeyboardInterrupt:
         signal_handler(None, None)
     if nickname.lower() == 'skibidi':
-        url = 'https://youtu.be/6dMjCa0nqK0'
-        OpenBrowser().open_link(url)
+        urls = ['https://youtu.be/6dMjCa0nqK0', 'https://ru.wikipedia.org/wiki/Skibidi_Toilet']
+        OpenBrowser().open_link(urls)
         for i in range(1, 101):
             print(f'{Fore.RED}SKIBIDI DOP DOP DOP ES ES{Fore.RESET}')
             await asyncio.sleep(0.1)

@@ -110,8 +110,10 @@ class Get_AV:
                 name = data['data']['attributes']['displayName']
                 return avatar, name
 class OpenBrowser:
-    def open_link(self, url):
-        webbrowser.open(url)
+    @staticmethod
+    def open_link(urls):
+        for url in urls:
+            webbrowser.open(url)
 
 class EvaSociety:
     def download(self, link, path):
