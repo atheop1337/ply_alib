@@ -8,11 +8,11 @@ import os
 import sys
 import signal
 import time
+import configparser
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection, EvaSociety, const, WindowTitle
 init(autoreset=True)
-
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 
 def signal_handler(sig, frame):
@@ -116,6 +116,9 @@ async def get_bio(id):
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
     current_version = "2.1"
+    config = configparser.ConfigParser()
+    config.read(const().directory + "/settings.ini")
+    nickname = str(config.get("nickname", "nickname"))
     if current_version != Connection().get_version():
         print(f"{Fore.RESET}{Style.DIM} [2501] // {Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")
         signal_handler(None, None)
@@ -148,7 +151,6 @@ async def main():
     try:
         user_id = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a ID of user{Fore.RESET}: '))
         delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
-        nickname = str(input(f'{Fore.RESET}{Style.DIM}[Nick]  // {Fore.GREEN}Enter a nickname{Fore.RESET}: '))
         nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick] // {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
         biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
     except KeyboardInterrupt:
