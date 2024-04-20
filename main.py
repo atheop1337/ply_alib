@@ -147,6 +147,7 @@ async def main():
 │  {Fore.RESET}[@]   {Fore.RED}To navigate back to the hub(or exit), please use {Fore.RESET}CTRL+C{Fore.RED}.               {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
 """)
+    logging.getLogger('requests').setLevel(logging.CRITICAL)
     logging.getLogger().setLevel(logging.DEBUG)
     await asyncio.sleep(0.1)
     try:
