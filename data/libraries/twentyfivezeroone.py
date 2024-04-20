@@ -8,6 +8,7 @@ import os
 import subprocess
 import aiohttp
 import configparser
+import webbrowser
 from bs4 import BeautifulSoup
 
 class const:
@@ -108,6 +109,9 @@ class Get_AV:
                 avatar = data['data']['attributes']['avatarUrl']
                 name = data['data']['attributes']['displayName']
                 return avatar, name
+class OpenBrowser:
+    def open_link(self, url):
+        webbrowser.open(url)
 
 class EvaSociety:
     def download(self, link, path):

@@ -11,7 +11,7 @@ import time
 import configparser
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, Connection, EvaSociety, const, WindowTitle
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, OpenBrowser, Connection, EvaSociety, const, WindowTitle
 init(autoreset=True)
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 
@@ -156,6 +156,8 @@ async def main():
     except KeyboardInterrupt:
         signal_handler(None, None)
     if nickname.lower() == 'skibidi':
+        url = 'https://youtu.be/6dMjCa0nqK0'
+        OpenBrowser().open_link(url)
         for i in range(1, 101):
             print(f'{Fore.RED}SKIBIDI DOP DOP DOP ES ES{Fore.RESET}')
             await asyncio.sleep(0.1)
