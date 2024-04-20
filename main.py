@@ -77,7 +77,7 @@ class ForumNickEditor(ForumEditor):
             if choice == 'random name' or choice == 'random string':
                 nickname_value = choice_value
             else:
-                nickname_value = f'{nickname}\n{choice_value}'
+                nickname_value = f'{nickname}\n {choice_value}'
 
             data = {
                 "data": {
