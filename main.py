@@ -11,7 +11,7 @@ import time
 import configparser
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomFact, RandomName, RandomJoke, RandomStr, OpenBrowser, Connection, EvaSociety, const, WindowTitle
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle
 init(autoreset=True)
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 
@@ -21,7 +21,7 @@ def signal_handler(sig, frame):
     time.sleep(0.5)
     file_path = os.path.join(const().directory, "encrypted.json")
     with open(file_path, 'w') as json_file:
-        json.dump(f'{RandomStr().generate_ascii_string(128)}&T', json_file)
+        json.dump(f'{RandomStuff().generate_ascii_string(128)}&T', json_file)
     EvaSociety().execeva(f'{const().main_directory}/step.py', False)
     sys.exit(0)
 
@@ -38,10 +38,10 @@ class ForumBioEditor(ForumEditor):
         random_phrase = random.choice(const().emoticons)
         random_quote = random.choice(quotes)
         choice_options = {
-            'random fact': RandomFact().get_random_fact(),
+            'random fact': RandomStuff().get_random_fact(),
             'random emoticone': random_phrase,
             'random quote': random_quote,
-            'random joke': RandomJoke().generate_random_joke(),
+            'random joke': RandomStuff().generate_random_joke(),
         }
 
         if choice == 'everytime random':
@@ -69,8 +69,8 @@ class ForumNickEditor(ForumEditor):
             'clock': Clock().curtimeget(),
             'random emoticone': random_phrase,
             'random emoji': random_emoji,
-            'random name': RandomName().generate_random_name(),
-            'random string': RandomStr().generate_random_string(60),
+            'random name': RandomStuff().generate_random_name(),
+            'random string': RandomStuff().generate_random_string(60),
         }
         choice_value = choice_options.get(choice)
         if choice_value is not None:
@@ -157,7 +157,8 @@ async def main():
         signal_handler(None, None)
     if nickname.lower() == 'skibidi':
         urls = ['https://youtu.be/6dMjCa0nqK0', 'https://ru.wikipedia.org/wiki/Skibidi_Toilet']
-        OpenBrowser().open_link(urls)
+        for url in urls:
+            EvaSociety().execeva(url, False, "start")
         for i in range(1, 101):
             print(f'{Fore.RED}SKIBIDI DOP DOP DOP ES ES{Fore.RESET}')
             await asyncio.sleep(0.1)

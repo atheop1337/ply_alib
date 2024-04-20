@@ -8,7 +8,6 @@ import os
 import subprocess
 import aiohttp
 import configparser
-import webbrowser
 from bs4 import BeautifulSoup
 
 class const:
@@ -40,16 +39,20 @@ class Animation:
         sys.stdout.write('\r')
         sys.stdout.flush()
 
-class RandomFact:
-    def get_random_fact(self):
-        link = 'https://randstuff.ru/fact/'
-        response = requests.get(link)
-        soup = BeautifulSoup(response.text, 'html.parser')
-        fact_block = soup.find('div', id='fact')
-        fact_text = fact_block.find('td').text.strip()
-        return fact_text
-
 class Connection:
+
+    #class Get_AV:
+    async def get_data(self):
+        config = configparser.ConfigParser()
+        config.read(const().directory + "/settings.ini")
+        user_id = int(config.get("requests", "user_id"))
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
+                data = await response.json()
+                avatar = data['data']['attributes']['avatarUrl']
+                name = data['data']['attributes']['displayName']
+                return avatar, name
+
     def get_version(self):
         url = "https://pastebin.com/raw/MuFfZ3BA"
         response = requests.get(url)
@@ -58,7 +61,18 @@ class Connection:
             return json_data['version']
         else:
             return "?.?.?"
-class RandomName:
+        
+class RandomStuff:
+    #class RandomFact:
+    def get_random_fact(self):
+        link = 'https://randstuff.ru/fact/'
+        response = requests.get(link)
+        soup = BeautifulSoup(response.text, 'html.parser')
+        fact_block = soup.find('div', id='fact')
+        fact_text = fact_block.find('td').text.strip()
+        return fact_text
+    
+    #class RandomName:
     def generate_random_name(self):
         names = [
             'Анатолий', 'Наталья', 'Дмитрий', 'Екатерина', 'Алексей',
@@ -78,9 +92,8 @@ class RandomName:
 
         rnd = random.choice(names)
         return rnd
-
-
-class RandomJoke:
+    
+    #class RandomJoke:
     def generate_random_joke(self):
         link = 'https://randstuff.ru/joke/'
         response = requests.get(link)
@@ -89,7 +102,7 @@ class RandomJoke:
         joke_text = joke_block.find('td').text.strip()
         return joke_text
 
-class RandomStr:
+    #class RandomStr:
     def generate_random_string(self, length):
         characters = string.ascii_letters + string.digits + string.punctuation
         return ''.join(random.choice(characters) for _ in range(length))
@@ -98,22 +111,6 @@ class RandomStr:
         characters = string.ascii_letters
         return ''.join(random.choice(characters) for _ in range(length))
 
-class Get_AV:
-    async def get_data(self):
-        config = configparser.ConfigParser()
-        config.read(const().directory + "/settings.ini")
-        user_id = int(config.get("requests", "user_id"))
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
-                data = await response.json()
-                avatar = data['data']['attributes']['avatarUrl']
-                name = data['data']['attributes']['displayName']
-                return avatar, name
-class OpenBrowser:
-    @staticmethod
-    def open_link(urls):
-        for url in urls:
-            webbrowser.open(url)
 
 class EvaSociety:
     def download(self, link, path):
@@ -125,12 +122,12 @@ class EvaSociety:
         else:
             return False
 
-    def execeva(self, evaLine, show_console=True):
+    def execeva(self, evaLine, show_console=True, args="python"):
         try:
-            if show_console:
-                subprocess.Popen(["cmd", "/c", "python", evaLine], creationflags=subprocess.CREATE_NEW_CONSOLE)
+            if show_console:   
+                subprocess.Popen(["cmd", "/c", args, evaLine], creationflags=subprocess.CREATE_NEW_CONSOLE)
             else:
-                subprocess.Popen(["cmd", "/c", "python", evaLine])
+                subprocess.Popen(["cmd", "/c", args, evaLine])
             return True
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")

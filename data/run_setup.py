@@ -24,14 +24,14 @@ def run_file(file_path, show_console=True):
     return True
 
 def quote_req():
-    run_file(f'{const().libraries_directory}/quotes_generate.py', False)
+    EvaSociety().execeva(f'{const().libraries_directory}/quotes_generate.py', False)
 
 def settings_req():
     print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
-    run_file(f'{const().libraries_directory}/settings_setup.py', False)
+    EvaSociety().execeva(f'{const().libraries_directory}/settings_setup.py', False)
 
 def token_req():
-    run_file(f'{const().data_directory}/GetToken.py', False)
+    EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
     time.sleep(1)
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
