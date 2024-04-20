@@ -3,9 +3,12 @@ import time
 import signal
 import sys
 import os
+import inquirer
 from colorama import Fore, Style, init
 from twentyfivezeroone import const, WindowTitle, EvaSociety
+
 init(autoreset=True)
+
 
 def signal_handler(sig, frame):
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
@@ -14,7 +17,8 @@ def signal_handler(sig, frame):
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
 
-def create_settings_ini(serverdelay, quotesammount, id, nick):
+
+def create_settings_ini(serverdelay, quotesammount, id, nick, language):
     config = configparser.ConfigParser()
     if serverdelay is None or not str(serverdelay).isdigit():
         answers_serverdelay = "60"
@@ -51,6 +55,10 @@ def create_settings_ini(serverdelay, quotesammount, id, nick):
         "; User nickname": "Default Star boy",
         'nickname': answers_nick
     }
+    config['Language'] = {
+        "; Default language": f"Default KAZ",
+        'language': language
+    }
     with open(const().directory + "/settings.ini", "w") as configfile:
         config.write(configfile)
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Settings file created successfully in {const().directory}!")
@@ -86,14 +94,27 @@ def main():
 """)
     time.sleep(0.2)
     try:
-        serverdelay = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter delay for \"serverMonitor\" section (in seconds) {Fore.RESET}(default 60): ")
-        quotesammount = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"quotesGenerator\" section {Fore.RESET}(default 50): ")
-        id = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 25(Стив Пиво)): ")
-        nick = input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter default nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy): ')
-        create_settings_ini(serverdelay, quotesammount, id, nick)
+        serverdelay = input(
+            f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter delay for \"serverMonitor\" section (in seconds) {Fore.RESET}(default 60): ")
+        quotesammount = input(
+            f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"quotesGenerator\" section {Fore.RESET}(default 50): ")
+        id = input(
+            f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 25(Стив Пиво)): ")
+        nick = input(
+            f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter default nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy): ')
+        questions = [
+            inquirer.List('language',
+                          message=f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter your default language{Fore.RESET}',
+                          choices=['ENG', 'RUS', 'KAZ'],
+                          default='KAZ'
+                          )
+        ]
+        answers = inquirer.prompt(questions)
+        language = answers['language']
+
+        create_settings_ini(serverdelay, quotesammount, id, nick, language)
     except KeyboardInterrupt:
         signal_handler(None, None)
-
 
 
 if __name__ == "__main__":
