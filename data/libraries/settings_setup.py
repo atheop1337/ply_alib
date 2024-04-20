@@ -101,10 +101,10 @@ def main():
         id = input(
             f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 25(Стив Пиво)): ")
         nick = input(
-            f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter default nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy): ')
+            f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy): ')
         questions = [
             inquirer.List('language',
-                          message=f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter your default language{Fore.RESET}',
+                          message=f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter language for \"defaultLanguage\" section{Fore.RESET}',
                           choices=['ENG', 'RUS', 'KAZ'],
                           default='KAZ'
                           )
