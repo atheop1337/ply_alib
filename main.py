@@ -113,9 +113,10 @@ async def get_bio(id):
             data = await response.json()
             bio = data['data']['attributes']['bio']
             return bio
+        
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
-    current_version = "2.1"
+    current_version = "3.2"
     config = configparser.ConfigParser()
     config.read(const().directory + "/settings.ini")
     nickname = str(config.get("nickname", "nickname"))
@@ -126,7 +127,7 @@ async def main():
     WindowTitle().set(f"ply_Alib   //   {current_version}")
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
-│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                                      {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[BETA] ply_Alib   {Fore.RESET}v{Connection().get_version()}{Fore.YELLOW}                                                       {Fore.LIGHTWHITE_EX}│
 ├──────────────────┴────────────────────────────────────────────────────────────┤
 │                                                                               │
 │{Fore.YELLOW}         ██▓███   ██▓   ▓██   ██▓       ▄▄▄       ██▓     ██▓ ▄▄▄▄             {Fore.LIGHTWHITE_EX}│
