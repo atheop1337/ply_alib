@@ -14,22 +14,26 @@ def signal_handler(sig, frame):
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
 
-def create_settings_ini(serverdelay, quotesammount, id):
+def create_settings_ini(serverdelay, quotesammount, id, nick):
     config = configparser.ConfigParser()
-    if serverdelay is None or not isinstance(serverdelay, int):
+    if serverdelay is None or not str(serverdelay).isdigit():
         answers_serverdelay = "60"
     else:
         answers_serverdelay = str(serverdelay)
 
-    if quotesammount is None or not isinstance(quotesammount, int):
+    if quotesammount is None or not str(quotesammount).isdigit():
         answers_quotesammount = "50"
     else:
         answers_quotesammount = str(quotesammount)
 
-    if id is None or not isinstance(id, int):
+    if id is None or not str(id).isdigit():
         answers_id = "25"
     else:
         answers_id = str(id)
+    if not nick or not isinstance(nick, str):
+        answers_nick = "Star boy"
+    else:
+        answers_nick = nick
 
     config["serverMonitor"] = {
         "; Delay between updates in seconds": "Default 60",
@@ -42,6 +46,10 @@ def create_settings_ini(serverdelay, quotesammount, id):
     config["requests"] = {
         "; User id for requests": "Default 25",
         "user_id": answers_id
+    }
+    config['nickname'] = {
+        "; User nickname": "Default Star boy",
+        'nickname': answers_nick
     }
     with open(const().directory + "/settings.ini", "w") as configfile:
         config.write(configfile)
@@ -81,7 +89,8 @@ def main():
         serverdelay = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter delay for \"serverMonitor\" section (in seconds) {Fore.RESET}(default 60): ")
         quotesammount = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"quotesGenerator\" section {Fore.RESET}(default 50): ")
         id = input(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 25(Стив Пиво)): ")
-        create_settings_ini(serverdelay, quotesammount, id)
+        nick = input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter default nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy): ')
+        create_settings_ini(serverdelay, quotesammount, id, nick)
     except KeyboardInterrupt:
         signal_handler(None, None)
 
