@@ -1,21 +1,56 @@
-import inquirer
-import time
-import subprocess
-import os
-import signal
-import sys
+import inquirer, time, subprocess, os, signal, sys, configparser, asyncio
 from data.libraries.twentyfivezeroone import WindowTitle, const
+from data.libraries.forumEditor import ForumEditor
 from colorama import Fore, Style, init
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Shutdown signal received...")
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
-    time.sleep(0.5)
-    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Thank you for being with us!")
-    time.sleep(2)
-    sys.exit(0)
+    async def run_tasks():
+        sendernick = ForumNickEditorHandler()
+        senderbio = ForumBioEditorHandler()
+        config = configparser.ConfigParser()
+        config.read(const().directory + "/settings.ini")
+        id = str(config.get("requests", "user_id"))
+        await sendernick.send_nick_request(id)
+        await senderbio.send_bio_request(id)
+        print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Successfully changed to values from C:\\2501\\ply_Alib\\data\\setting.ini!")
+        time.sleep(2)
+        sys.exit(0)
 
+    asyncio.run(run_tasks())
+class ForumNickEditorHandler(ForumEditor):
+    async def send_nick_request(self, id):
+        config = configparser.ConfigParser()
+        config.read(const().directory + "/settings.ini")
+        nickname = str(config.get("nickname", "nickname"))
+        data = {
+            "data": {
+                "type": "users",
+                "attributes": {
+                    "nickname": nickname
+                },
+                "id": str(id)
+            }
+        }
+        return await self.send_request(id, data)
+
+class ForumBioEditorHandler(ForumEditor):
+    async def send_bio_request(self, id):
+        config = configparser.ConfigParser()
+        config.read(const().directory + "/settings.ini")
+        bio = str(config.get("bio", "bio")).replace("\\n", "\n")
+        data = {
+            "data": {
+                "type": "users",
+                "attributes": {
+                    "bio": bio
+                },
+                "id": str(id)
+            }
+        }
+        return await self.send_request(id, data)
 def run_file(file_path, show_console=True):
     if show_console:
         subprocess.Popen(["cmd", "/c", "python", file_path], creationflags=subprocess.CREATE_NEW_CONSOLE)
