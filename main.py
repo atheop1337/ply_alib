@@ -91,9 +91,8 @@ class ForumNickEditor(ForumEditor):
             return await self.send_request(id, data)
 
 
-async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick):
+async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
-    user_bio_static = user_bio
     while True:
         Animation().animate(delay)
         Animation().clear_animation()
@@ -106,19 +105,13 @@ async def Run(id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, s
             signal_handler(None, None)
             break
         print(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Loop: {loop}")
-
-async def get_bio(id):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(f"https://forum.wayzer.ru/api/users/{id}") as response:
-            data = await response.json()
-            bio = data['data']['attributes']['bio']
-            return bio
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
-    current_version = "2.1"
+    current_version = "3.2"
     config = configparser.ConfigParser()
     config.read(const().directory + "/settings.ini")
     nickname = str(config.get("nickname", "nickname"))
+    user_id = str(config.get("requests", "user_id"))
     if current_version != Connection().get_version():
         print(f"{Fore.RESET}{Style.DIM} [2501] // {Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")
         signal_handler(None, None)
@@ -149,7 +142,6 @@ async def main():
     logging.getLogger().setLevel(logging.DEBUG)
     await asyncio.sleep(0.1)
     try:
-        user_id = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a ID of user{Fore.RESET}: '))
         delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
         nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick] // {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
         biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
@@ -167,12 +159,11 @@ async def main():
             print(f'{Fore.RED}ELITE 228 1337{Fore.RESET}')
             await asyncio.sleep(0.1)
         return
-    user_bio = await get_bio(user_id)
     #logging.debug(f'{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}User started bio{Fore.RESET}:\n{user_bio}')
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor()
     sendernick = ForumNickEditor()
-    await Run(user_id, delay, nickname, biochoice, nickchoice, user_bio, senderbio, sendernick)
+    await Run(user_id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
 
 
 if __name__ == "__main__":
