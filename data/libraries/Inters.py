@@ -5,7 +5,7 @@ import json
 import time
 import asyncio
 from discordrpc.utils import timestamp
-from twentyfivezeroone import Connection, RandomStr, Get_AV, const
+from twentyfivezeroone import Connection, RandomStuff, const
 get_version = Connection
 data = Connection().get_version()
 
@@ -26,12 +26,12 @@ def readjsonloop(rpc):
             if data_after_ampersand == "T":
                 rpc.disconnect()
                 with open(file_path, 'w') as json_file:
-                    json.dump(f'{RandomStr().generate_ascii_string(128)}&F', json_file)
+                    json.dump(f'{RandomStuff().generate_ascii_string(128)}&F', json_file)
                 return True
 
 def rpc_connect():
     rpc = discordrpc.RPC(app_id=1227178799964356650, output=True) # True FOR DEBUG
-    avatar, name = asyncio.run(Get_AV().get_data())
+    avatar, name = asyncio.run(Connection().get_data())
     button = discordrpc.Button(
         button_one_label="v1lmok",
         button_one_url="https://github.com/v1lmok",
