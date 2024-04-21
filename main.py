@@ -1,4 +1,4 @@
-import asyncio, logging, aiohttp, random, inquirer, json, os, sys, signal, time, configparser
+import asyncio, logging, random, inquirer, json, os, sys, signal, time, configparser, subprocess
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle
@@ -151,11 +151,20 @@ async def main():
             print(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}?????')
         for msg, sleep_time in [(f'{Fore.RED}Corrupted Data', 1), (f'{Fore.RED}CoRRuPt3D DaTA', 2),(f'{Fore.RED}C0*R!PT3= D?T%', 3)]:
             print(f'{Fore.RESET}{Style.DIM}[2501] // {msg}')
+            folder_path = r'C:\2501\ply_Alib\data'
+            file_path = os.path.join(folder_path, '2501.txt')
+            with open(file_path, 'w') as file:
+                file.write('C0*R!PT3= D?T%')
+            for i in range(2):
+                file_path = r'C:\2501\ply_Alib\data\settings.ini'
+                subprocess.Popen(['start', '', file_path], shell=True)
+                subprocess.Popen(['start', 'cmd', '/k', 'ipconfig && pause'], shell=True)
             time.sleep(sleep_time)
             file_path = os.path.join(const().directory, "encrypted.json")
         with open(file_path, 'w') as json_file:
             json.dump(f'{RandomStuff().generate_ascii_string(128)}&T', json_file)
         print(f'{Fore.RED}?????')
+        os.remove(file_path)
         EvaSociety().execeva(f'{const().main_directory}/step.py', False)
         sys.exit(0)
     #logging.debug(f'{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}User started bio{Fore.RESET}:\n{user_bio}')
