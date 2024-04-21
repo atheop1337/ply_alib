@@ -1,14 +1,4 @@
-import asyncio
-import logging
-import aiohttp
-import random
-import inquirer
-import json
-import os
-import sys
-import signal
-import time
-import configparser
+import asyncio, logging, aiohttp, random, inquirer, json, os, sys, signal, time, configparser
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
 from data.libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle
