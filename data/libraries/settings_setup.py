@@ -18,7 +18,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 
-def create_settings_ini(serverdelay, quotesammount, id, nick, language):
+def create_settings_ini(serverdelay, quotesammount, id, nick, bio, language):
     config = configparser.ConfigParser()
     if serverdelay is None or not str(serverdelay).isdigit():
         answers_serverdelay = "60"
@@ -38,6 +38,10 @@ def create_settings_ini(serverdelay, quotesammount, id, nick, language):
         answers_nick = "Star boy"
     else:
         answers_nick = nick
+    if not bio or not isinstance(bio, str):
+        answers_bio = "What a lovely day!"
+    else:
+        answers_bio = bio
 
     config["serverMonitor"] = {
         "; Delay between updates in seconds": "Default 60",
@@ -54,6 +58,10 @@ def create_settings_ini(serverdelay, quotesammount, id, nick, language):
     config['nickname'] = {
         "; User nickname": "Default Star boy",
         'nickname': answers_nick
+    }
+    config['bio'] = {
+        "; User bio": "Default What a lovely day!",
+        "bio": answers_bio
     }
     config['Language'] = {
         "; Default language": f"Default KAZ",
@@ -102,6 +110,8 @@ def main():
             f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 25(Стив Пиво)): ")
         nick = input(
             f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy): ')
+        bio = input(
+            f'{Fore.RESET}{Style.DIM}[2501 // {Fore.GREEN}Enter bio for \"defaultBio\" section {Fore.RESET}(default What a lovely day!): ')
         questions = [
             inquirer.List('language',
                           message=f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter language for \"defaultLanguage\" section{Fore.RESET}',
@@ -112,7 +122,7 @@ def main():
         answers = inquirer.prompt(questions)
         language = answers['language']
 
-        create_settings_ini(serverdelay, quotesammount, id, nick, language)
+        create_settings_ini(serverdelay, quotesammount, id, nick, bio, language)
     except KeyboardInterrupt:
         signal_handler(None, None)
 
