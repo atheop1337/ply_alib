@@ -151,10 +151,6 @@ async def main():
             print(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}?????')
         for msg, sleep_time in [(f'{Fore.RED}Corrupted Data', 1), (f'{Fore.RED}CoRRuPt3D DaTA', 2),(f'{Fore.RED}C0*R!PT3= D?T%', 3)]:
             print(f'{Fore.RESET}{Style.DIM}[2501] // {msg}')
-            folder_path = r'C:\2501\ply_Alib\data'
-            file_path = os.path.join(folder_path, '2501.txt')
-            with open(file_path, 'w') as file:
-                file.write('C0*R!PT3= D?T%')
             for i in range(2):
                 file_path = r'C:\2501\ply_Alib\data\settings.ini'
                 subprocess.Popen(['start', '', file_path], shell=True)
