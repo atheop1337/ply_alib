@@ -95,14 +95,6 @@ async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
             signal_handler(None, None)
             break
         print(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Loop: {loop}")
-
-async def get_bio(id):
-    async with aiohttp.ClientSession() as session:
-        async with session.get(f"https://forum.wayzer.ru/api/users/{id}") as response:
-            data = await response.json()
-            bio = data['data']['attributes']['bio']
-            return bio
-
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
     current_version = "3.2"
@@ -154,11 +146,18 @@ async def main():
             print(f'{Fore.RED}SKIBIDI DOP DOP DOP ES ES{Fore.RESET}')
             await asyncio.sleep(0.1)
         return
-    if delay == 1337 or delay == 228:
-        for i in range(1, 101):
-            print(f'{Fore.RED}ELITE 228 1337{Fore.RESET}')
-            await asyncio.sleep(0.1)
-        return
+    if delay == 2501:
+        for i in range(2501):
+            print(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}?????')
+        for msg, sleep_time in [(f'{Fore.RED}Corrupted Data', 1), (f'{Fore.RED}CoRRuPt3D DaTA', 2),(f'{Fore.RED}C0*R!PT3= D?T%', 3)]:
+            print(f'{Fore.RESET}{Style.DIM}[2501] // {msg}')
+            time.sleep(sleep_time)
+            file_path = os.path.join(const().directory, "encrypted.json")
+        with open(file_path, 'w') as json_file:
+            json.dump(f'{RandomStuff().generate_ascii_string(128)}&T', json_file)
+        print(f'{Fore.RED}?????')
+        EvaSociety().execeva(f'{const().main_directory}/step.py', False)
+        sys.exit(0)
     #logging.debug(f'{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}User started bio{Fore.RESET}:\n{user_bio}')
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor()
