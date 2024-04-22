@@ -3,7 +3,6 @@ import time
 import signal
 import sys
 import os
-import inquirer
 from colorama import Fore, Style, init
 from twentyfivezeroone import const, WindowTitle, EvaSociety
 
@@ -18,7 +17,7 @@ def signal_handler(sig, frame):
     sys.exit(0)
 
 
-def create_settings_ini(serverdelay, quotesammount, id, nick, bio, language):
+def create_settings_ini(serverdelay, quotesammount, id, nick, bio):
     config = configparser.ConfigParser()
     if serverdelay is None or not str(serverdelay).isdigit():
         answers_serverdelay = "60"
@@ -62,10 +61,6 @@ def create_settings_ini(serverdelay, quotesammount, id, nick, bio, language):
     config['bio'] = {
         "; User bio": "Default What a lovely day!",
         "bio": answers_bio
-    }
-    config['Language'] = {
-        "; Default language": f"Default KAZ",
-        'language': language
     }
     with open(const().directory + "/settings.ini", "w") as configfile:
         config.write(configfile)
@@ -112,17 +107,8 @@ def main():
             f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy): ')
         bio = input(
             f'{Fore.RESET}{Style.DIM}[2501 // {Fore.GREEN}Enter bio for \"defaultBio\" section {Fore.RESET}(default What a lovely day!): ')
-        questions = [
-            inquirer.List('language',
-                          message=f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter language for \"defaultLanguage\" section{Fore.RESET}',
-                          choices=['ENG', 'RUS', 'KAZ'],
-                          default='KAZ'
-                          )
-        ]
-        answers = inquirer.prompt(questions)
-        language = answers['language']
 
-        create_settings_ini(serverdelay, quotesammount, id, nick, bio, language)
+        create_settings_ini(serverdelay, quotesammount, id, nick, bio)
     except KeyboardInterrupt:
         signal_handler(None, None)
 
