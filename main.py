@@ -48,7 +48,14 @@ class ForumBioEditor(ForumEditor):
                     "id": str(id)
                 }
             }
-            return await self.send_request(id, data)
+            response = await self.send_request(id, data)
+
+            if not response:
+                print(f'{Fore.RESET}[2501] // {Fore.RED} Token not found! | Invalid token!{Fore.RESET}\n[2501] // {Fore.YELLOW} Redirecting to GetToken.py..{Fore.RESET}')
+                await asyncio.sleep(2)
+                EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
+                sys.exit(0)
+            return response
 
 
 class ForumNickEditor(ForumEditor):
@@ -78,7 +85,14 @@ class ForumNickEditor(ForumEditor):
                     "id": str(id)
                 }
             }
-            return await self.send_request(id, data)
+            response = await self.send_request(id, data)
+
+            if not response:
+                print(f'{Fore.RESET}[2501] // {Fore.RED} Token not found! | Invalid token!{Fore.RESET}\n[2501] // {Fore.YELLOW} Redirecting to GetToken.py..{Fore.RESET}')
+                await asyncio.sleep(2)
+                EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
+                sys.exit(0)
+            return response
 
 
 async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):

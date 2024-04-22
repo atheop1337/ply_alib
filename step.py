@@ -1,5 +1,5 @@
-import inquirer, time, subprocess, os, signal, sys, configparser, asyncio
-from data.libraries.twentyfivezeroone import WindowTitle, const
+import inquirer, time, subprocess, os, signal, sys, configparser, asyncio, json
+from data.libraries.twentyfivezeroone import WindowTitle, const, EvaSociety, RandomStuff
 from data.libraries.forumEditor import ForumEditor
 from colorama import Fore, Style, init
 init(autoreset=True)
@@ -34,7 +34,15 @@ class ForumNickEditorHandler(ForumEditor):
                 "id": str(id)
             }
         }
-        return await self.send_request(id, data)
+        response = await self.send_request(id, data)
+
+        if not response:
+            print(f'{Fore.RESET}[2501] // {Fore.RED} Token not found! | Invalid token!{Fore.RESET}\n[2501] // {Fore.YELLOW} Redirecting to GetToken.py..{Fore.RESET}')
+            await asyncio.sleep(2)
+            EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
+            sys.exit(0)
+        return response
+
 
 class ForumBioEditorHandler(ForumEditor):
     async def send_bio_request(self, id):
@@ -50,7 +58,14 @@ class ForumBioEditorHandler(ForumEditor):
                 "id": str(id)
             }
         }
-        return await self.send_request(id, data)
+        response = await self.send_request(id, data)
+
+        if not response:
+            print(f'{Fore.RESET}[2501] // {Fore.RED} Token not found! | Invalid token!{Fore.RESET}\n[2501] // {Fore.YELLOW} Redirecting to GetToken.py..{Fore.RESET}')
+            await asyncio.sleep(2)
+            EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
+            sys.exit(0)
+        return response
 def run_file(file_path, show_console=True):
     if show_console:
         subprocess.Popen(["cmd", "/c", "python", file_path], creationflags=subprocess.CREATE_NEW_CONSOLE)

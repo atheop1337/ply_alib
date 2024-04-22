@@ -93,7 +93,7 @@ class Connection:
             return json_data['version']
         else:
             return "?.?.?"
-        
+
 class RandomStuff:
     #class RandomFact:
     def get_random_fact(self):
@@ -164,7 +164,6 @@ class EvaSociety:
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")
             return False
-
 class WindowTitle():
     def set(self, title):
         if sys.platform.startswith("win"):
