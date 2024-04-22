@@ -1,4 +1,4 @@
-import inquirer, time, subprocess, os, signal, sys, configparser, asyncio, json
+import inquirer, time, logging, os, signal, sys, configparser, asyncio, json
 from data.libraries.twentyfivezeroone import WindowTitle, const, EvaSociety, RandomStuff
 from data.libraries.forumEditor import ForumEditor
 from colorama import Fore, Style, init
@@ -7,6 +7,9 @@ init(autoreset=True)
 def signal_handler(sig, frame):
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
+    file_path = os.path.join(const().directory, "encrypted.json")
+    with open(file_path, 'w') as json_file:
+        json.dump(f'{RandomStuff().generate_ascii_string(128)}&T', json_file)
     async def run_tasks():
         sendernick = ForumNickEditorHandler()
         senderbio = ForumBioEditorHandler()
@@ -15,11 +18,13 @@ def signal_handler(sig, frame):
         id = str(config.get("requests", "user_id"))
         await sendernick.send_nick_request(id)
         await senderbio.send_bio_request(id)
-        print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Successfully changed to values from C:\\2501\\ply_Alib\\data\\setting.ini!")
-        time.sleep(2)
-        sys.exit(0)
+        print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Successfully changed to values from C:\\2501\\ply_Alib\\data\\setting.ini!")
+        print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// The terminal window will close after a few seconds....")
+        print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.RED}// If this does not happen, close the terminal window yourself...")
 
     asyncio.run(run_tasks())
+    sys.exit(0)
+
 class ForumNickEditorHandler(ForumEditor):
     async def send_nick_request(self, id):
         config = configparser.ConfigParser()
@@ -66,42 +71,26 @@ class ForumBioEditorHandler(ForumEditor):
             EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
             sys.exit(0)
         return response
-def run_file(file_path, show_console=True):
-    if show_console:
-        subprocess.Popen(["cmd", "/c", "python", file_path], creationflags=subprocess.CREATE_NEW_CONSOLE)
-    else:
-        subprocess.Popen(["cmd", "/c", "python", file_path])
-    return True
 
 def all_in_one():
-    # os.system('cls' if os.name == 'nt' else 'clear')
-    print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
-    #run_file(f'{const().data_directory}/run_all.py', False)
-    #time.sleep(1)
-    #main()
+    os.system('cls' if os.name == 'nt' else 'clear')
+    EvaSociety().execeva(f'{const().data_directory}/run_all.py', False)
 
 def setup():
     os.system('cls' if os.name == 'nt' else 'clear')
-    run_file(f'{const().data_directory}/run_setup.py', False)
-    #time.sleep(1)
-    #main()
+    EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
 
 def main_script():
     os.system('cls' if os.name == 'nt' else 'clear')
-    run_file(f'{const().data_directory}/run_main.py', False)
-    #time.sleep(1)
-    #main()
+    EvaSociety().execeva(f'{const().data_directory}/run_main.py', False)
 
 def server_monitoring():
     os.system('cls' if os.name == 'nt' else 'clear')
-    run_file(f'{const().data_directory}/run_serverMonitor.py', False)
-    #time.sleep(1)
-    #main()
+    EvaSociety().execeva(f'{const().data_directory}/run_serverMonitor.py', False)
 
-def plug():
-    print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
-    #time.sleep(1)
-    #main()
+def ai():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    EvaSociety().execeva(f'{const().data_directory}/run_ai.py', False)
 
 def list_input(choice):
     choice_options = {
@@ -109,15 +98,19 @@ def list_input(choice):
         '[!] setup hub': setup,
         '[•] main script': main_script,
         '[•] server monitoring': server_monitoring,
-        '[•] someother shit': plug,
+        '[•] safonoff AI terminal': ai,
     }
     chosen_function = choice_options.get(choice)
     if chosen_function is not None:
         chosen_function()
 
-
 def main():
     WindowTitle().set("ply_Alib   //   Hub")
+    logging.getLogger('requests').setLevel(logging.CRITICAL)
+    file_path = os.path.join(const().directory, "encrypted.json")
+    with open(file_path, 'w') as json_file:
+        json.dump(f'{RandomStuff().generate_ascii_string(128)}&F', json_file)
+    EvaSociety().execeva(f"{const().data_directory}/libraries/Inters.py", False)
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐
@@ -148,7 +141,7 @@ def main():
             '[!] setup hub',
             '[•] main script',
             '[•] server monitoring',
-            '[•] someother shit',
+            '[•] safonoff AI terminal',
         ])
     except KeyboardInterrupt:
         signal_handler(None, None)

@@ -9,9 +9,6 @@ def signal_handler(sig, frame):
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
-    file_path = os.path.join(const().directory, "encrypted.json")
-    with open(file_path, 'w') as json_file:
-        json.dump(f'{RandomStuff().generate_ascii_string(128)}&T', json_file)
     EvaSociety().execeva(f'{const().main_directory}/step.py', False)
     sys.exit(0)
 

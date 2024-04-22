@@ -1,6 +1,5 @@
 import inquirer
 import time
-import subprocess
 import os
 import signal
 import sys
@@ -14,14 +13,6 @@ def signal_handler(sig, frame):
     time.sleep(0.5)
     EvaSociety().execeva(f'{const().main_directory}/step.py', False)
     sys.exit(0)
-
-
-def run_file(file_path, show_console=True):
-    if show_console:
-        subprocess.Popen(["cmd", "/c", "python", file_path], creationflags=subprocess.CREATE_NEW_CONSOLE)
-    else:
-        subprocess.Popen(["cmd", "/c", "python", file_path])
-    return True
 
 def quote_req():
     EvaSociety().execeva(f'{const().libraries_directory}/quotes_generate.py', False)

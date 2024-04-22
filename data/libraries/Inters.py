@@ -19,7 +19,7 @@ def readjsonloop(rpc):
         time.sleep(3)
         with open(file_path, 'r') as json_file:
             loaded_data = json.load(json_file)
-        print(loaded_data) # FOR DEBUG
+        #print(loaded_data) FOR DEBUG
         index_of_ampersand = loaded_data.find('&')
         if index_of_ampersand != -1:
             data_after_ampersand = loaded_data[index_of_ampersand+1:]
@@ -30,7 +30,7 @@ def readjsonloop(rpc):
                 return True
 
 def rpc_connect():
-    rpc = discordrpc.RPC(app_id=1227178799964356650, output=True) # True FOR DEBUG
+    rpc = discordrpc.RPC(app_id=1227178799964356650, output=False) # True FOR DEBUG
     avatar, name = asyncio.run(Connection().get_data())
     button = discordrpc.Button(
         button_one_label="v1lmok",
