@@ -118,16 +118,16 @@ class AiTerminalCLI(cmd.Cmd):
             print(f"Error: {str(e)}")
 
     def do_clear(self, args):
-        """Clears the console"""
+        """ :: Clears the console"""
         os.system('cls' if os.name=='nt' else 'clear')
         print(self.intro)
 
     def do_exit(self, args):
-        """Exits the console application"""
+        """ :: Exits the console application"""
         signal_handler(None, None)
 
     def do_help(self, args):
-        """Displays available commands and their descriptions"""
+        """ :: Displays available commands and their descriptions"""
         for command in self.get_names():
             if command.startswith("do_"):
                 command_name = command[3:]
