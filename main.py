@@ -57,13 +57,21 @@ class ForumBioEditor(ForumEditor):
 
 class ForumNickEditor(ForumEditor):
     async def send_nick_request(self, id, nickname, choice):
+        try:
+            with open(const().directory + "/nicks.json", "r", encoding="utf-8") as file:
+                nicks = json.load(file)
+        except FileNotFoundError:
+            logging.error(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.RED}File nicks.json not found! Try to run the setup proccess again")
+            signal_handler(None, None)
+            return
+        random_name = random.choice(nicks)
         random_phrase = random.choice(const().emoticons)
         random_emoji = chr(random.randint(0x1F600, 0x1F64F))
         choice_options = {
             'clock': Clock().curtimeget(),
             'random emoticone': random_phrase,
             'random emoji': random_emoji,
-            'random name': RandomStuff().generate_random_name(),
+            'random name': random_name,
             'random string': RandomStuff().generate_random_string(60),
         }
         choice_value = choice_options.get(choice)
