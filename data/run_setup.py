@@ -16,7 +16,8 @@ def signal_handler(sig, frame):
 
 def quote_req():
     EvaSociety().execeva(f'{const().libraries_directory}/quotes_generate.py', False)
-
+def nick_req():
+    EvaSociety().execeva(f'{const().libraries_directory}/nicknames_generate.py', False)
 def settings_req():
     print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
     EvaSociety().execeva(f'{const().libraries_directory}/settings_setup.py', False)
@@ -32,6 +33,7 @@ def list_input(choice):
         '[!] token&cookies': token_req,
         '[!] settings': settings_req,
         '[!] quotes': quote_req,
+        '[!] nicks': nick_req
     }
     chosen_function = choice_options.get(choice)
     if chosen_function is not None:
@@ -69,6 +71,7 @@ def main():
             '[!] token&cookies',
             '[!] settings',
             '[!] quotes',
+            '[!] nicks',
         ])
         list_input(choice)
     except KeyboardInterrupt:
