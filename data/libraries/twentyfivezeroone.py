@@ -104,27 +104,6 @@ class RandomStuff:
         fact_text = fact_block.find('td').text.strip()
         return fact_text
     
-    #class RandomName:
-    def generate_random_name(self):
-        names = [
-            'Анатолий', 'Наталья', 'Дмитрий', 'Екатерина', 'Алексей',
-            'Ольга', 'Иван', 'Светлана', 'Сергей', 'Мария', 'Владимир',
-            'Елена', 'Андрей', 'Татьяна', 'Павел', 'Анастасия', 'Александр',
-            'Виктория', 'Константин', 'Надежда',
-            'Jоhn', 'Emily', 'Michаel', 'Sophiа', 'Dаniel',
-            'Oliviа', 'Dаvid', 'Emmа', 'Christоpher', 'Isabellа',
-            'Jаmes', 'Avа', 'Mаtthew', 'Miа', 'Williаm',
-            'Charl0tt3', 'Alexаnder', 'Grаce', 'Benjаmin', 'Ellа',
-            'Mav3r1ck', 'Shad0w', 'L3n0', 'Pho3n1x', 'Blaz3',
-            'St0rm', 'N0va', 'Rav3n', 'Hunt3r', 'Sapph1r3',
-            'Ech0', 'T1ta3', 'Jad3', 'Aur0ra', 'RoGu3',
-            'Falc0n', 'Midn1ght', 'V1p3r', 'Z3phr', 'Spe3tre',
-            'Жидорептилойд с планеты Нибиру',
-        ]
-
-        rnd = random.choice(names)
-        return rnd
-    
     #class RandomJoke:
     def generate_random_joke(self):
         link = 'https://randstuff.ru/joke/'

@@ -14,7 +14,7 @@ def signal_handler(sig, frame):
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
 
-def create_settings_ini(serverdelay, quotesammount, safonoff, id, nick, bio):
+def create_settings_ini(serverdelay, quotesammount, nicksammount, safonoff, id, nick, bio):
     config = configparser.ConfigParser()
     if serverdelay is None or not str(serverdelay).isdigit():
         answers_serverdelay = "60"
@@ -25,7 +25,10 @@ def create_settings_ini(serverdelay, quotesammount, safonoff, id, nick, bio):
         answers_quotesammount = "50"
     else:
         answers_quotesammount = str(quotesammount)
-
+    if nicksammount is None or not str(quotesammount).isdigit():
+        answers_nicksammount = "50"
+    else:
+        answers_nicksammount = str(quotesammount)
     if id is None or not str(id).isdigit():
         answers_id = "25"
     else:
@@ -53,6 +56,10 @@ def create_settings_ini(serverdelay, quotesammount, safonoff, id, nick, bio):
     config["quotesGenerator"] = {
         "; Amount of quotes to be generated": "Default 50",
         "amount": answers_quotesammount
+    }
+    config["nicksGenerator"] = {
+        "; Amount of nicks to be generated": "Default 50",
+        "amount": answers_nicksammount
     }
     config["safonoff"] = {
         "; Whether Safonoff AI terminal will run?": "Default True",
@@ -109,6 +116,8 @@ def main():
             f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter delay for \"serverMonitor\" section (in seconds) {Fore.RESET}(default 60) [int]: ")
         quotesammount = input(
             f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"quotesGenerator\" section {Fore.RESET}(default 50) [int]: ")
+        nicksamount = input(
+            f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"nicksGenerator\" section {Fore.RESET}(default 50) [int]: ")
         safonoff = input(
             f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Whether \"Safonoff AI terminal\" will run with all_in_one function? {Fore.RESET}(default True) [bool]: ")
         id = input(
@@ -118,7 +127,7 @@ def main():
         bio = input(
             f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter bio for \"defaultBio\" section {Fore.RESET}(default What a lovely day!) [str]: ')
 
-        create_settings_ini(serverdelay, quotesammount, safonoff, id, nick, bio)
+        create_settings_ini(serverdelay, quotesammount, nicksamount, safonoff,  id, nick, bio)
     except KeyboardInterrupt:
         signal_handler(None, None)
 
