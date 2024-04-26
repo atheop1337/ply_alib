@@ -82,7 +82,7 @@ def setup():
 
 def main_script():
     os.system('cls' if os.name == 'nt' else 'clear')
-    EvaSociety().execeva(f'{const().data_directory}/run_main.py', False)
+    EvaSociety().execeva(f"{const().main_directory}/main.py", False)
 
 def server_monitoring():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -110,7 +110,6 @@ def main():
     file_path = os.path.join(const().directory, "encrypted.json")
     with open(file_path, 'w') as json_file:
         json.dump(f'{RandomStuff().generate_ascii_string(128)}&F', json_file)
-    EvaSociety().execeva(f"{const().data_directory}/libraries/Inters.py", False)
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"""{Fore.LIGHTWHITE_EX}{Style.DIM}
 ┌──────────────────┬────────────────────────────────────────────────────────────┐

@@ -1,7 +1,7 @@
 from data.libraries.twentyfivezeroone import const, EvaSociety
 
 def main():
-    EvaSociety().execeva(f"{const().main_directory}/requirements.txt", True, "pip install -r ") # <<< True для дебага, False для запуска
+    EvaSociety().execeva(f"{const().main_directory}/requirements.txt", True, "pip install -r ")
 
 
 

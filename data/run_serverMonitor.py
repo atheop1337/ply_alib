@@ -3,10 +3,9 @@ import asyncio
 import sys
 import time
 import signal
-import json
 import configparser
 from libraries.serverMonitor import ServerMonitor
-from libraries.twentyfivezeroone import Animation, WindowTitle, const, EvaSociety, RandomStuff
+from libraries.twentyfivezeroone import Animation, WindowTitle, const, EvaSociety
 from colorama import Fore, Style, init
 
 config = configparser.ConfigParser()

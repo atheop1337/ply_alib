@@ -164,6 +164,7 @@ class EvaSociety:
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")
             return False
+        
 class WindowTitle():
     def set(self, title):
         if sys.platform.startswith("win"):
