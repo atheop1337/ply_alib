@@ -1,14 +1,5 @@
-import time
-import sys
-import json
-import requests
-import random
-import string
-import ctypes
-import os
-import subprocess
-import aiohttp
-import configparser
+import time, sys, json, requests, random, string, ctypes, os, subprocess, aiohttp, configparser, spotipy, datetime
+from spotipy.oauth2 import SpotifyOAuth
 from bs4 import BeautifulSoup
 
 class const:
@@ -94,6 +85,23 @@ class Connection:
         else:
             return "?.?.?"
 
+class Spotify:
+    def get_track(self):
+        client_id = '2b207da4ce7e43fd8a863386ef324768'
+        client_secret = 'a838c1892fb04b15a14f2022e9a8021b'
+        redirect_uri = 'http://localhost:3036'
+        sp = spotipy.Spotify(
+            auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri,
+                                      scope='user-read-currently-playing'))
+        current_track = sp.currently_playing()
+        if current_track is not None:
+            track_name = current_track['item']['name']
+            artist_name = current_track['item']['artists'][0]['name']
+            album_name = current_track['item']['album']['name']
+            progress_ms = current_track['progress_ms']
+            progress_time = datetime.timedelta(milliseconds=progress_ms)
+            formatted_time = str(progress_time).split('.')[0]
+            return track_name, artist_name, album_name, formatted_time
 class RandomStuff:
     #class RandomFact:
     def get_random_fact(self):
