@@ -1,4 +1,4 @@
-import time, sys, json, requests, random, string, ctypes, os, subprocess, aiohttp, configparser, spotipy, datetime
+import time, sys, json, requests, random, string, ctypes, os, subprocess, aiohttp, configparser, spotipy, datetime, logging
 from spotipy.oauth2 import SpotifyOAuth
 from bs4 import BeautifulSoup
 
@@ -63,7 +63,6 @@ class Animation:
         sys.stdout.flush()
 
 class Connection:
-
     #class Get_AV:
     async def get_data(self):
         config = configparser.ConfigParser()
@@ -87,12 +86,10 @@ class Connection:
 
 class Spotify:
     def get_track(self):
-        client_id = '2b207da4ce7e43fd8a863386ef324768'
-        client_secret = 'a838c1892fb04b15a14f2022e9a8021b'
+        client_id = 'cb70b34f8d424488a46a9d6603dd3930'
+        client_secret = '43b489ed98744e0aa45f3034c2068f3c'
         redirect_uri = 'http://localhost:3036'
-        sp = spotipy.Spotify(
-            auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri,
-                                      scope='user-read-currently-playing'))
+        sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=client_id, client_secret=client_secret, redirect_uri=redirect_uri,scope='user-read-currently-playing'))
         current_track = sp.currently_playing()
         if current_track is not None:
             track_name = current_track['item']['name']
@@ -102,6 +99,7 @@ class Spotify:
             progress_time = datetime.timedelta(milliseconds=progress_ms)
             formatted_time = str(progress_time).split('.')[0]
             return track_name, artist_name, album_name, formatted_time
+        
 class RandomStuff:
     #class RandomFact:
     def get_random_fact(self):

@@ -19,7 +19,7 @@ def readjsonloop(rpc):
         time.sleep(3)
         with open(file_path, 'r') as json_file:
             loaded_data = json.load(json_file)
-        print(loaded_data)  #print(loaded_data) FOR DEBUG
+        #print(loaded_data) FOR DEBUG
         index_of_ampersand = loaded_data.find('&')
         if index_of_ampersand != -1:
             data_after_ampersand = loaded_data[index_of_ampersand+1:]
