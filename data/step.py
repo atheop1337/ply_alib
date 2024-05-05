@@ -15,7 +15,7 @@ def signal_handler(sig, frame):
         sendernick = ForumNickEditorHandler()
         senderbio = ForumBioEditorHandler()
         config = configparser.ConfigParser()
-        config.read(const().directory + "/settings.ini")
+        config.read(const().directory + "/settings.ini", encoding="utf-8")
         id = str(config.get("requests", "user_id"))
         await sendernick.send_nick_request(id)
         await senderbio.send_bio_request(id)
@@ -30,8 +30,8 @@ def signal_handler(sig, frame):
 class ForumNickEditorHandler(ForumEditor):
     async def send_nick_request(self, id):
         config = configparser.ConfigParser()
-        config.read(const().directory + "/settings.ini")
-        nickname = str(config.get("nickname", "nickname"))
+        config.read(const().directory + "/settings.ini", encoding="utf-8")
+        nickname = str(config.get("info", "nickname"))
         data = {
             "data": {
                 "type": "users",
@@ -54,8 +54,8 @@ class ForumNickEditorHandler(ForumEditor):
 class ForumBioEditorHandler(ForumEditor):
     async def send_bio_request(self, id):
         config = configparser.ConfigParser()
-        config.read(const().directory + "/settings.ini")
-        bio = str(config.get("bio", "bio")).replace("\\n", "\n")
+        config.read(const().directory + "/settings.ini", encoding="utf-8")
+        bio = str(config.get("info", "bio")).replace("\\n", "\n")
         data = {
             "data": {
                 "type": "users",

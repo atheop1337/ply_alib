@@ -40,24 +40,24 @@ def create_settings_ini(serverdelay, quotesammount, nicksammount, safonoff, id):
         answers_safonoff = safonoff
 
     config["serverMonitor"] = {
-        "; Delay between updates in seconds": "Default 60",
-        "delay": answers_serverdelay
+        "; Delay between updates in seconds": "Default: 60",
+        "delay": answers_serverdelay,
     }
     config["quotesGenerator"] = {
-        "; Amount of quotes to be generated": "Default 50",
-        "amount": answers_quotesammount
+        "; Amount of quotes to be generated": "Default: 50",
+        "amount": answers_quotesammount,
     }
     config["nicksGenerator"] = {
-        "; Amount of nicks to be generated": "Default 50",
-        "amount": answers_nicksammount
+        "; Amount of nicks to be generated": "Default: 50",
+        "amount": answers_nicksammount,
     }
     config["safonoff"] = {
-        "; Whether Safonoff AI terminal will run?": "Default True",
-        "boolean": answers_safonoff
+        "; Whether Safonoff AI terminal will run?": "Default: True",
+        "boolean": answers_safonoff,
     }
     config["requests"] = {
-        "; User id for requests": "Default 1",
-        "user_id": answers_id
+        "; User id for requests": "Default: 1",
+        "user_id": answers_id,
     }
     with open(const().directory + "/settings.ini", "w") as configfile:
         config.write(configfile)

