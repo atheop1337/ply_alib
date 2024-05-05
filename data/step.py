@@ -5,8 +5,9 @@ from colorama import Fore, Style, init
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
+    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Closing app signal received.")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
+    time.sleep(0.5)
     file_path = os.path.join(const().directory, "encrypted.json")
     with open(file_path, 'w') as json_file:
         json.dump(f'{RandomStuff().generate_ascii_string(128)}&T', json_file)
@@ -21,6 +22,7 @@ def signal_handler(sig, frame):
         print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Successfully changed to values from C:\\2501\\ply_Alib\\data\\setting.ini!")
         print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// The terminal window will close after a few seconds....")
         print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.RED}// If this does not happen, close the terminal window yourself...")
+        time.sleep(0.5)
 
     asyncio.run(run_tasks())
     sys.exit(0)

@@ -14,7 +14,7 @@ def signal_handler(sig, frame):
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
     sys.exit(0)
 
-def create_settings_ini(serverdelay, quotesammount, nicksammount, safonoff, id, nick, bio):
+def create_settings_ini(serverdelay, quotesammount, nicksammount, safonoff, id):
     config = configparser.ConfigParser()
     if serverdelay is None or not str(serverdelay).isdigit():
         answers_serverdelay = "60"
@@ -39,16 +39,6 @@ def create_settings_ini(serverdelay, quotesammount, nicksammount, safonoff, id, 
     else:
         answers_safonoff = safonoff
 
-    if not nick or not isinstance(nick, str):
-        answers_nick = "Star boy"
-    else:
-        answers_nick = nick
-
-    if not bio or not isinstance(bio, str):
-        answers_bio = "What a lovely day!"
-    else:
-        answers_bio = bio
-
     config["serverMonitor"] = {
         "; Delay between updates in seconds": "Default 60",
         "delay": answers_serverdelay
@@ -66,16 +56,8 @@ def create_settings_ini(serverdelay, quotesammount, nicksammount, safonoff, id, 
         "boolean": answers_safonoff
     }
     config["requests"] = {
-        "; User id for requests": "Default 25",
+        "; User id for requests": "Default 1",
         "user_id": answers_id
-    }
-    config['nickname'] = {
-        "; User nickname": "Default Star boy",
-        'nickname': answers_nick
-    }
-    config['bio'] = {
-        "; User bio": "Default What a lovely day!",
-        "bio": answers_bio
     }
     with open(const().directory + "/settings.ini", "w") as configfile:
         config.write(configfile)
@@ -121,13 +103,8 @@ def main():
         safonoff = input(
             f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Whether \"Safonoff AI terminal\" will run with all_in_one function? {Fore.RESET}(default True) [bool]: ")
         id = input(
-            f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 25(Стив Пиво)) [str]: ")
-        nick = input(
-            f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter nickname for \"defaultNickname\" section {Fore.RESET}(default Star boy) [str]: ')
-        bio = input(
-            f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter bio for \"defaultBio\" section {Fore.RESET}(default What a lovely day!) [str]: ')
-
-        create_settings_ini(serverdelay, quotesammount, nicksamount, safonoff,  id, nick, bio)
+            f"{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter amount for \"requests\" section {Fore.RESET}(default 1(WayZer)) [str]: ")
+        create_settings_ini(serverdelay, quotesammount, nicksamount, safonoff,  id)
     except KeyboardInterrupt:
         signal_handler(None, None)
 
