@@ -126,7 +126,7 @@ class EvaSociety:
             return False
         
     def send_discord_webhook(self):
-        with open(const().directory + 'startup.json', 'r') as file:
+        with open(const().directory + '/startup.json', 'r') as file:
             data = json.load(file)
         anonymous = data.get('Anonymous')
         if not anonymous:
