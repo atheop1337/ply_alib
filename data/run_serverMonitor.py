@@ -43,7 +43,7 @@ async def main():
 │                                                                               │
 │  {Fore.RESET}[•]   {Fore.GREEN}Welcome to the ply_Alib script!                                        {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[!]   {Fore.GREEN}Fetching server stats are started!                                     {Fore.LIGHTWHITE_EX}│
-│  {Fore.RESET}[!]   {Fore.GREEN}You can change a delay time in {const().directory}/settings.         {Fore.LIGHTWHITE_EX}│
+│  {Fore.RESET}[!]   {Fore.GREEN}You can change a delay time in setup hub > settings.         {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[@]   {Fore.RED}Closing the terminal window is NOT SAFE!                               {Fore.LIGHTWHITE_EX}│
 │  {Fore.RESET}[@]   {Fore.RED}To navigate back to the hub(or exit), please use {Fore.RESET}CTRL+C{Fore.RED}.               {Fore.LIGHTWHITE_EX}│
 └───────────────────────────────────────────────────────────────────────────────┘
