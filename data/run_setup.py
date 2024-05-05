@@ -19,7 +19,6 @@ def quote_req():
 def nick_req():
     EvaSociety().execeva(f'{const().libraries_directory}/nicknames_generate.py', False)
 def settings_req():
-    print(f'\n{Fore.RED}THIS FUNCTION IS UNDER CONSTRUCT!')
     EvaSociety().execeva(f'{const().libraries_directory}/settings_setup.py', False)
 
 def token_req():
