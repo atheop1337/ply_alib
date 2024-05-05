@@ -1,7 +1,7 @@
-import asyncio, logging, random, inquirer, json, os, sys, signal, time, configparser, aiohttp
+import asyncio, logging, random, inquirer, json, sys, signal, time, configparser, aiohttp
 from colorama import init, Fore, Style
 from libraries.forumEditor import ForumEditor
-from libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle, Spotify, EXCEPTION
+from libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle
 init(autoreset=True)
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 
@@ -29,16 +29,12 @@ class ForumBioEditor(ForumEditor):
             'random emoticone': random_phrase,
             'random quote': random_quote,
             'random joke': RandomStuff().generate_random_joke(),
-            'spotify': Spotify().get_track(),
         }
 
         if choice == 'everytime random':
             choice = random.choice(list(choice_options.keys()))
         choice_value = choice_options.get(choice)
         if choice_value is not None:
-            if choice == 'spotify':
-                track, artist, album, time = choice_value
-                choice_value = f"I'm currently listening to {track} By {artist} \nFrom the album {album} \nTime snaps: {time}."
             data = {
                 "data": {
                     "type": "users",
@@ -130,8 +126,10 @@ async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
             signal_handler(None, None)
             break
         print(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Loop: {loop}")
+        
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
+    await get_info()
     current_version = "3.2"
     config = configparser.ConfigParser()
     config.read(const().directory + "/settings.ini")
@@ -170,7 +168,7 @@ async def main():
     try:
         delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
         nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick] // {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
-        biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'spotify', 'everytime random'])
+        biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
     except KeyboardInterrupt:
         signal_handler(None, None)
     if nickname.lower() == 'skibidi':
@@ -181,19 +179,6 @@ async def main():
             print(f'{Fore.RED}SKIBIDI DOP DOP DOP ES ES{Fore.RESET}')
             await asyncio.sleep(0.1)
         return
-    if delay == 2501:
-        for i in range(2501):
-            print(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}?????')
-        for msg, sleep_time in [(f'{Fore.RED}Corrupted Data', 1), (f'{Fore.RED}CoRRuPt3D DaTA', 2),(f'{Fore.RED}C0*R!PT3= D?T%', 3)]:
-            print(f'{Fore.RESET}{Style.DIM}[2501] // {msg}')
-            time.sleep(sleep_time)
-            file_path = os.path.join(const().directory, "encrypted.json")
-        with open(file_path, 'w') as json_file:
-            json.dump(f'{RandomStuff().generate_ascii_string(128)}&T', json_file)
-        EvaSociety().execeva(f'{const().main_directory}/step.py', False)
-        EXCEPTION.exception_trigger()
-        sys.exit(0)
-    #logging.debug(f'{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}User started bio{Fore.RESET}:\n{user_bio}')
     await asyncio.sleep(0.1)
     senderbio = ForumBioEditor()
     sendernick = ForumNickEditor()
