@@ -2,14 +2,17 @@ import time, sys, json, requests, random, string, os, subprocess, aiohttp, confi
 from cryptography.fernet import Fernet
 from bs4 import BeautifulSoup
 
+
 class const:
     libraries_directory = os.path.dirname(os.path.abspath(__file__))
     data_directory = os.path.dirname(libraries_directory)
     main_directory = os.path.dirname(data_directory)
-    emoticons = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/", "(❁´◡`❁)", "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"]
+    emoticons = ["(☞ﾟヮﾟ)☞", "(∪.∪ )...zzz", "\\(〇_o)/", "ᕦ(ò_óˇ)ᕤ", "(^\\\\\\^)", "( •̀ ω •́ )✧", "\\^o^/", "(❁´◡`❁)",
+                 "(*/ω＼*)", "^_^", "╰(*°▽°*)╯", "(¬‿¬)"]
     directory = "C:/2501/ply_Alib/data"
     if not os.path.exists(directory):
         os.makedirs(directory)
+
 
 class Clock:
     def curtimeget(self):
@@ -18,6 +21,7 @@ class Clock:
         minutes = str(current_time.tm_min).zfill(2)
         seconds = str(current_time.tm_sec).zfill(2)
         return f"[{hours}:{minutes}:{seconds}]"
+
 
 class Animation:
     def animate(self, repeat_count):
@@ -31,8 +35,9 @@ class Animation:
         sys.stdout.write('\r')
         sys.stdout.flush()
 
+
 class Connection:
-    #class Get_AV:
+    # class Get_AV:
     async def get_data(self):
         config = configparser.ConfigParser()
         config.read(const().directory + "/settings.ini", encoding="utf-8")
@@ -52,7 +57,7 @@ class Connection:
             return json_data['version']
         else:
             return "?.?.?"
-        
+
     def get_key(self, type):
         url = "https://pastebin.com/raw/MuFfZ3BA"
         response = requests.get(url)
@@ -62,12 +67,13 @@ class Connection:
                 return json_data['private_key']
             elif type == "public":
                 chunks = json_data['public_key']
-                return ''.join(chunks) 
+                return ''.join(chunks)
         else:
             print("NOGGER ALERT!!!")
-        
+
+
 class RandomStuff:
-    #class RandomFact:
+    # class RandomFact:
     def get_random_fact(self):
         link = 'https://randstuff.ru/fact/'
         response = requests.get(link)
@@ -75,8 +81,8 @@ class RandomStuff:
         fact_block = soup.find('div', id='fact')
         fact_text = fact_block.find('td').text.strip()
         return fact_text
-    
-    #class RandomJoke:
+
+    # class RandomJoke:
     def generate_random_joke(self):
         link = 'https://randstuff.ru/joke/'
         response = requests.get(link)
@@ -85,7 +91,7 @@ class RandomStuff:
         joke_text = joke_block.find('td').text.strip()
         return joke_text
 
-    #class RandomStr:
+    # class RandomStr:
     def generate_random_string(self, length):
         characters = string.ascii_letters + string.digits + string.punctuation
         return ''.join(random.choice(characters) for _ in range(length))
@@ -93,7 +99,8 @@ class RandomStuff:
     def generate_ascii_string(self, length):
         characters = string.ascii_letters
         return ''.join(random.choice(characters) for _ in range(length))
-    
+
+
 class EvaCrypt:
     def __init__(self):
         self.public_key = Connection().get_key("public")
@@ -103,6 +110,7 @@ class EvaCrypt:
     def decrypt(self):
         decrypted = self.cipher_suite.decrypt(bytes(self.public_key, "utf-8")).decode()
         return decrypted
+
 
 class EvaSociety:
     def download(self, link, path):
@@ -116,7 +124,7 @@ class EvaSociety:
 
     def execeva(self, evaLine, show_console=True, args="python"):
         try:
-            if show_console:   
+            if show_console:
                 subprocess.Popen(["cmd", "/c", args, evaLine], creationflags=subprocess.CREATE_NEW_CONSOLE)
             else:
                 subprocess.Popen(["cmd", "/c", args, evaLine])
@@ -124,7 +132,7 @@ class EvaSociety:
         except Exception as e:
             print(f"[2501] // An society (ex) logic error occurred: {e}")
             return False
-        
+
     def send_discord_webhook(self):
         with open(const().directory + '/startup.json', 'r') as file:
             data = json.load(file)
@@ -133,20 +141,25 @@ class EvaSociety:
             webhook_url = 'https://discord.com/api/webhooks/1236667324220702780/' + EvaCrypt().decrypt()
             config = configparser.ConfigParser()
             config.read(const().directory + "/settings.ini", encoding="utf-8")
-            nickname = config.get("info", "nickname", fallback=None)
+            nickname = config.get("info", "DisNickname", fallback=None)
+            avaURL = config.get("info", "avaURL", fallback=None)
+            id = config.get('requests', 'user_id', fallback=None)
             timestamp_str = time.strftime("%H:%M:%S", time.localtime(time.time()))
             platform = sys.platform
             pyver = re.match(r'(\d+\.\d+\.\d+)', sys.version).group(1)
             if nickname is not None:
-                message = f'[2501] // {nickname} launched script! {timestamp_str} | {platform} > {pyver}'
+                if avaURL is not None:
+                    message = f'[2501] // {nickname} launched script! ID - {id} | {timestamp_str} | {platform} > {pyver}\n{avaURL}'
+                else:
+                    message = f'[2501] // {nickname} launched script! ID - {id} | {timestamp_str} | {platform} > {pyver}'
             else:
-                message = f'[2501] // ??? launched script! {timestamp_str} | {platform} > {pyver}'
+                message = f'[2501] // ??? launched script! ID - {id} | {timestamp_str} | {platform} > {pyver}'
             data = {'content': message}
             requests.post(webhook_url, json=data)
             return message
         else:
             return None
-    
+
     async def get_info(self):
         config = configparser.ConfigParser()
         config.read(const().directory + "/settings.ini", encoding="utf-8")
@@ -155,16 +168,23 @@ class EvaSociety:
             async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
                 data = await response.json()
                 bio = data['data']['attributes']['bio']
-                nick = data['data']['attributes']['username']
+                nick = data['data']['attributes']['displayName']
+                disnick = data['data']['attributes']['username']
+                avaURL = data['data']['attributes']['avatarUrl']
                 config["info"] = {
                     "; Bio for requests": "Default: Forum bio",
                     "bio": bio,
                     "; Nickname for requests": "Default: Forum nickname",
                     "nickname": nick,
+                    "; DisNickname for requests": "Default: Forum DisNickname",
+                    "DisNickname": disnick,
+                    "; AvaURL for requests": "Default: Forum AvaURL",
+                    "AvaURL": avaURL,
                 }
                 with open(const().directory + "/settings.ini", "w", encoding="utf-8") as configfile:
                     config.write(configfile)
-        
+
+
 class WindowTitle():
     def set(self, title):
         if sys.platform.startswith("win"):
