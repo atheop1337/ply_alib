@@ -60,10 +60,10 @@ git clone https://github.com/v1lmok/ply_alib.git
 ## Media
 
 ##### Tutorial: Installation
-<iframe width="660" height="375" src="https://www.youtube.com/embed/-ewjSZvIwkc" title="Installation | Video tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+https://www.youtube.com/watch?v=-ewjSZvIwkc
 
 ##### Tutorial: cURL for Token&Cookies setup
-<iframe width="660" height="375" src="https://www.youtube.com/embed/4qT4BbN-yNU" title="Installation | Video tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+https://www.youtube.com/watch?v=4qT4BbN-yNU
 
 ##### Hub menu:
 <img src="images/interface.png" width="100%" height="100%">
