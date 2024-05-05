@@ -106,16 +106,10 @@ async def get_info():
             data = await response.json()
             bio = data['data']['attributes']['bio']
             nick = data['data']['attributes']['displayName']
-            config['nickname'] = {
-                "; User name": "Default Star boy",
-                "nickname": nick
-            }
-            config['bio'] = {
-                "; User bio": "Default What a lovely day!",
-                "bio": bio
-            }
+            config.set('nickname', 'nickname', nick)
+            config.set('bio', 'bio', bio)
             with open(const().directory + "/settings.ini", "w", encoding="utf-8") as configfile:
-                config.write(configfile)
+                config.write(configfile, space_around_delimiters=False)
 
 async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
