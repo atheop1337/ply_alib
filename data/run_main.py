@@ -110,7 +110,7 @@ async def get_info():
             config.set('nickname', 'nickname', nick)
             config.set('bio', 'bio', bio)
             with open(const().directory + "/settings.ini", "w", encoding="utf-8") as configfile:
-                config.write(configfile, space_around_delimiters=False)
+                config.write(configfile)
 
 async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
