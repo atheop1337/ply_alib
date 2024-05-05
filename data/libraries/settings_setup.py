@@ -8,7 +8,8 @@ from twentyfivezeroone import const, WindowTitle, EvaSociety
 init(autoreset=True)
 
 def signal_handler(sig, frame):
-    print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
+    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.RED}// If this is your first run, restart the script!!!")
+    print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
     EvaSociety().execeva(f'{const().data_directory}/run_setup.py', False)
