@@ -39,7 +39,7 @@ _powered by 2501_
 ## Установка
 
 **1.** Скачайте или клонируйте репозиторий.
-``batch
+```batch
 cd Desktop
 git clone https://github.com/v1lmok/ply_alib.git
 ```
