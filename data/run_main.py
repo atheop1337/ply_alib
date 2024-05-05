@@ -1,4 +1,4 @@
-import asyncio, logging, random, inquirer, json, os, sys, signal, time, configparser
+import asyncio, logging, random, inquirer, json, os, sys, signal, time, configparser, aiohttp
 from colorama import init, Fore, Style
 from libraries.forumEditor import ForumEditor
 from libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle, Spotify, EXCEPTION
@@ -101,6 +101,20 @@ class ForumNickEditor(ForumEditor):
                 EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
                 sys.exit(0)
             return response
+        
+async def get_info():
+    config = configparser.ConfigParser()
+    config.read(const().directory + "/settings.ini")
+    user_id = str(config.get("requests", "user_id"))
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
+            data = await response.json()
+            bio = data['data']['attributes']['bio']
+            nick = data['data']['attributes']['displayName']
+            config.set('nickname', 'nickname', nick)
+            config.set('bio', 'bio', bio)
+            with open(const().directory + "/settings.ini", "w", encoding="utf-8") as configfile:
+                config.write(configfile, space_around_delimiters=False)
 
 async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
