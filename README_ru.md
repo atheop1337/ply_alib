@@ -1,10 +1,10 @@
 # ♿ ply_Alib
 ###### Скрипт с открытым исходным кодом для улучшения использования форума WRP.
 _powered by 2501_
-![Pivo](https://github.com/v1lmok/ply_alib/assets/133809614/93157ebe-43ff-4739-b952-b4eed7bc8dc3)
 
 ------
 ![gif](images/SqPNT.gif)
+![Pivo](images/Pivo.gif)
 
 ## Скрипт содержит такие функции, как:
 
