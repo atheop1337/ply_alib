@@ -1,28 +1,59 @@
-# ♿ ply_Alib - make great again
-Скрипт для улучшения опыта на форуме
+# ♿ ply_Alib
+###### An open-source script for improving WRP forum experience
+_powered by 2501_
 
-_powered by 2501 👁️_
+------
 
-## В скрипте присутствуют такие функции как:
+## The script contains such functions as:
 
-- 🖤 |  Профиль
-  - Эмотиконы в нике
-  - Эмотиконы в био
-  - Возврат био и ника до использования скрипта
+- 🔧 |  Flexible settings & customization
+  - Full setup of the script through the CLI
+  - Semi-automatic token and cookie loading via GUI
+  - Automatic generation of bios and nicknames
+
+- 💻 |  Server monitoring
+  - Delay setting
+  - Automatic update
+
+- ♿ |  Main script
+  - Wide range of customisation in nickname and bio 
+  - Delay setting
+  - Return default nickname and bios after script termination
+  - Automatic & constant update
   
-- 🤍 |  Прочее
-  - Интеграция в дискорд
-  - Пасхалки
-  - Интеграция музыки в профиль (spotify)
+- 🎭 |  Personal AI
+  - Borderless AI's answer to your questions
+  - Personality and ability to change system prompt in files
+  - View discussions via only id in CLI
+  - Tracing a phone number
+  - Terminal functions
 
-## Установка / Использование
+- 💎 |  Others
+  - Start all functions at the same time
+  - Discord integration
+  - Anonymous startup mode
+  - Easter eggs
 
-1. Скачайте или клонируйте репозиторий.
-2. Запустите: `setup(requirements).py`
-3. Запустите: `step.py`
-4. Настройте скрипт.
+## Installation
 
-## Создатели
+**1.** Download or clone repository.
+```batch
+cd Desktop
+git clone https://github.com/v1lmok/ply_alib.git
+```
+**2.** Make sure you have Python installed.
+**3.** Launch: `setup(requirements).py` and wait for the dependency installation to complete.
+**4.** Launch `run.py` in the initial directory.
+**5.** Setup the script for the first time.
+**6.** Congratulations! Restart the script to work properly and listen to the instructions on the screen.
+ 
+## Credits
 
-- Star boy > [Github](https://github.com/v1lmok) / [WRP Forum](https://forum.wayzer.ru/u/vilmok)
-- Стив Пиво > [Github](https://github.com/PivoSteve) / [WRP Forum](https://forum.wayzer.ru/u/Buba)
+- Idea mastermind, coder :: Star boy > [Github](https://github.com/v1lmok) // [WRP Forum](https://forum.wayzer.ru/u/vilmok)
+- Provider, coder, design :: Стив Пиво > [Github](https://github.com/PivoSteve) // [WRP Forum](https://forum.wayzer.ru/u/Buba)
+
+## Images
+##### Hub menu:
+<img src="images/interface.png" width="400" height="275">
+
+
