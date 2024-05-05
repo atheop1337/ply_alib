@@ -9,7 +9,7 @@ def signal_handler(sig, frame):
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
-    EvaSociety().execeva(f'{const().main_directory}/step.py', False)
+    EvaSociety().execeva(f'{const().data_directory}/step.py', False)
     sys.exit(0)
 
 class ForumBioEditor(ForumEditor):
@@ -97,20 +97,6 @@ class ForumNickEditor(ForumEditor):
                 EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
                 sys.exit(0)
             return response
-        
-async def get_info():
-    config = configparser.ConfigParser()
-    config.read(const().directory + "/settings.ini")
-    user_id = str(config.get("requests", "user_id"))
-    async with aiohttp.ClientSession() as session:
-        async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
-            data = await response.json()
-            bio = data['data']['attributes']['bio']
-            nick = data['data']['attributes']['displayName']
-            config.set('nickname', 'nickname', nick)
-            config.set('bio', 'bio', bio)
-            with open(const().directory + "/settings.ini", "w", encoding="utf-8") as configfile:
-                config.write(configfile)
 
 async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
@@ -129,11 +115,10 @@ async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
         
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
-    await get_info()
     current_version = "3.2"
     config = configparser.ConfigParser()
-    config.read(const().directory + "/settings.ini")
-    nickname = str(config.get("nickname", "nickname"))
+    config.read(const().directory + "/settings.ini", encoding="utf-8")
+    nickname = str(config.get("info", "nickname"))
     user_id = str(config.get("requests", "user_id"))
     if current_version != Connection().get_version():
         print(f"{Fore.RESET}{Style.DIM} [2501] // {Fore.YELLOW}Script version: {current_version}\nSystem version: {Connection().get_version()}\nPlease update to the latest version.")

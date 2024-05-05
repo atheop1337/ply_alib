@@ -12,7 +12,7 @@ def signal_handler(sig, frame):
     print(f"\n{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Navigate back signal received...")
     print(f"{Fore.RESET}{Style.DIM}[2501] {Fore.YELLOW}// Cleaning up...")
     time.sleep(0.5)
-    EvaSociety().execeva(f'{const().main_directory}/step.py', False)
+    EvaSociety().execeva(f'{const().data_directory}/step.py', False)
     sys.exit(0)
 
 class AiTerminalCLI(cmd.Cmd):
