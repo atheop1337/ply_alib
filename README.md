@@ -3,7 +3,8 @@
 _powered by 2501_
 
 ------
-![gif](https://i.yapx.cc/SqPNT.gif)
+![gif](images/SqPNT.gif)
+
 ## The script contains such functions as:
 
 - 🔧 |  Flexible settings & customization
