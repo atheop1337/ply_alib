@@ -1,7 +1,7 @@
 import asyncio, logging, random, inquirer, json, os, sys, signal, time, configparser
 from colorama import init, Fore, Style
-from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle, Spotify, EXCEPTION
+from libraries.forumEditor import ForumEditor
+from libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle, Spotify, EXCEPTION
 init(autoreset=True)
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 

@@ -1,6 +1,6 @@
 import inquirer, time, logging, os, signal, sys, configparser, asyncio, json
-from data.libraries.twentyfivezeroone import WindowTitle, const, EvaSociety, RandomStuff
-from data.libraries.forumEditor import ForumEditor
+from libraries.twentyfivezeroone import WindowTitle, const, EvaSociety, RandomStuff
+from libraries.forumEditor import ForumEditor
 from colorama import Fore, Style, init
 init(autoreset=True)
 
@@ -82,7 +82,7 @@ def setup():
 
 def main_script():
     os.system('cls' if os.name == 'nt' else 'clear')
-    EvaSociety().execeva(f"{const().main_directory}/main.py", False)
+    EvaSociety().execeva(f"{const().data_directory}/run_main.py", False)
 
 def server_monitoring():
     os.system('cls' if os.name == 'nt' else 'clear')
