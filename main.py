@@ -114,8 +114,9 @@ async def get_info():
                 "; User bio": "Default What a lovely day!",
                 "bio": bio
             }
-            with open(const().directory + "/settings.ini", "w") as configfile:
+            with open(const().directory + "/settings.ini", "w", encoding="utf-8") as configfile:
                 config.write(configfile)
+
 async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
     while True:
