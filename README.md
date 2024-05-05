@@ -41,19 +41,35 @@ _powered by 2501_
 cd Desktop
 git clone https://github.com/v1lmok/ply_alib.git
 ```
+
 **2.** Make sure you have Python installed.
+
 **3.** Launch: `setup(requirements).py` and wait for the dependency installation to complete.
+
 **4.** Launch `run.py` in the initial directory.
+
 **5.** Setup the script for the first time.
-**6.** Congratulations! Restart the script to work properly and listen to the instructions on the screen.
+
+**6.** Congratulations! Restart the script to work properly and listen to the instructions on the screen. ***(Help and tutorials are below)***
  
 ## Credits
 
 - Idea mastermind, coder :: Star boy > [Github](https://github.com/v1lmok) // [WRP Forum](https://forum.wayzer.ru/u/vilmok)
 - Provider, coder, design :: Стив Пиво > [Github](https://github.com/PivoSteve) // [WRP Forum](https://forum.wayzer.ru/u/Buba)
 
-## Images
+## Media
+
+##### Tutorial: Installation
+<iframe width="660" height="375" src="https://www.youtube.com/embed/-ewjSZvIwkc" title="Installation | Video tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+##### Tutorial: cURL for Token&Cookies setup
+<iframe width="660" height="375" src="https://www.youtube.com/embed/4qT4BbN-yNU" title="Installation | Video tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ##### Hub menu:
-<img src="images/interface.png" width="400" height="275">
+<img src="images/interface.png" width="100%" height="100%">
 
+#### Setup hub:
+<img src="images/setuphub.png" width="100%" height="100%">
 
+#### Main hub:
+<img src="images/main.png" width="100%" height="100%">
