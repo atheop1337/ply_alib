@@ -1,7 +1,7 @@
-import asyncio, logging, random, inquirer, json, os, sys, signal, time, configparser
+import asyncio, logging, random, inquirer, json, os, sys, signal, time, configparser, aiohttp
 from colorama import init, Fore, Style
 from data.libraries.forumEditor import ForumEditor
-from data.libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle, Spotify, EXCEPTION
+from data.libraries.twentyfivezeroone import Clock, Animation, RandomStuff, Connection, EvaSociety, const, WindowTitle, EXCEPTION
 init(autoreset=True)
 logging.basicConfig(format=f'{Fore.RESET}{Style.DIM}[%(asctime)s] %(levelname)s |   {Fore.RED}%(message)s', datefmt='%H:%M:%S')
 
@@ -29,16 +29,12 @@ class ForumBioEditor(ForumEditor):
             'random emoticone': random_phrase,
             'random quote': random_quote,
             'random joke': RandomStuff().generate_random_joke(),
-            'spotify': Spotify().get_track(),
         }
 
         if choice == 'everytime random':
             choice = random.choice(list(choice_options.keys()))
         choice_value = choice_options.get(choice)
         if choice_value is not None:
-            if choice == 'spotify':
-                track, artist, album, time = choice_value
-                choice_value = f"I'm currently listening to {track} By {artist} \nFrom the album {album} \nTime snaps: {time}."
             data = {
                 "data": {
                     "type": "users",
@@ -101,7 +97,25 @@ class ForumNickEditor(ForumEditor):
                 EvaSociety().execeva(f'{const().data_directory}/GetToken.py', False)
                 sys.exit(0)
             return response
-
+async def get_info():
+    config = configparser.ConfigParser()
+    config.read(const().directory + "/settings.ini")
+    user_id = str(config.get("requests", "user_id"))
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
+            data = await response.json()
+            bio = data['data']['attributes']['bio']
+            nick = data['data']['attributes']['displayName']
+            config['nickname'] = {
+                "; User name": "Default Star boy",
+                "nickname": nick
+            }
+            config['bio'] = {
+                "; User bio": "Default What a lovely day!",
+                "bio": bio
+            }
+            with open(const().directory + "/settings.ini", "w") as configfile:
+                config.write(configfile)
 async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick):
     loop = 0
     while True:
@@ -117,6 +131,7 @@ async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
             break
         print(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Loop: {loop}")
 async def main():
+    await get_info()
     signal.signal(signal.SIGINT, signal_handler)
     current_version = "3.2"
     config = configparser.ConfigParser()
@@ -156,7 +171,7 @@ async def main():
     try:
         delay = int(input(f'{Fore.RESET}{Style.DIM}[2501] // {Fore.GREEN}Enter a delay (in seconds){Fore.RESET}: '))
         nickchoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Nick] // {Fore.GREEN}Enter your choice{Fore.RESET}", choices=['clock', 'random emoticone', 'random emoji', 'random name', 'random string'])
-        biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'spotify', 'everytime random'])
+        biochoice = inquirer.list_input(f"{Fore.RESET}{Style.DIM}[Bio] // {Fore.GREEN}Enter your choice{Fore.RESET}",choices=['random fact', 'random emoticone', 'random quote', 'random joke', 'everytime random'])
     except KeyboardInterrupt:
         signal_handler(None, None)
     if nickname.lower() == 'skibidi':
