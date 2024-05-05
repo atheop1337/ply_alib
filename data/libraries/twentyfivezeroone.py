@@ -155,7 +155,7 @@ class EvaSociety:
             async with session.get(f"https://forum.wayzer.ru/api/users/{user_id}") as response:
                 data = await response.json()
                 bio = data['data']['attributes']['bio']
-                nick = data['data']['attributes']['displayName']
+                nick = data['data']['attributes']['username']
                 config["info"] = {
                     "; Bio for requests": "Default: Forum bio",
                     "bio": bio,

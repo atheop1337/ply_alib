@@ -115,7 +115,7 @@ async def Run(id, delay, nickname, biochoice, nickchoice, senderbio, sendernick)
         
 async def main():
     signal.signal(signal.SIGINT, signal_handler)
-    current_version = "4.2"
+    current_version = "4.3"
     config = configparser.ConfigParser()
     config.read(const().directory + "/settings.ini", encoding="utf-8")
     nickname = str(config.get("info", "nickname"))
