@@ -14,14 +14,14 @@ async def main():
         EvaSociety().execeva(f"{const().libraries_directory}/settings_setup.py", False)
         return
     print(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Setting up...")
-    if os.path.isfile(const().directory + 'startup.json'):
-        with open(const().directory + 'startup.json', 'r') as file:
+    if os.path.isfile(const().directory + '/startup.json'):
+        with open(const().directory + '/startup.json', 'r') as file:
             data = json.load(file)
     else:
         data = {
             "Anonymous": False,
         }
-        with open(const().directory + 'startup.json', 'w') as file:
+        with open(const().directory + '/startup.json', 'w') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
     print(f"{Fore.RESET}{Style.DIM}[2501] // {Fore.YELLOW}Start the required services...")
     await EvaSociety().get_info()
