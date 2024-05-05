@@ -1,4 +1,4 @@
-import time, sys, json, requests, random, string, os, subprocess, aiohttp, configparser
+import time, sys, json, requests, random, string, os, subprocess, aiohttp, configparser, re
 from cryptography.fernet import Fernet
 from bs4 import BeautifulSoup
 
@@ -126,17 +126,24 @@ class EvaSociety:
             return False
         
     def send_discord_webhook(self):
-        webhook_url = 'https://discord.com/api/webhooks/1236667324220702780/' + EvaCrypt().decrypt()
-        config = configparser.ConfigParser()
-        config.read(const().directory + "/settings.ini", encoding="utf-8")
-        nickname = config.get("info", "nickname", fallback=None)
-        if nickname is not None:
-            message = f'[2501] {nickname} launched script!'
+        anonymous = False                    #MARK | Anonymous startup
+        if not anonymous:
+            webhook_url = 'https://discord.com/api/webhooks/1236667324220702780/' + EvaCrypt().decrypt()
+            config = configparser.ConfigParser()
+            config.read(const().directory + "/settings.ini", encoding="utf-8")
+            nickname = config.get("info", "nickname", fallback=None)
+            timestamp_str = time.strftime("%H:%M:%S", time.localtime(time.time()))
+            platform = sys.platform
+            pyver = re.match(r'(\d+\.\d+\.\d+)', sys.version).group(1)
+            if nickname is not None:
+                message = f'[2501] // {nickname} launched script! {timestamp_str} | {platform} > {pyver}'
+            else:
+                message = f'[2501] // ??? launched script! {timestamp_str} | {platform} > {pyver}'
+            data = {'content': message}
+            requests.post(webhook_url, json=data)
+            return message
         else:
-            message = f'[2501] ??? launched script!'
-        data = {'content': message}
-        requests.post(webhook_url, json=data)
-        return message
+            return None
     
     async def get_info(self):
         config = configparser.ConfigParser()
