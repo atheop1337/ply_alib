@@ -126,7 +126,9 @@ class EvaSociety:
             return False
         
     def send_discord_webhook(self):
-        anonymous = False                    #MARK | Anonymous startup
+        with open(const().directory + 'startup.json', 'r') as file:
+            data = json.load(file)
+        anonymous = data.get('Anonymous')
         if not anonymous:
             webhook_url = 'https://discord.com/api/webhooks/1236667324220702780/' + EvaCrypt().decrypt()
             config = configparser.ConfigParser()
