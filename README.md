@@ -1,6 +1,7 @@
 # ♿ ply_Alib
 ###### An open-source script for improving WRP forum experience
 _powered by 2501_
+![Pivo](https://github.com/v1lmok/ply_alib/assets/133809614/93157ebe-43ff-4739-b952-b4eed7bc8dc3)
 
 ------
 ![gif](images/SqPNT.gif)
