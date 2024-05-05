@@ -34,6 +34,3 @@ class PseudoHacker:
             print("Invalid phone number")
         else:
             print(PseudoHacker.get_info(phone))
-            
-if __name__ == "__main__":
-    print(PseudoHacker.checkphone("77772242210"))
